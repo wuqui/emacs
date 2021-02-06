@@ -1,0 +1,9 @@
+
+* use =Alt= key for non-ASCII chars
+#+begin_src elisp
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+#+end_src
+source: https://stackoverflow.com/a/3378391
