@@ -1,3 +1,50 @@
+#+STARTUP: overview
+#+TITLE: Doom Emacs configuration
+#+AUTHOR: Quirin Würschinger
+#+PROPERTY: header-args :results silent :tangle yes
+
+* =dired=
+** hide details by default
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (dired-hide-details-mode))))
+#+END_SRC
+
+** =dired-narrow=
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "dired narrow" "a d n" #'dired-narrow)
+#+END_SRC
+
+
+** delete files to Trash
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (setq delete-by-moving-to-trash t)
+  (setq trash-directory "~/.Trash"))
+#+END_SRC
+
+** icons from =treemacs=
+#+BEGIN_SRC elisp
+(after! dired
+  (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
+#+END_SRC
+
+** bindings for folders
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :prefix "a"
+ :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
+ :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
+ :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ )
+#+END_SRC
 
 * use =Alt= key for non-ASCII chars
 #+begin_src elisp
