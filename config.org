@@ -205,6 +205,133 @@ source: https://stackoverflow.com/a/3378391
 (setq org-agenda-show-future-repeats nil)
 #+END_SRC
 
+** inserting stuff
+*** insert entities
+function by John Kitchin ([[https://kitchingroup.cheme.cmu.edu/blog/2015/11/21/Insert-org-entities-into-org-mode-with-helm/][source]])
+
+#+BEGIN_SRC emacs-lisp
+(defun helm-insert-org-entity ()
+  "Helm interface to insert an entity from `org-entities'.
+F1 inserts utf-8 character
+F2 inserts entity code
+F3 inserts LaTeX code (does not wrap in math-mode)
+F4 inserts HTML code"
+  (interactive)
+  (helm :sources (reverse
+                  (let ((sources '())
+                        toplevel
+                        secondlevel)
+                    (dolist (element (append
+                                      '("* User" "** User entities")
+                                      org-entities-user org-entities))
+                      (when (and (stringp element)
+                                 (s-starts-with? "* " element))
+                        (setq toplevel element))
+                      (when (and (stringp element)
+                                 (s-starts-with? "** " element))
+                        (setq secondlevel element)
+                        (add-to-list
+                         'sources
+                         `((name . ,(concat
+                                     toplevel
+                                     (replace-regexp-in-string
+                                      "\\*\\*" " - " secondlevel)))
+                           (candidates . nil)
+                           (action . (("insert utf-8 char" . (lambda (candidate)
+                                                               (insert (nth 6 candidate))))
+                                      ("insert org entity" . (lambda (candidate)
+                                                               (insert (concat "\\" (car candidate)))))
+                                      ("insert latex" . (lambda (candidate)
+                                                          (insert (nth 1 candidate))))
+                                      ("insert html" . (lambda (candidate)
+                                                         (insert (nth 3 candidate)))))))))
+                      (when (and element (listp element))
+                        (setf (cdr (assoc 'candidates (car sources)))
+                              (append
+                               (cdr (assoc 'candidates (car sources)))
+                               (list (cons
+                                      (format "%10s %s" (nth 6 element) element)
+                                      element))))))
+                    sources))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map!
+:leader
+:desc "insert org entity" "i e" #'helm-insert-org-entity)
+#+END_SRC
+
+*** insert timestamp / inactive
+#+BEGIN_SRC elisp
+(defun q/insert-timestamp-inactive ()
+  (interactive)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively 'org-time-stamp-inactive)))
+#+END_SRC
+[[https://emacs.stackexchange.com/questions/12130/how-to-insert-inactive-timestamp-via-function][source]]
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "timestamp" "i t" #'q/insert-timestamp-inactive
+ )
+#+END_SRC
+
+*** insert datestamp / inactive
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "datestamp" "i d" #'org-time-stamp-inactive
+ )
+#+END_SRC
+
+*** insert file link
+#+BEGIN_SRC elisp
+(defun q/insert-file-link ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'org-insert-link)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert file link" "l" #'q/insert-file-link)
+#+END_SRC
+
+*** insert file path
+#+begin_src elisp
+(defun my-counsel-insert-file-path ()
+  "Insert file path."
+  (interactive)
+  (unless (featurep 'counsel) (require 'counsel))
+  (ivy-read "Find file: " 'read-file-name-internal
+            :matcher #'counsel--find-file-matcher
+            :action
+            (lambda (x)
+              (insert x))))
+
+(map!
+ :leader
+ :desc "insert file path" "L" #'my-counsel-insert-file-path)
+#+end_src
+source: https://emacs.stackexchange.com/a/39107/29471
+
+*** insert checkbox
+#+BEGIN_SRC elisp
+(defun q/toggle-checkbox ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(4)))
+    (call-interactively 'org-toggle-checkbox)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert checkbox" "c h" #'q/toggle-checkbox)
+#+END_SRC
+
 * LaTeX
 ** show table of contents
 using =reftex=
