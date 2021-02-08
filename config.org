@@ -3,6 +3,11 @@
 #+AUTHOR: Quirin Würschinger
 #+PROPERTY: header-args :results silent :tangle yes
 
+* font
+#+BEGIN_SRC elisp
+(setq doom-font (font-spec :family "monospace" :size 16))
+#+END_SRC
+
 * =dired=
 ** hide details by default
 #+BEGIN_SRC emacs-lisp
@@ -19,7 +24,6 @@
  :desc "dired narrow" "a d n" #'dired-narrow)
 #+END_SRC
 
-
 ** delete files to Trash
 #+BEGIN_SRC emacs-lisp
 (after! dired
@@ -34,17 +38,18 @@
 #+END_SRC
 
 ** bindings for folders
-#+BEGIN_SRC elisp
-(map!
- :leader
- :prefix "a"
- :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
- :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
- :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
- :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
- :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
- )
-#+END_SRC
+    #+BEGIN_SRC elisp
+    (map!
+     :leader
+     :prefix "a"
+     :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
+     :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
+     :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
+     :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
+     :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+     :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
+     )
+    #+END_SRC
 
 * use =Alt= key for non-ASCII chars
 #+begin_src elisp
@@ -54,3 +59,170 @@
 
 #+end_src
 source: https://stackoverflow.com/a/3378391
+
+* =org-roam=
+#+BEGIN_SRC emacs-lisp
+(use-package! org-roam
+  :after org
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-dailies-directory "journal")
+  (org-roam-graph-viewer "/usr/bin/open")
+  :init
+  (setq org-roam-dailies-capture-templates '(
+                                             ("d" "daily" plain (function org-roam-capture--get-point) ""
+                                              :immediate-finish t
+                                              :file-name "journal/%<%Y-%m-%d>"
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
+                                             ))
+  :config
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (setq org-roam-graph-exclude-matcher '("dailies"))
+  (map!
+   :leader
+   :desc "add alias" "r a" #'org-roam-alias-add
+   :desc "add tag" "r l" #'org-roam-tag-add
+   :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
+   :desc "d / today" "r t" #'org-roam-dailies-find-today
+   :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
+   :desc "d / date" "r d" #'org-roam-dailies-find-date
+   :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
+   :desc "d / next" "r n" #'org-roam-dailies-find-next-note
+   :desc "insert" "r i" #'org-roam-insert
+   :desc "find file" "r f" #'org-roam-find-file
+   :desc "sidebar" "r r" #'org-roam
+   )
+  )
+#+END_SRC
+
+* projectile
+#+BEGIN_SRC elisp
+(after! projectile
+  (setq projectile-known-projects '(
+                                    ;; private
+                                    "~/.doom.d/"
+                                    "~/org/"
+                                    "~/roam/"
+                                    "~/temp/latex/"
+                                    "~/Dropbox/orgzly/"
+
+                                    ;; teaching
+                                    "~/promo/lehre/2020-21_ue_morph-wf/"
+                                    "~/promo/lehre/2020-21_ps_itl/"
+
+                                    ;; projects
+                                    "~/promo/neocrawler/"
+                                    "~/promo/sna/"
+                                    "~/promo/AngloSaxon/"
+                                    "~/promo/SocEmb/"
+                                    )))
+#+END_SRC
+
+* workspaces
+#+begin_src elisp
+(map!
+ :leader
+ :desc "switch workspace" "y" #'+workspace/switch-to)
+#+end_src
+
+* org
+** agenda
+*** agenda files
+#+BEGIN_SRC elisp
+(after! org
+    (setq org-agenda-files (list
+    "~/.doom.d/config.org"
+    "~/org/temp.org"
+
+    ;; projects
+    "~/promo/sna/sna.org"
+    "~/promo/haiku/haiku.org"
+    "~/promo/IndVarBNC/IndVarBNC.org"
+    "~/promo/AngloSaxon/AngloSaxon.org"
+    "~/promo/SocEmb/SocEmb.org"
+    "~/promo/SocEmb/notebook.org"
+    "~/promo/CoVid/CoVid.org"
+
+    ;; ongoing
+    "~/org/work.org"
+
+    ;; teaching
+    "~/promo/lehre/2020-21_ps_itl/itl202021.org"
+    "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+
+    ;; private
+    "~/org/cal/default.org"
+    "~/Dropbox/orgzly/mobin.org"
+    "~/org/rout.org"
+    "~/org/privat.org"
+    "~/org/sport.org"
+    )))
+#+END_SRC
+
+*** agenda view
+#+BEGIN_SRC elisp
+(after! org
+  (defun q/org-agenda ()
+    "My personal agenda view."
+    (interactive)
+    (setq org-agenda-start-with-log-mode t)
+    (org-agenda nil "a")
+    (org-agenda-day-view))
+
+  (map! :leader
+        :desc "q agenda" "a q" #'q/org-agenda)
+  )
+#+END_SRC
+
+*** log into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-log-into-drawer t))
+#+END_SRC
+
+*** clock into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-clock-into-drawer "CLOCKBOOK"))
+#+END_SRC
+
+*** clocking status
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (setq org-clock-mode-line-total 'current))
+#+END_SRC
+
+*** hide =DONE= from agenda
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-agenda-skip-scheduled-if-done t))
+#+END_SRC
+
+*** hide repeating items
+#+BEGIN_SRC elisp
+(setq org-agenda-show-future-repeats nil)
+#+END_SRC
+
+* LaTeX
+** show table of contents
+using =reftex=
+#+begin_src elisp
+(map!
+ :leader
+ :desc "reftex-toc" "a t" #'reftex-toc)
+#+end_src
+
+** set =reftex= bibliography path
+#+BEGIN_SRC emacs-lisp
+(after! reftex
+  (setq reftex-default-bibliography
+        '("~/promo/bib/references.bib")))
+#+END_SRC
+
+** compile without save query
+#+BEGIN_SRC emacs-lisp
+(after! latex
+  (setq TeX-save-query nil))
+#+END_SRC
