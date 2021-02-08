@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: phone
+# key: phn
+# --
+\phn{$1}$0

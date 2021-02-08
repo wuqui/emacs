@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: qblank
+# key: qblank
+# --
+\begin{qblank}
+  # $1
+\end{qblank}

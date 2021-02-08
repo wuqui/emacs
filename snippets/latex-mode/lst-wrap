@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lst-wrap
+# key: lst-wrap
+# --
+\begin{lstlisting}[language={$1}]
+  `yas-selected-text`
+\end{lstlisting}

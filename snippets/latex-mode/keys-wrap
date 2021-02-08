@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: keys-wrap
+# key: keys-wrap
+# --
+\keys{`yas-selected-text`}$0

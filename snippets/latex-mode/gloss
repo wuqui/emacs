@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: gloss
+# key: gloss
+# --
+\begin{exe}
+  \sn \gll
+  \{\} \{\} \\\
+  /  /  \\\
+\end{exe}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: subscript
+# key: sbs
+# --
+\sbs{$1}$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: grapheme
+# key: grphm
+# --
+\grphm{$1}$0

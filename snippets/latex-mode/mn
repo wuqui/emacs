@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mn
+# key: mn
+# --
+\mn{$1}$0

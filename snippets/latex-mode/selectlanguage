@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: selectlanguage
+# key: sellang
+# --
+\selectlanguage{${ngerman}}$0

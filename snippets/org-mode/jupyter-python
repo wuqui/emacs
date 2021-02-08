@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: jupyter-python
+# key: juPy
+# --
+#+BEGIN_SRC jupyter-python $1
+$0
+#+END_SRC

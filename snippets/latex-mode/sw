@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sw
+# key: sw
+# --
+\sw{$1}$0

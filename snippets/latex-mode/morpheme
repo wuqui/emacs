@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: morpheme
+# key: mrphm
+# --
+\mrphm{$1}$0

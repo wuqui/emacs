@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: phoneme
+# key: phnm
+# --
+\phnm{$1}$0

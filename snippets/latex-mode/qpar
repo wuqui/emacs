@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: qpar
+# key: qpar
+# --
+\qpar{$1}$0

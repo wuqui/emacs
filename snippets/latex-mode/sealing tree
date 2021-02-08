@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: sealing tree
+# key: seal
+# --
+\begin{forest}
+  for tree={sealing}
+  [$1]
+\end{forest}

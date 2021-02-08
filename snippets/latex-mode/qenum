@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: qenum
+# key: qenum
+# --
+\begin{qenum}
+  # $1
+\end{qenum}

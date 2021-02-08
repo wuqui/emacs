@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ROAM_ALIAS
+# key: ali
+# --
+#+ROAM_ALIAS: $1

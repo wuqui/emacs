@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: se-wrap
+# key: se-wrap
+# --
+\se{`yas-selected-text`}$0
