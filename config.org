@@ -61,7 +61,6 @@ Current pattern: %`evil-mc-pattern
   :nv "z" #'my-mc-hydra/body))
 #+end_src
 
-
 * =dired=
 ** hide details by default
 #+BEGIN_SRC emacs-lisp
@@ -392,6 +391,31 @@ source: https://emacs.stackexchange.com/a/39107/29471
   (map!
    :leader
    :desc "align" "a l" #'align))
+#+END_SRC
+
+** export
+*** remove brackets around timestamps
+source: https://stackoverflow.com/a/33716338/4165300
+
+#+BEGIN_SRC elisp
+(defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
+  "removes relevant brackets from a timestamp"
+  (cond
+   ((org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))))
+
+(eval-after-load 'ox '(add-to-list
+                       'org-export-filter-timestamp-functions
+                       'org-export-filter-timestamp-remove-brackets))
+#+END_SRC
+
+*** LaTeX
+**** always use =booktabs=
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-latex-tables-booktabs t))
 #+END_SRC
 
 * LaTeX

@@ -242,23 +242,6 @@ source: https://christiantietze.de/posts/2019/06/org-fold-heading/ (by [[file:..
 #+END_SRC
 
 ** export
-*** remove brackets around timestamps
-source: https://stackoverflow.com/a/33716338/4165300
-
-#+BEGIN_SRC elisp
-(defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
-  "removes relevant brackets from a timestamp"
-  (cond
-   ((org-export-derived-backend-p backend 'latex)
-    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
-   ((org-export-derived-backend-p backend 'html)
-    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))))
-
-(eval-after-load 'ox '(add-to-list
-                       'org-export-filter-timestamp-functions
-                       'org-export-filter-timestamp-remove-brackets))
-#+END_SRC
-
 *** to =docx= with citations
 **** =ox-word=
 #+BEGIN_SRC elisp
@@ -390,12 +373,6 @@ does not work with bibliography
 - sticking with =pdflatex= and switchint to =\usepackage[utf8x]{inputenc}=
 - causes error with =biblatex=
 - switching to XeLaTeX: proper solution
-
-**** always use =booktabs=
-#+BEGIN_SRC elisp
-(after! org
-  (setq org-latex-tables-booktabs t))
-#+END_SRC
 
 **** use =minted=
 ***** config
