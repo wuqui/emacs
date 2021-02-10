@@ -258,7 +258,7 @@ source: https://stackoverflow.com/a/3378391
 (setq org-agenda-show-future-repeats nil)
 #+END_SRC
 
-** inserting stuff
+** insert stuff
 *** insert entities
 function by John Kitchin ([[https://kitchingroup.cheme.cmu.edu/blog/2015/11/21/Insert-org-entities-into-org-mode-with-helm/][source]])
 
@@ -401,10 +401,12 @@ source: https://stackoverflow.com/a/33716338/4165300
 (defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
   "removes relevant brackets from a timestamp"
   (cond
-   ((org-export-derived-backend-p backend 'latex)
-    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
-   ((org-export-derived-backend-p backend 'html)
-    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))))
+    ((org-export-derived-backend-p backend 'latex)
+     (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+    ((org-export-derived-backend-p backend 'html)
+     (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+  )
+)
 
 (eval-after-load 'ox '(add-to-list
                        'org-export-filter-timestamp-functions
