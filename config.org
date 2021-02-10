@@ -113,43 +113,6 @@ Current pattern: %`evil-mc-pattern
 #+end_src
 source: https://stackoverflow.com/a/3378391
 
-* =org-roam=
-#+BEGIN_SRC emacs-lisp
-(use-package! org-roam
-  :after org
-  :hook
-  (after-init . org-roam-mode)
-  :custom
-  (org-roam-directory "~/org/roam")
-  (org-roam-dailies-directory "journal")
-  (org-roam-graph-viewer "/usr/bin/open")
-  :init
-  (setq org-roam-dailies-capture-templates '(
-                                             ("d" "daily" plain (function org-roam-capture--get-point) ""
-                                              :immediate-finish t
-                                              :file-name "journal/%<%Y-%m-%d>"
-                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
-                                             ))
-  :config
-  (setq +org-roam-open-buffer-on-find-file nil)
-  (setq org-roam-graph-exclude-matcher '("dailies"))
-  (map!
-   :leader
-   :desc "add alias" "r a" #'org-roam-alias-add
-   :desc "add tag" "r l" #'org-roam-tag-add
-   :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
-   :desc "d / today" "r t" #'org-roam-dailies-find-today
-   :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
-   :desc "d / date" "r d" #'org-roam-dailies-find-date
-   :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
-   :desc "d / next" "r n" #'org-roam-dailies-find-next-note
-   :desc "insert" "r i" #'org-roam-insert
-   :desc "find file" "r f" #'org-roam-find-file
-   :desc "sidebar" "r r" #'org-roam
-   )
-  )
-#+END_SRC
-
 * projectile
 #+BEGIN_SRC elisp
 (after! projectile
@@ -418,6 +381,48 @@ source: https://stackoverflow.com/a/33716338/4165300
 #+BEGIN_SRC elisp
 (after! org
   (setq org-latex-tables-booktabs t))
+#+END_SRC
+
+*** =docx=
+#+BEGIN_SRC elisp
+(use-package ox-word)
+#+END_SRC
+
+** =org-roam=
+#+BEGIN_SRC emacs-lisp
+(use-package! org-roam
+  :after org
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-dailies-directory "journal")
+  (org-roam-graph-viewer "/usr/bin/open")
+  :init
+  (setq org-roam-dailies-capture-templates '(
+                                             ("d" "daily" plain (function org-roam-capture--get-point) ""
+                                              :immediate-finish t
+                                              :file-name "journal/%<%Y-%m-%d>"
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
+                                             ))
+  :config
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (setq org-roam-graph-exclude-matcher '("dailies"))
+  (map!
+   :leader
+   :desc "add alias" "r a" #'org-roam-alias-add
+   :desc "add tag" "r l" #'org-roam-tag-add
+   :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
+   :desc "d / today" "r t" #'org-roam-dailies-find-today
+   :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
+   :desc "d / date" "r d" #'org-roam-dailies-find-date
+   :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
+   :desc "d / next" "r n" #'org-roam-dailies-find-next-note
+   :desc "insert" "r i" #'org-roam-insert
+   :desc "find file" "r f" #'org-roam-find-file
+   :desc "sidebar" "r r" #'org-roam
+   )
+  )
 #+END_SRC
 
 * LaTeX

@@ -47,7 +47,6 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! windresize)
-(package! org-ref)
 (package! lorem-ipsum)
 (package! latex-extra)
 ;; (package! org-noter)
@@ -66,12 +65,6 @@
 (package! ag)
 (package! anaconda-mode)
 (package! company-anaconda)
-
-(package! ox-word
-  :recipe (:host github
-           :repo "jkitchin/scimax"
-           :files ("ox-word.el"))
-  )
 
 (package! ox-ipynb
   :recipe (:host github

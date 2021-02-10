@@ -1,8 +1,3 @@
-#+STARTUP: overview
-#+TITLE: Doom Emacs configuration
-#+AUTHOR: Quirin Würschinger
-#+PROPERTY: header-args :results silent :tangle yes
-
 * personal info
 #+BEGIN_SRC elisp
 (setq user-full-name "Quirin Würschinger"
@@ -243,11 +238,6 @@ source: https://christiantietze.de/posts/2019/06/org-fold-heading/ (by [[file:..
 
 ** export
 *** to =docx= with citations
-**** =ox-word=
-#+BEGIN_SRC elisp
-(use-package ox-word)
-#+END_SRC
-
 **** KILL custom function :inact:
 source: https://kitchingroup.cheme.cmu.edu/blog/2015/01/29/Export-org-mode-to-docx-with-citations-via-pandoc/
 #+BEGIN_SRC emacs-lisp :tangle no

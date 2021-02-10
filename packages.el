@@ -50,3 +50,10 @@
 ;(unpin! t)
 
 (package! treemacs-icons-dired)
+
+(package! org-ref)
+(package! ox-word
+  :recipe (:host github
+           :repo "jkitchin/scimax"
+           :files ("ox-word.el"))
+  )
