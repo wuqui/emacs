@@ -57,20 +57,6 @@
 )
 #+END_SRC
 
-** resize windows
-#+BEGIN_SRC emacs-lisp
-(map!
- :leader
- :desc "resize windows" "a r" #'+hydra/window-nav/body)
-#+END_SRC
-
-** switch frames
-#+BEGIN_SRC elisp
-(map!
- :leader
- :desc "switch frames" "f o" #'other-frame)
-#+END_SRC
-
 ** open a file in new window
 #+begin_src elisp
 (map!

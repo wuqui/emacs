@@ -7,6 +7,37 @@
 #+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 16))
 #+END_SRC
+* windows and frames
+** clone indirect buffer in new frame
+#+begin_src elisp
+(defun clone-indirect-buffer-other-frame (newname display-flag &optional norecord)
+  "Like `clone-indirect-buffer' but display in another window."
+  (interactive
+   (progn
+     (if (get major-mode 'no-clone-indirect)
+         (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+     (list (if current-prefix-arg
+               (read-buffer "Name of indirect buffer: " (current-buffer)))
+           t)))
+  ;; (let ((pop-up-windows t))
+  (let ((pop-up-frames t)) ; <==========
+    (clone-indirect-buffer newname display-flag norecord)))
+#+end_src
+
+** resize windows
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "resize windows" "a r" #'+hydra/window-nav/body)
+#+END_SRC
+
+** switch frames
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "switch frames" "f o" #'other-frame)
+#+END_SRC
+
 * editing
 ** expand region
 #+BEGIN_SRC emacs-lisp
