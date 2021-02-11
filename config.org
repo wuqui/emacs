@@ -3,6 +3,12 @@
 #+AUTHOR: Quirin Würschinger
 #+PROPERTY: header-args :results silent :tangle yes
 
+* personal info
+#+BEGIN_SRC elisp
+(setq user-full-name "Quirin Würschinger"
+    user-mail-address "q.wuerschinger@gmail.com")
+#+END_SRC
+
 * font
 #+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 16))
@@ -37,6 +43,15 @@
  :leader
  :desc "switch frames" "f o" #'other-frame)
 #+END_SRC
+
+* buffers and files
+** =helm-buffers-list=
+#+begin_src elisp
+(map!
+ :leader
+ :desc "helm-buffers-list" "b h" #'helm-buffers-list
+)
+#+end_src
 
 * editing
 ** expand region
@@ -419,6 +434,30 @@ source: https://stackoverflow.com/a/33716338/4165300
 (use-package ox-word)
 #+END_SRC
 
+** tables
+*** shrink
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "shrink table" "t s" #'org-table-shrink))
+#+END_SRC
+
+*** expand
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "expand table" "t e" #'org-table-expand))
+#+END_SRC
+
+** =org-ref=
+#+BEGIN_SRC emacs-lisp
+(after! org-ref
+  (setq org-ref-default-bibliography '("/Users/quirin/promo/bib/references.bib")
+        org-ref-pdf-directory "/Users/quirin/promo/bib/pdfs/"))
+#+END_SRC
+
 ** =org-roam=
 #+BEGIN_SRC emacs-lisp
 (use-package! org-roam
@@ -476,4 +515,38 @@ using =reftex=
 #+BEGIN_SRC emacs-lisp
 (after! latex
   (setq TeX-save-query nil))
+#+END_SRC
+
+* =pdf-tools=
+#+BEGIN_SRC emacs-lisp
+(use-package! pdf-tools
+  :config
+  (setq-default pdf-view-display-size 'fit-width)
+  (setq pdf-annot-activate-created-annotations t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "annotate w/ text" "d t" #'pdf-annot-add-text-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ highlight" "d h" #'pdf-annot-add-highlight-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ underline" "d u" #'pdf-annot-add-underline-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ strikeout" "d s" #'pdf-annot-add-strikeout-markup-annotation)
+
+(map!
+ :leader
+ :desc "delete annotation" "d d" #'pdf-annot-delete)
+
+(map!
+ :leader
+ :desc "jump back" "d b" #'pdf-history-goto)
 #+END_SRC

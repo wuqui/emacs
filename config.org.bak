@@ -1,9 +1,3 @@
-* personal info
-#+BEGIN_SRC elisp
-(setq user-full-name "Quirin Würschinger"
-    user-mail-address "q.wuerschinger@gmail.com")
-#+END_SRC
-
 * =alt= key
 #+BEGIN_SRC emacs-lisp :tangle yes
 (set-keyboard-coding-system 'iso-latin-1)
@@ -132,14 +126,6 @@ source: http://steve.yegge.googlepages.com/my-dot-emacs-file
  :leader
  :desc "kill buffer and window" "b D" #'kill-buffer-and-window)
 #+END_SRC
-
-** =helm-buffers-list=
-#+begin_src elisp
-(map!
- :leader
- :desc "helm-buffers-list" "b h" #'helm-buffers-list
-)
-#+end_src
 
 * org
 ** org dir
@@ -377,55 +363,12 @@ does not work with bibliography
 (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified))
 #+END_SRC
 
-** library of babel
-#+BEGIN_SRC elisp
-(after! evil-org
-  (org-babel-lob-ingest "qbabel.org"))
-#+END_SRC
-
-** default image size
-*** fixed width
-#+BEGIN_SRC elisp :tangle yes
-(after! org
-  (setq org-image-actual-width '(500))
-  )
-#+END_SRC
-
-*** KILL relative to display width :inact:
-#+BEGIN_SRC elisp :tangle no
-(setq org-image-actual-width (/ (display-pixel-width) 3))
-#+END_SRC
-
-** tables
-*** shrink
-#+BEGIN_SRC emacs-lisp
-(after! org
-  (map!
-   :leader
-   :desc "shrink table" "t s" #'org-table-shrink))
-#+END_SRC
-
-*** expand
-#+BEGIN_SRC emacs-lisp
-(after! org
-  (map!
-   :leader
-   :desc "expand table" "t e" #'org-table-expand))
-#+END_SRC
-
 ** =jupyter-python=
 #+BEGIN_SRC elisp :tangle yes
 (after! org
   (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
                                                        (:session . "JuPy")
                                                        (:kernel . "qw"))))
-#+END_SRC
-
-** =org-ref=
-#+BEGIN_SRC emacs-lisp
-(after! org-ref
-  (setq org-ref-default-bibliography '("/Users/quirin/promo/bib/references.bib")
-        org-ref-pdf-directory "/Users/quirin/promo/bib/pdfs/"))
 #+END_SRC
 
 ** =org-roam=
@@ -556,6 +499,25 @@ source: https://stackoverflow.com/questions/15328515/iso-transclusion-in-emacs-o
 - filename
 - first line
 - last line
+** library of babel
+#+BEGIN_SRC elisp
+(after! evil-org
+  (org-babel-lob-ingest "qbabel.org"))
+#+END_SRC
+
+** default image size
+*** fixed width
+#+BEGIN_SRC elisp :tangle yes
+(after! org
+  (setq org-image-actual-width '(500))
+  )
+#+END_SRC
+
+*** KILL relative to display width :inact:
+#+BEGIN_SRC elisp :tangle no
+(setq org-image-actual-width (/ (display-pixel-width) 3))
+#+END_SRC
+
 ** pdf annotation
 *** =org-noter=
 **** default window location
@@ -997,40 +959,6 @@ source: https://github.com/emacs-lsp/lsp-mode/issues/2004
 automatic language identification
 #+BEGIN_SRC elisp
 (setq langtool-default-language nil)
-#+END_SRC
-
-* =pdf-tools=
-#+BEGIN_SRC emacs-lisp
-(use-package! pdf-tools
-  :config
-  (setq-default pdf-view-display-size 'fit-width)
-  (setq pdf-annot-activate-created-annotations t))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(map!
- :leader
- :desc "annotate w/ text" "d t" #'pdf-annot-add-text-annotation)
-
-(map!
- :leader
- :desc "annotate w/ highlight" "d h" #'pdf-annot-add-highlight-markup-annotation)
-
-(map!
- :leader
- :desc "annotate w/ underline" "d u" #'pdf-annot-add-underline-markup-annotation)
-
-(map!
- :leader
- :desc "annotate w/ strikeout" "d s" #'pdf-annot-add-strikeout-markup-annotation)
-
-(map!
- :leader
- :desc "delete annotation" "d d" #'pdf-annot-delete)
-
-(map!
- :leader
- :desc "jump back" "d b" #'pdf-history-goto)
 #+END_SRC
 
 * KILL =company= :inact:
