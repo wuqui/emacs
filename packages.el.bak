@@ -54,14 +54,12 @@
 (package! org-roam-server)
 (package! org-journal)
 (package! org-tree-slide)
-(package! dired-narrow)
 (package! dired-subtree)
 (package! ov)
 (package! outline-magic
   :recipe (:host github
            :repo "tj64/outline-magic")
   )
-(package! org-roam-bibtex)
 (package! ag)
 (package! anaconda-mode)
 (package! company-anaconda)
@@ -72,8 +70,3 @@
            :files ("ox-ipynb.el"))
   )
 
-(package! org-transclusion
-  :recipe (:host github
-           :repo "nobiot/org-transclusion"
-           :branch "main"
-           :files ("org-transclusion.el")))

@@ -52,8 +52,25 @@
 (package! treemacs-icons-dired)
 
 (package! org-ref)
+
 (package! ox-word
   :recipe (:host github
            :repo "jkitchin/scimax"
            :files ("ox-word.el"))
   )
+
+(package! org-transclusion
+  :recipe (:host github
+           :repo "nobiot/org-transclusion"
+           :branch "main"
+           :files ("org-transclusion.el")))
+
+(package! dired-narrow)
+
+
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam company-org-roam)
+;; When using bibtex-completion via the `biblio` module
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)

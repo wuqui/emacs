@@ -9,6 +9,15 @@
     user-mail-address "q.wuerschinger@gmail.com")
 #+END_SRC
 
+* use =Alt= key for non-ASCII chars
+#+begin_src elisp
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+#+end_src
+source: https://stackoverflow.com/a/3378391
+
 * font
 #+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 16))
@@ -52,6 +61,20 @@
  :desc "helm-buffers-list" "b h" #'helm-buffers-list
 )
 #+end_src
+
+** copy file (to current dir)
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "copy file here" "a c" #'copy-file)
+#+END_SRC
+
+** move file (to current dir)
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "move file (here)" "a m" #'rename-file)
+#+END_SRC
 
 * editing
 ** expand region
@@ -150,15 +173,6 @@ Current pattern: %`evil-mc-pattern
      )
     #+END_SRC
 
-* use =Alt= key for non-ASCII chars
-#+begin_src elisp
-(setq mac-option-modifier nil
-      mac-command-modifier 'meta
-      x-select-enable-clipboard t)
-
-#+end_src
-source: https://stackoverflow.com/a/3378391
-
 * projectile
 #+BEGIN_SRC elisp
 (after! projectile
@@ -179,6 +193,7 @@ source: https://stackoverflow.com/a/3378391
                                     "~/promo/sna/"
                                     "~/promo/AngloSaxon/"
                                     "~/promo/SocEmb/"
+                                    "~/promo/NeoCov/"
                                     )))
 #+END_SRC
 
@@ -459,6 +474,7 @@ source: https://stackoverflow.com/a/33716338/4165300
 #+END_SRC
 
 ** =org-roam=
+*** config
 #+BEGIN_SRC emacs-lisp
 (use-package! org-roam
   :after org
@@ -493,6 +509,32 @@ source: https://stackoverflow.com/a/33716338/4165300
    :desc "sidebar" "r r" #'org-roam
    )
   )
+#+END_SRC
+
+*** =org-roam-bibtex=
+#+begin_src elisp
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode))
+  :config
+    (setq orb-templates
+      '(
+         ("r" "ref" plain (function org-roam-capture--get-point) ""
+            :file-name "${citekey}"
+            :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
+            :unnarrowed t
+         )
+       )
+    )
+#+end_src
+
+* citations and bibliography (=helm-bibtex=)
+#+BEGIN_SRC elisp
+(after! helm-bibtex
+  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (map!
+   :leader
+   :desc "bibliography" "a b" #'helm-bibtex))
 #+END_SRC
 
 * LaTeX
