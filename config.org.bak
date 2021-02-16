@@ -711,19 +711,6 @@ source: https://emacs.stackexchange.com/questions/3072/how-to-use-auctex-and-out
                                             "[q]" ("question"))))
 #+END_SRC
 
-**** =outline-magic=
-- source:
-- https://github.com/tj64/outline-magic
-- MELPA: https://melpa.org/#/outline-magic
-- extension to =outline-minor-mode=
-
-#+BEGIN_SRC emacs-lisp
-(after! latex
-  (map!
-   :leader
-   :desc "cycle outline" "a o" #'outline-cycle))
-#+END_SRC
-
 *** KILL using =latex-extra= :inact:
 - using =latex-extra= (and =outline-minor-mode=)
 - doesn't work

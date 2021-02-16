@@ -559,6 +559,20 @@ using =reftex=
   (setq TeX-save-query nil))
 #+END_SRC
 
+** folding
+*** =outline-magic=
+- source:
+  + https://github.com/tj64/outline-magic
+  + MELPA: https://melpa.org/#/outline-magic
+- extension to =outline-minor-mode=
+
+#+BEGIN_SRC emacs-lisp
+(after! latex
+  (map!
+   :leader
+   :desc "cycle outline" "a o" #'outline-cycle))
+#+END_SRC
+
 * =pdf-tools=
 #+BEGIN_SRC emacs-lisp
 (use-package! pdf-tools

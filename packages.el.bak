@@ -56,10 +56,8 @@
 (package! org-tree-slide)
 (package! dired-subtree)
 (package! ov)
-(package! outline-magic
-  :recipe (:host github
-           :repo "tj64/outline-magic")
-  )
+
+
 (package! ag)
 (package! anaconda-mode)
 (package! company-anaconda)
@@ -67,6 +65,4 @@
 (package! ox-ipynb
   :recipe (:host github
            :repo "jkitchin/ox-ipynb"
-           :files ("ox-ipynb.el"))
-  )
-
+           :files ("ox-ipynb.el")))
