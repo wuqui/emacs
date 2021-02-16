@@ -1,0 +1,409 @@
+(setq user-full-name "Quirin Würschinger"
+    user-mail-address "q.wuerschinger@gmail.com")
+
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+(setq doom-font (font-spec :family "monospace" :size 16))
+
+(defun clone-indirect-buffer-other-frame (newname display-flag &optional norecord)
+  "Like `clone-indirect-buffer' but display in another window."
+  (interactive
+   (progn
+     (if (get major-mode 'no-clone-indirect)
+         (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+     (list (if current-prefix-arg
+               (read-buffer "Name of indirect buffer: " (current-buffer)))
+           t)))
+  ;; (let ((pop-up-windows t))
+  (let ((pop-up-frames t)) ; <==========
+    (clone-indirect-buffer newname display-flag norecord)))
+
+(map!
+ :leader
+ :desc "switch frames" "f o" #'other-frame)
+
+(map!
+ :leader
+ :desc "helm-buffers-list" "b h" #'helm-buffers-list
+)
+
+(map!
+ :leader
+ :desc "copy file here" "a c" #'copy-file)
+
+(map!
+ :leader
+ :desc "move file (here)" "a m" #'rename-file)
+
+(defhydra my-mc-hydra (:color pink
+                       :hint nil
+                       :pre (evil-mc-pause-cursors))
+  "
+^Match^            ^Line-wise^           ^Manual^
+^^^^^^----------------------------------------------------
+_Z_: match all     _J_: make & go down   _z_: toggle here
+_m_: make & next   _K_: make & go up     _r_: remove last
+_M_: make & prev   ^ ^                   _R_: remove all
+_n_: skip & next   ^ ^                   _p_: pause/resume
+_N_: skip & prev
+
+Current pattern: %`evil-mc-pattern
+
+"
+  ("Z" #'evil-mc-make-all-cursors)
+  ("m" #'evil-mc-make-and-goto-next-match)
+  ("M" #'evil-mc-make-and-goto-prev-match)
+  ("n" #'evil-mc-skip-and-goto-next-match)
+  ("N" #'evil-mc-skip-and-goto-prev-match)
+  ("J" #'evil-mc-make-cursor-move-next-line)
+  ("K" #'evil-mc-make-cursor-move-prev-line)
+  ("z" #'+multiple-cursors/evil-mc-toggle-cursor-here)
+  ("r" #'+multiple-cursors/evil-mc-undo-cursor)
+  ("R" #'evil-mc-undo-all-cursors)
+  ("p" #'+multiple-cursors/evil-mc-toggle-cursors)
+  ("q" #'evil-mc-resume-cursors "quit" :color blue)
+  ("<escape>" #'evil-mc-resume-cursors "quit" :color blue))
+
+(map!
+ (:when (featurep! :editor multiple-cursors)
+  :prefix "g"
+  :nv "z" #'my-mc-hydra/body))
+
+(map!
+ :leader
+ :desc "dired narrow" "a d n" #'dired-narrow)
+
+(after! dired
+  (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
+
+    (map!
+     :leader
+     :prefix "a"
+     :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
+     :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
+     :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
+     :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
+     :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+     :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
+     )
+
+(after! projectile
+  (setq projectile-known-projects '(
+                                    ;; private
+                                    "~/.doom.d/"
+                                    "~/org/"
+                                    "~/roam/"
+                                    "~/temp/latex/"
+                                    "~/Dropbox/orgzly/"
+
+                                    ;; teaching
+                                    "~/promo/lehre/2020-21_ue_morph-wf/"
+                                    "~/promo/lehre/2020-21_ps_itl/"
+
+                                    ;; projects
+                                    "~/promo/neocrawler/"
+                                    "~/promo/sna/"
+                                    "~/promo/AngloSaxon/"
+                                    "~/promo/SocEmb/"
+                                    "~/promo/NeoCov/"
+                                    )))
+
+(map!
+ :leader
+ :desc "switch workspace" "y" #'+workspace/switch-to)
+
+(after! org
+    (setq org-agenda-files (list
+    "~/.doom.d/config.org"
+    "~/org/temp.org"
+
+    ;; projects
+    "~/promo/sna/sna.org"
+    "~/promo/haiku/haiku.org"
+    "~/promo/IndVarBNC/IndVarBNC.org"
+    "~/promo/AngloSaxon/AngloSaxon.org"
+    "~/promo/SocEmb/SocEmb.org"
+    "~/promo/SocEmb/notebook.org"
+    "~/promo/CoVid/CoVid.org"
+
+    ;; ongoing
+    "~/org/work.org"
+
+    ;; teaching
+    "~/promo/lehre/2020-21_ps_itl/itl202021.org"
+    "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+
+    ;; private
+    "~/org/cal/default.org"
+    "~/Dropbox/orgzly/mobin.org"
+    "~/org/rout.org"
+    "~/org/privat.org"
+    "~/org/sport.org"
+    )))
+
+(after! org
+  (defun q/org-agenda ()
+    "My personal agenda view."
+    (interactive)
+    (setq org-agenda-start-with-log-mode t)
+    (org-agenda nil "a")
+    (org-agenda-day-view))
+
+  (map! :leader
+        :desc "q agenda" "a q" #'q/org-agenda)
+  )
+
+(after! org
+  (setq org-log-into-drawer t))
+
+(after! org
+  (setq org-clock-into-drawer "CLOCKBOOK"))
+
+(after! org
+  (setq org-agenda-skip-scheduled-if-done t))
+
+(setq org-agenda-show-future-repeats nil)
+
+(defun q/insert-timestamp-inactive ()
+  (interactive)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively 'org-time-stamp-inactive)))
+
+(map!
+ :leader
+ :desc "timestamp" "i t" #'q/insert-timestamp-inactive
+ )
+
+(map!
+ :leader
+ :desc "datestamp" "i d" #'org-time-stamp-inactive
+ )
+
+(defun q/insert-file-link ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'org-insert-link)))
+
+(map!
+ :leader
+ :desc "insert file link" "l" #'q/insert-file-link)
+
+(defun my-counsel-insert-file-path ()
+  "Insert file path."
+  (interactive)
+  (unless (featurep 'counsel) (require 'counsel))
+  (ivy-read "Find file: " 'read-file-name-internal
+            :matcher #'counsel--find-file-matcher
+            :action
+            (lambda (x)
+              (insert x))))
+
+(map!
+ :leader
+ :desc "insert file path" "L" #'my-counsel-insert-file-path)
+
+(defun q/toggle-checkbox ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(4)))
+    (call-interactively 'org-toggle-checkbox)))
+
+(map!
+ :leader
+ :desc "insert checkbox" "c h" #'q/toggle-checkbox)
+
+(defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
+  "removes relevant brackets from a timestamp"
+  (cond
+    ((org-export-derived-backend-p backend 'latex)
+     (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+    ((org-export-derived-backend-p backend 'html)
+     (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+  )
+)
+
+(eval-after-load 'ox '(add-to-list
+                       'org-export-filter-timestamp-functions
+                       'org-export-filter-timestamp-remove-brackets))
+
+(after! org
+  (setq org-latex-tables-booktabs t))
+
+(use-package ox-word)
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode))
+
+(after! helm-bibtex
+  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (map!
+   :leader
+   :desc "bibliography" "a b" #'helm-bibtex))
+
+(map!
+ :leader
+ :desc "reftex-toc" "a t" #'reftex-toc)
+
+(map!
+ :leader
+ :desc "resize windows" "a r" #'+hydra/window-nav/body)
+
+(map!
+ :leader
+ :desc "expand region" "a e r" #'er/expand-region)
+
+(map!
+ :leader
+ :desc "indent region" "a i r" #'indent-region)
+
+(after! dired
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (dired-hide-details-mode))))
+
+(after! dired
+  (setq delete-by-moving-to-trash t)
+  (setq trash-directory "~/.Trash"))
+
+(after! org
+  (setq org-clock-mode-line-total 'current))
+
+(defun helm-insert-org-entity ()
+  "Helm interface to insert an entity from `org-entities'.
+F1 inserts utf-8 character
+F2 inserts entity code
+F3 inserts LaTeX code (does not wrap in math-mode)
+F4 inserts HTML code"
+  (interactive)
+  (helm :sources (reverse
+                  (let ((sources '())
+                        toplevel
+                        secondlevel)
+                    (dolist (element (append
+                                      '("* User" "** User entities")
+                                      org-entities-user org-entities))
+                      (when (and (stringp element)
+                                 (s-starts-with? "* " element))
+                        (setq toplevel element))
+                      (when (and (stringp element)
+                                 (s-starts-with? "** " element))
+                        (setq secondlevel element)
+                        (add-to-list
+                         'sources
+                         `((name . ,(concat
+                                     toplevel
+                                     (replace-regexp-in-string
+                                      "\\*\\*" " - " secondlevel)))
+                           (candidates . nil)
+                           (action . (("insert utf-8 char" . (lambda (candidate)
+                                                               (insert (nth 6 candidate))))
+                                      ("insert org entity" . (lambda (candidate)
+                                                               (insert (concat "\\" (car candidate)))))
+                                      ("insert latex" . (lambda (candidate)
+                                                          (insert (nth 1 candidate))))
+                                      ("insert html" . (lambda (candidate)
+                                                         (insert (nth 3 candidate)))))))))
+                      (when (and element (listp element))
+                        (setf (cdr (assoc 'candidates (car sources)))
+                              (append
+                               (cdr (assoc 'candidates (car sources)))
+                               (list (cons
+                                      (format "%10s %s" (nth 6 element) element)
+                                      element))))))
+                    sources))))
+
+(map!
+:leader
+:desc "insert org entity" "i e" #'helm-insert-org-entity)
+
+(after! org
+  (map!
+   :leader
+   :desc "align" "a l" #'align))
+
+(after! org
+  (map!
+   :leader
+   :desc "shrink table" "t s" #'org-table-shrink))
+
+(after! org
+  (map!
+   :leader
+   :desc "expand table" "t e" #'org-table-expand))
+
+(after! org-ref
+  (setq org-ref-default-bibliography '("/Users/quirin/promo/bib/references.bib")
+        org-ref-pdf-directory "/Users/quirin/promo/bib/pdfs/"))
+
+(use-package! org-roam
+  :after org
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/org/roam")
+  (org-roam-dailies-directory "journal")
+  (org-roam-graph-viewer "/usr/bin/open")
+  :init
+  (setq org-roam-dailies-capture-templates '(
+                                             ("d" "daily" plain (function org-roam-capture--get-point) ""
+                                              :immediate-finish t
+                                              :file-name "journal/%<%Y-%m-%d>"
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
+                                             ))
+  :config
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (setq org-roam-graph-exclude-matcher '("dailies"))
+  (map!
+   :leader
+   :desc "add alias" "r a" #'org-roam-alias-add
+   :desc "add tag" "r l" #'org-roam-tag-add
+   :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
+   :desc "d / today" "r t" #'org-roam-dailies-find-today
+   :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
+   :desc "d / date" "r d" #'org-roam-dailies-find-date
+   :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
+   :desc "d / next" "r n" #'org-roam-dailies-find-next-note
+   :desc "insert" "r i" #'org-roam-insert
+   :desc "find file" "r f" #'org-roam-find-file
+   :desc "sidebar" "r r" #'org-roam
+   )
+  )
+
+(after! reftex
+  (setq reftex-default-bibliography
+        '("~/promo/bib/references.bib")))
+
+(after! latex
+  (setq TeX-save-query nil))
+
+(use-package! pdf-tools
+  :config
+  (setq-default pdf-view-display-size 'fit-width)
+  (setq pdf-annot-activate-created-annotations t))
+
+(map!
+ :leader
+ :desc "annotate w/ text" "d t" #'pdf-annot-add-text-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ highlight" "d h" #'pdf-annot-add-highlight-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ underline" "d u" #'pdf-annot-add-underline-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ strikeout" "d s" #'pdf-annot-add-strikeout-markup-annotation)
+
+(map!
+ :leader
+ :desc "delete annotation" "d d" #'pdf-annot-delete)
+
+(map!
+ :leader
+ :desc "jump back" "d b" #'pdf-history-goto)
