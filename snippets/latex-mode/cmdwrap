@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: cmdwrap
+# key: cmdwrp
+# binding: SPC a w
+# --
+\\$0{`yas-selected-text`}
