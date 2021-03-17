@@ -56,8 +56,7 @@
 (package! ox-word
   :recipe (:host github
            :repo "jkitchin/scimax"
-           :files ("ox-word.el"))
-  )
+           :files ("ox-word.el")))
 
 (package! org-transclusion
   :recipe (:host github
@@ -67,13 +66,12 @@
 
 (package! dired-narrow)
 
-
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 ;; When using org-roam via the `+roam` flag
-(unpin! org-roam company-org-roam)
+;; (unpin! org-roam company-org-roam)
 ;; When using bibtex-completion via the `biblio` module
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+;; (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 
 (package! outline-magic
   :recipe (:host github

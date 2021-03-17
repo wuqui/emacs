@@ -54,6 +54,13 @@ source: https://stackoverflow.com/a/3378391
 #+END_SRC
 
 * buffers and files
+** kill buffer and window
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "kill buffer and window" "b D" #'kill-buffer-and-window)
+#+END_SRC
+
 ** =helm-buffers-list=
 #+begin_src elisp
 (map!
@@ -191,7 +198,7 @@ Current pattern: %`evil-mc-pattern
                                     "~/promo/neocrawler/"
                                     "~/promo/sna/"
                                     "~/promo/AngloSaxon/"
-                                    "~/promo/SocEmb/"
+                                    "~/promo/socemb/"
                                     "~/promo/NeoCov/"
                                     )))
 #+END_SRC
@@ -204,6 +211,18 @@ Current pattern: %`evil-mc-pattern
 #+end_src
 
 * org
+** org dir
+#+BEGIN_SRC elisp
+(setq org-directory "~/org/")
+#+END_SRC
+
+** fold files on startup
+backup: ~(setq-default org-startup-folded t)~
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-startup-folded t))
+#+END_SRC
+
 ** agenda
 *** agenda files
 #+BEGIN_SRC elisp
@@ -217,8 +236,7 @@ Current pattern: %`evil-mc-pattern
     "~/promo/haiku/haiku.org"
     "~/promo/IndVarBNC/IndVarBNC.org"
     "~/promo/AngloSaxon/AngloSaxon.org"
-    "~/promo/SocEmb/SocEmb.org"
-    "~/promo/SocEmb/notebook.org"
+    "~/promo/socemb/socemb.org"
     "~/promo/CoVid/CoVid.org"
 
     ;; ongoing
@@ -245,7 +263,9 @@ Current pattern: %`evil-mc-pattern
     (interactive)
     (setq org-agenda-start-with-log-mode t)
     (org-agenda nil "a")
-    (org-agenda-day-view))
+    (org-agenda-day-view)
+    (org-agenda-goto-today)
+    )
 
   (map! :leader
         :desc "q agenda" "a q" #'q/org-agenda)
@@ -436,14 +456,32 @@ source: https://stackoverflow.com/a/33716338/4165300
                        'org-export-filter-timestamp-remove-brackets))
 #+END_SRC
 
-*** LaTeX
+*** to =LaTeX=
+**** =scrartcl=
+#+BEGIN_SRC elisp
+(with-eval-after-load "ox-latex"
+  (add-to-list 'org-latex-classes
+               '("koma-article" "\\documentclass{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+END_SRC
+
+**** always use =qbase=
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-latex-default-packages-alist '("" "qbase")))
+#+end_src
+
 **** always use =booktabs=
 #+BEGIN_SRC elisp
 (after! org
   (setq org-latex-tables-booktabs t))
 #+END_SRC
 
-*** =docx=
+*** to =docx=
 #+BEGIN_SRC elisp
 (use-package ox-word)
 #+END_SRC
@@ -527,14 +565,7 @@ source: https://stackoverflow.com/a/33716338/4165300
     )
 #+end_src
 
-* citations and bibliography (=helm-bibtex=)
-#+BEGIN_SRC elisp
-(after! helm-bibtex
-  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
-  (map!
-   :leader
-   :desc "bibliography" "a b" #'helm-bibtex))
-#+END_SRC
+** =org-babel=
 
 * LaTeX
 ** show pdf in =pdf-tools=
@@ -736,6 +767,15 @@ source: https://emacs.stackexchange.com/a/33679/29471
     (replace-string "\\sitem" "\\begin{qblank}" nil (point-min) (point-max))
     (replace-string "\\el" "\\end{qblank}" nil (point-min) (point-max))
     (q/repl-macros)))
+#+END_SRC
+
+* citations and bibliography (=helm-bibtex=)
+#+BEGIN_SRC elisp
+(after! helm-bibtex
+  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (map!
+   :leader
+   :desc "bibliography" "a b" #'helm-bibtex))
 #+END_SRC
 
 * =pdf-tools=

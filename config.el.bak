@@ -26,6 +26,10 @@
 
 (map!
  :leader
+ :desc "kill buffer and window" "b D" #'kill-buffer-and-window)
+
+(map!
+ :leader
  :desc "helm-buffers-list" "b h" #'helm-buffers-list
 )
 
@@ -78,16 +82,15 @@ Current pattern: %`evil-mc-pattern
 (after! dired
   (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
 
-    (map!
-     :leader
-     :prefix "a"
-     :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
-     :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
-     :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
-     :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
-     :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
-     :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
-     )
+(map!
+ :leader
+ :prefix "a"
+ :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
+ :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
+ )
 
 (after! projectile
   (setq projectile-known-projects '(
@@ -106,13 +109,18 @@ Current pattern: %`evil-mc-pattern
                                     "~/promo/neocrawler/"
                                     "~/promo/sna/"
                                     "~/promo/AngloSaxon/"
-                                    "~/promo/SocEmb/"
+                                    "~/promo/socemb/"
                                     "~/promo/NeoCov/"
                                     )))
 
 (map!
  :leader
  :desc "switch workspace" "y" #'+workspace/switch-to)
+
+(setq org-directory "~/org/")
+
+(after! org
+  (setq org-startup-folded t))
 
 (after! org
     (setq org-agenda-files (list
@@ -124,8 +132,7 @@ Current pattern: %`evil-mc-pattern
     "~/promo/haiku/haiku.org"
     "~/promo/IndVarBNC/IndVarBNC.org"
     "~/promo/AngloSaxon/AngloSaxon.org"
-    "~/promo/SocEmb/SocEmb.org"
-    "~/promo/SocEmb/notebook.org"
+    "~/promo/socemb/socemb.org"
     "~/promo/CoVid/CoVid.org"
 
     ;; ongoing
@@ -228,6 +235,15 @@ Current pattern: %`evil-mc-pattern
                        'org-export-filter-timestamp-functions
                        'org-export-filter-timestamp-remove-brackets))
 
+(with-eval-after-load "ox-latex"
+  (add-to-list 'org-latex-classes
+               '("koma-article" "\\documentclass{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
 (after! org
   (setq org-latex-tables-booktabs t))
 
@@ -236,16 +252,146 @@ Current pattern: %`evil-mc-pattern
 (use-package! org-roam-bibtex
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode))
+  :config
+    (setq orb-templates
+      '(
+         ("r" "ref" plain (function org-roam-capture--get-point) ""
+            :file-name "${citekey}"
+            :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
+            :unnarrowed t
+         )
+       )
+    )
+
+(after! latex
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-source-correlate-start-server t)
+
+  ;; Update PDF buffers after successful LaTeX runs
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer)
+  )
+
+(after! latex
+  (defun framesMenus-display-buffer-use-some-frame (fun &rest args)
+    "Use `display-buffer-use-some-frame' as `display-buffer-overriding-action'.
+Then run FUN with ARGS."
+    (let ((display-buffer-overriding-action '(display-buffer-use-some-frame)))
+      (apply fun args)))
+
+  (advice-add 'TeX-pdf-tools-sync-view :around #'framesMenus-display-buffer-use-some-frame)
+  (advice-add 'pdf-sync-backward-search-mouse :around #'framesMenus-display-buffer-use-some-frame)
+  )
+
+(map!
+ :leader
+ :desc "reftex-toc" "a t" #'reftex-toc)
+
+(after! latex
+  (setq TeX-outline-extra
+        '(
+          (".*%chapter" 1)
+          (".*%section" 2)
+          (".*%subsection" 3)
+          (".*%subsubsection" 4)
+          (".*%paragraph" 5)
+          ("[ \t]*\\\\question\\b" 2)
+          ("[ \t]*\\\\part\\b" 3)
+          )))
+
+(after! latex
+  (font-lock-add-keywords
+   'latex-mode
+   '((".*%\\(chapter\\|\\(sub\\|subsub\\)?section\\|paragraph\\)"
+      0 'font-lock-keyword-face t)
+     (".*%chapter{\\(.*\\)}"       1 'font-latex-sectioning-1-face t)
+     (".*%section{\\(.*\\)}"       1 'font-latex-sectioning-2-face t)
+     (".*%subsection{\\(.*\\)}"    1 'font-latex-sectioning-3-face t)
+     (".*%subsubsection{\\(.*\\)}" 1 'font-latex-sectioning-4-face t)
+     (".*%paragraph{\\(.*\\)}"     1 'font-latex-sectioning-5-face t))))
+
+(after! latex
+  (add-to-list 'LaTeX-fold-math-spec-list '(
+                                            "[p]" ("part")
+                                            "[q]" ("question"))))
+
+(after! latex
+  (setq TeX-fold-macro-spec-list '(
+                                   ("[f]" ("footnote" "marginpar"))
+                                   ("[c]" ("cite"))
+                                   ("[l]" ("label"))
+                                   ("[r]" ("ref" "pageref" "eqref"))
+                                   ("[i]" ("index" "glossary"))
+                                   ("[1]:||*" ("item"))
+                                   ("..." ("dots"))
+                                   ("(C)" ("copyright"))
+                                   ("(R)" ("textregistered"))
+                                   ("TM" ("texttrademark"))
+                                   (1 ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup"))
+                                   ("{1}" ("se" "sw" "sps" "sbs" "hw" "qpar" "cite" "parencite" "ol" "mn" "phnm" "mrphm" "enquote" "uline" "num"))
+                                   ))
+  )
+
+(defun q/repl-macros ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\ra " "$\\rightarrow$~" nil (point-min) (point-max))
+    (replace-string "\\nlk " "\\textlnot{}~" nil (point-min) (point-max))
+    (replace-string "\\zit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\cittit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\phn{" "\\phnm{" nil (point-min) (point-max))
+    (replace-string "\\slash " "/" nil (point-min) (point-max))
+    (replace-string "\\;R" "\\textscr{}" nil (point-min) (point-max))
+    (replace-string "\\lra " "$\\longrightarrow$~" nil (point-min) (point-max))
+    (replace-string "\\ul{" "\\uline{" nil (point-min) (point-max))
+    (replace-string "\\fs{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\ae " "\\ae{}" nil (point-min) (point-max))
+    (replace-string "\\tit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\bf{" "\\textbf{" nil (point-min) (point-max))
+    (replace-string "\\gp{" "\\grphm{" nil (point-min) (point-max))
+    (replace-string "\\sc{" "\\textsc{" nil (point-min) (point-max))
+    (replace-string "\\lla " "$\\longleftarrow$~" nil (point-min) (point-max))
+    (replace-string "\\ldots " "\\ldots{} " nil (point-min) (point-max))
+    (replace-string "\\ldots" "\\ldots{}" nil (point-min) (point-max))
+    (replace-string "\\fbox{" "\\textbf{" nil (point-min) (point-max))
+    (replace-string "\\llra " "$\\longleftrightarrow{}$~" nil (point-min) (point-max))
+  )
+)
+
+(defun q/repl-qitem ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\sitem" "\\begin{qitem}" nil (point-min) (point-max))
+    (replace-string "\\begin{itemize}" "\\begin{qitem}" nil (point-min) (point-max))
+    (replace-string "\\item" "#" nil (point-min) (point-max))
+    (replace-string "\\end{itemize}" "\\end{qitem}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qitem}" nil (point-min) (point-max))
+    (q/repl-macros)
+    )
+  )
+
+(defun q/repl-qenum ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\senum" "\\begin{qenum}" nil (point-min) (point-max))
+    (replace-string "\\begin{enumerate}" "\\begin{qenum}" nil (point-min) (point-max))
+    (replace-string "\\item" "#" nil (point-min) (point-max))
+    (replace-string "\\end{enumerate}" "\\end{qenum}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qenum}" nil (point-min) (point-max))
+    (q/repl-macros)))
+
+(defun q/repl-qblank ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\sitem" "\\begin{qblank}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qblank}" nil (point-min) (point-max))
+    (q/repl-macros)))
 
 (after! helm-bibtex
   (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
   (map!
    :leader
    :desc "bibliography" "a b" #'helm-bibtex))
-
-(map!
- :leader
- :desc "reftex-toc" "a t" #'reftex-toc)
 
 (map!
  :leader
@@ -325,6 +471,9 @@ F4 inserts HTML code"
    :desc "align" "a l" #'align))
 
 (after! org
+  (add-to-list 'org-latex-default-packages-alist '("" "qbase")))
+
+(after! org
   (map!
    :leader
    :desc "shrink table" "t s" #'org-table-shrink))
@@ -378,6 +527,11 @@ F4 inserts HTML code"
 
 (after! latex
   (setq TeX-save-query nil))
+
+(after! latex
+  (map!
+   :leader
+   :desc "cycle outline" "a o" #'outline-cycle))
 
 (use-package! pdf-tools
   :config
