@@ -592,6 +592,42 @@ source: https://stackoverflow.com/a/33716338/4165300
 
 ** =org-babel=
 
+** =org-noter=
+*** default window location
+#+BEGIN_SRC elisp
+(setq org-noter-notes-window-location 'other-frame)
+#+END_SRC
+
+*** extract text from PDF
+source: https://github.com/weirdNox/org-noter/issues/88
+#+BEGIN_SRC elisp
+(defun org-noter-insert-selected-text-inside-note-content ()
+(interactive)
+(progn (setq currenb (buffer-name))
+        (org-noter-insert-precise-note)
+        (set-buffer currenb)
+        (org-noter-insert-note)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+:leader
+:desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
+#+END_SRC
+
+*** wrap text in =quote= block
+#+BEGIN_SRC elisp
+(fset 'org-noter-wrap-quote
+      (kmacro-lambda-form [?  ?: ?j ?o ?i ?n ?e ?  backspace backspace return ?V ?  ?i ?s ?q ?u ?o ?t ?e return escape ?\{ ?\{ ?d ?d] 0 "%d"))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "wrap extracted text in quote block" "d w" #'org-noter-wrap-quote)
+#+END_SRC
+
+
 * LaTeX
 ** show pdf in =pdf-tools=
 *** use =pdf-tools= as a viewer
