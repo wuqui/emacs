@@ -1,0 +1,1833 @@
+#+STARTUP: overview
+#+TITLE: Quirin's Emacs configuration
+#+AUTHOR: Quirin Würschinger
+#+PROPERTY: header-args :results silent :tangle yes
+
+* personal info
+#+BEGIN_SRC elisp
+(setq user-full-name "Quirin Würschinger"
+    user-mail-address "q.wuerschinger@gmail.com")
+#+END_SRC
+
+* font
+#+BEGIN_SRC elisp
+(setq doom-font (font-spec :family "monospace" :size 16))
+#+END_SRC
+
+* =alt= key
+#+BEGIN_SRC emacs-lisp :tangle yes
+(set-keyboard-coding-system 'iso-latin-1)
+
+(if (eq system-type 'darwin)
+    (if (eq window-system 'mac)
+        (progn
+          (setq mac-keyboard-text-encoding kTextEncodingISOLatin1)
+          ;; Workaround for not having Latin-9 Fonts
+          (latin1-display 'latin-9))
+      (if (eq window-system 'nil)
+          (progn
+            ;; "fix" the broken
+            (global-set-key "\M-l" '(lambda () (interactive) (insert "@")))
+            (global-set-key "\M-5" '(lambda () (interactive) (insert "[")))
+            (global-set-key "\M-6" '(lambda () (interactive) (insert "]")))
+            (global-set-key "\M-7" '(lambda () (interactive) (insert "|")))
+            (global-set-key "\M-/" '(lambda () (interactive) (insert "\\")))
+            (global-set-key "\M-8" '(lambda () (interactive) (insert "{")))
+            (global-set-key "\M-9" '(lambda () (interactive) (insert "}")))
+            (global-set-key "\M-n" '(lambda () (interactive) (insert "~")))
+            ))))
+
+(setq
+ mac-command-modifier 'meta
+ mac-option-modifier 'none
+ default-input-method "MacOSX"
+ )
+#+END_SRC
+
+* system time locale
+#+BEGIN_SRC elisp
+(setq system-time-locale "C")
+#+END_SRC
+
+* toggle modeline
+#+begin_src elisp
+(map!
+ :leader
+ :desc "toggle modeline" "t m" #'doom-modeline-mode)
+#+end_src
+
+* windows and frames
+** =ace-window=
+#+BEGIN_SRC elisp
+(use-package! ace-window
+  :config
+  (setq aw-scope 'global)
+  (map! :leader
+        :desc "ace-window" "e" #'ace-window)
+)
+#+END_SRC
+
+** resize windows
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "resize windows" "a r" #'+hydra/window-nav/body)
+#+END_SRC
+
+** switch frames
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "switch frames" "f o" #'other-frame)
+#+END_SRC
+
+** open a file in new window
+#+begin_src elisp
+(map!
+ :leader
+ :desc "open file in new window" "o w" #'find-file-other-window)
+#+end_src
+
+** open a file in new frame
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "open a file in new frame" "o F" #'find-file-other-frame)
+#+END_SRC
+
+* projectile
+#+BEGIN_SRC elisp
+(after! projectile
+  (setq projectile-known-projects '(
+                                    ;; private
+                                    "~/.doom.d/"
+                                    "~/org/"
+                                    "~/roam/"
+                                    "~/temp/latex/"
+                                    "~/Dropbox/orgzly/"
+
+                                    ;; work
+                                    "~/promo/neocrawler/"
+
+                                    ;; teaching
+                                    "~/promo/lehre/2020-21_ue_morph-wf/"
+                                    "~/promo/lehre/2020-21_ps_itl/"
+
+                                    ;; projects
+                                    "~/promo/sna/"
+                                    "~/promo/AngloSaxon/"
+                                    "~/promo/SocEmb/"
+                                    )))
+#+END_SRC
+
+* workspaces
+#+begin_src elisp
+(map!
+ :leader
+ :desc "switch workspace" "y" #'+workspace/switch-to)
+#+end_src
+
+* editing
+** expand region
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "expand region" "a e r" #'er/expand-region)
+#+END_SRC
+
+** indent region
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "indent region" "a i r" #'indent-region)
+#+END_SRC
+
+** multiple cursors
+*** hydra for =evil-mc=
+source: [[https://hungyi.net/posts/hydra-for-evil-mc/][An evil-mc Emacs Hydra - Hung-Yi’s Journal]]
+#+begin_src elisp
+(defhydra my-mc-hydra (:color pink
+                       :hint nil
+                       :pre (evil-mc-pause-cursors))
+  "
+^Match^            ^Line-wise^           ^Manual^
+^^^^^^----------------------------------------------------
+_Z_: match all     _J_: make & go down   _z_: toggle here
+_m_: make & next   _K_: make & go up     _r_: remove last
+_M_: make & prev   ^ ^                   _R_: remove all
+_n_: skip & next   ^ ^                   _p_: pause/resume
+_N_: skip & prev
+
+Current pattern: %`evil-mc-pattern
+
+"
+  ("Z" #'evil-mc-make-all-cursors)
+  ("m" #'evil-mc-make-and-goto-next-match)
+  ("M" #'evil-mc-make-and-goto-prev-match)
+  ("n" #'evil-mc-skip-and-goto-next-match)
+  ("N" #'evil-mc-skip-and-goto-prev-match)
+  ("J" #'evil-mc-make-cursor-move-next-line)
+  ("K" #'evil-mc-make-cursor-move-prev-line)
+  ("z" #'+multiple-cursors/evil-mc-toggle-cursor-here)
+  ("r" #'+multiple-cursors/evil-mc-undo-cursor)
+  ("R" #'evil-mc-undo-all-cursors)
+  ("p" #'+multiple-cursors/evil-mc-toggle-cursors)
+  ("q" #'evil-mc-resume-cursors "quit" :color blue)
+  ("<escape>" #'evil-mc-resume-cursors "quit" :color blue))
+
+(map!
+ (:when (featurep! :editor multiple-cursors)
+  :prefix "g"
+  :nv "z" #'my-mc-hydra/body))
+#+end_src
+
+
+** fold by indentation level
+#+BEGIN_SRC emacs-lisp
+(defun toggle-selective-display (column)
+  (interactive "P")
+  (set-selective-display
+   (or column
+       (unless selective-display
+         (1+ (current-column))))))
+
+(map! :leader
+      :desc "fold by indentation level" "a f" #'toggle-selective-display)
+#+END_SRC
+
+* handling buffers and files
+** =dired=
+*** hide details by default
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (dired-hide-details-mode))))
+#+END_SRC
+
+*** =dired-narrow=
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "dired narrow" "a d n" #'dired-narrow)
+#+END_SRC
+
+*** auto-refresh on file change
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (add-hook 'dired-mode-hook 'auto-revert-mode))
+#+END_SRC
+
+*** delete files to Trash
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (setq delete-by-moving-to-trash t)
+  (setq trash-directory "~/.Trash"))
+#+END_SRC
+
+*** icons from =treemacs=
+#+BEGIN_SRC elisp
+(after! dired
+  (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
+#+END_SRC
+
+*** bindings for folders
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :prefix "a"
+ :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
+ :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "open TAGS" "d t" (lambda () (interactive) (find-file "/Volumes/qjd/tags"))
+ :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ )
+#+END_SRC
+
+** copy file (to current dir)
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "copy file here" "a c" #'copy-file)
+#+END_SRC
+
+** move file (to current dir)
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "move file (here)" "a m" #'rename-file)
+#+END_SRC
+
+** rename file and buffer
+source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+#+BEGIN_SRC emacs-lisp
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+#+END_SRC
+
+** kill buffer and window
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "kill buffer and window" "b D" #'kill-buffer-and-window)
+#+END_SRC
+
+** =helm-buffers-list=
+#+begin_src elisp
+(map!
+ :leader
+ :desc "helm-buffers-list" "b h" #'helm-buffers-list
+)
+#+end_src
+
+* org
+** org dir
+#+BEGIN_SRC elisp
+(setq org-directory "~/org/")
+#+END_SRC
+
+** fold files on startup
+backup: ~(setq-default org-startup-folded t)~
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-startup-folded t))
+#+END_SRC
+
+** fold current subtree
+source: https://christiantietze.de/posts/2019/06/org-fold-heading/ (by [[file:../roam/20201005160619-christian_tietze.org][Christian Tietze]])
+
+#+BEGIN_SRC elisp
+(defun ct/org-foldup ()
+  "Hide the entire subtree from root headline at point."
+  (interactive)
+  (while (ignore-errors (outline-up-heading 1)))
+  (org-flag-subtree t))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(defun ct/org-shifttab (&optional arg)
+  (interactive "P")
+  (if (or (null (org-current-level))     ; point is before 1st heading, or
+          (and (= 1 (org-current-level)) ; at level-1 heading, or
+               (org-at-heading-p))
+          (org-at-table-p))              ; in a table (to preserve cell movement)
+                                        ; perform org-shifttab at root level elements and inside tables
+      (org-shifttab arg)
+                                        ; try to fold up elsewhere
+    (ct/org-foldup)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "ct/org-shifttab" "a <tab>" #'ct/org-shifttab)
+#+END_SRC
+
+** agenda
+*** agenda files
+#+BEGIN_SRC elisp
+(after! org
+    (setq org-agenda-files (list
+    "~/.doom.d/config.org"
+    "~/org/temp.org"
+
+    ;; projects
+    "~/promo/sna/sna.org"
+    "~/promo/haiku/haiku.org"
+    "~/promo/IndVarBNC/IndVarBNC.org"
+    "~/promo/AngloSaxon/AngloSaxon.org"
+    "~/promo/SocEmb/SocEmb.org"
+    "~/promo/SocEmb/notebook.org"
+    "~/promo/CoVid/CoVid.org"
+
+    ;; ongoing
+    "~/org/work.org"
+
+    ;; teaching
+    "~/promo/lehre/2020-21_ps_itl/itl202021.org"
+    "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+
+    ;; private
+    "~/org/cal/default.org"
+    "~/Dropbox/orgzly/mobin.org"
+    "~/org/rout.org"
+    "~/org/privat.org"
+    "~/org/sport.org"
+    )))
+#+END_SRC
+
+*** agenda view
+#+BEGIN_SRC elisp
+(after! org
+  (defun q/org-agenda ()
+    "My personal agenda view."
+    (interactive)
+    (setq org-agenda-start-with-log-mode t)
+    (org-agenda nil "a")
+    (org-agenda-day-view))
+
+  (map! :leader
+        :desc "q agenda" "a q" #'q/org-agenda)
+  )
+#+END_SRC
+
+*** log into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-log-into-drawer t))
+#+END_SRC
+
+*** clock into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-clock-into-drawer "CLOCKBOOK"))
+#+END_SRC
+
+*** clocking status
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (setq org-clock-mode-line-total 'current))
+#+END_SRC
+
+*** hide =DONE= from agenda
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-agenda-skip-scheduled-if-done t))
+#+END_SRC
+
+*** hide repeating items
+#+BEGIN_SRC elisp
+(setq org-agenda-show-future-repeats nil)
+#+END_SRC
+
+*** KILL schedule efforts :inact:
+#+BEGIN_SRC elisp :tangle no
+(after!
+(defun org-schedule-effort ()
+(interactive)
+(save-excursion
+    (org-back-to-heading t)
+    (let* (
+            (element (org-element-at-point))
+            (effort (org-element-property :EFFORT element))
+            (scheduled (org-element-property :scheduled element))
+            (ts-year-start (org-element-property :year-start scheduled))
+            (ts-month-start (org-element-property :month-start scheduled))
+            (ts-day-start (org-element-property :day-start scheduled))
+            (ts-hour-start (org-element-property :hour-start scheduled))
+            (ts-minute-start (org-element-property :minute-start scheduled)) )
+    (org-schedule nil (concat
+                        (format "%s" ts-year-start)
+                        "-"
+                        (if (< ts-month-start 10)
+                            (concat "0" (format "%s" ts-month-start))
+                            (format "%s" ts-month-start))
+                        "-"
+                        (if (< ts-day-start 10)
+                            (concat "0" (format "%s" ts-day-start))
+                            (format "%s" ts-day-start))
+                        " "
+                        (if (< ts-hour-start 10)
+                            (concat "0" (format "%s" ts-hour-start))
+                            (format "%s" ts-hour-start))
+                        ":"
+                        (if (< ts-minute-start 10)
+                            (concat "0" (format "%s" ts-minute-start))
+                            (format "%s" ts-minute-start))
+                        "+"
+                        effort))))))
+#+END_SRC
+
+** export
+*** remove brackets around timestamps
+source: https://stackoverflow.com/a/33716338/4165300
+
+#+BEGIN_SRC elisp
+(defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
+  "removes relevant brackets from a timestamp"
+  (cond
+   ((org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))))
+
+(eval-after-load 'ox '(add-to-list
+                       'org-export-filter-timestamp-functions
+                       'org-export-filter-timestamp-remove-brackets))
+#+END_SRC
+
+*** to =docx= with citations
+**** =ox-word=
+#+BEGIN_SRC elisp
+(use-package ox-word)
+#+END_SRC
+
+**** KILL custom function :inact:
+source: https://kitchingroup.cheme.cmu.edu/blog/2015/01/29/Export-org-mode-to-docx-with-citations-via-pandoc/
+#+BEGIN_SRC emacs-lisp :tangle no
+(defun helm-bibtex-format-pandoc-citation (keys)
+(concat "[" (mapconcat (lambda (key) (concat "@" key)) keys "; ") "]"))
+
+(after! helm-bibtex
+(setf (cdr (assoc 'org-mode helm-bibtex-format-citation-functions))
+    'helm-bibtex-format-pandoc-citation))
+
+(defun ox-export-to-docx-and-open ()
+"Export the current org file as a docx via markdown."
+(interactive)
+(let* ((bibfile (expand-file-name (car (org-ref-find-bibliography))))
+        ;; this is probably a full path
+        (current-file (buffer-file-name))
+        (basename (file-name-sans-extension current-file))
+        (docx-file (concat basename ".docx")))
+(save-buffer)
+(when (file-exists-p docx-file) (delete-file docx-file))
+(shell-command (format
+                "pandoc -s -S --bibliography=%s %s -o %s"
+                bibfile current-file docx-file))
+(org-open-file docx-file '(16))))
+#+END_SRC
+
+*** to =html=
+**** active region to buffer and open
+workaround for encoding problems
+
+#+BEGIN_SRC elisp
+(defun q/org-export-to-html-region
+    (&optional async subtreep visible-only body-sdfonly ext-plist)
+  (interactive)
+  (org-export-to-buffer 'html "*Org HTML Export*"
+    nil nil t t ext-plist (lambda () (html-mode)))
+  (browse-url-of-buffer)
+  )
+#+END_SRC
+
+**** with citations
+from John Kitchin
+
+#+BEGIN_SRC emacs-lisp
+(defun ox-export-to-html-and-open ()
+  (interactive)
+  (let* ((bibfile (expand-file-name (car (org-ref-find-bibliography))))
+         ;; this is probably a full path
+         (current-file (buffer-file-name))
+         (basename (file-name-sans-extension current-file))
+         (docx-file (concat basename ".html")))
+    (save-buffer)
+    (when (file-exists-p docx-file) (delete-file docx-file))
+    (shell-command (format
+                    "pandoc -s -S --bibliography=%s %s -o %s"
+                    bibfile current-file docx-file))
+    (org-open-file docx-file '(16))))
+#+END_SRC
+
+*** to =LaTeX=
+**** always use =qbase=
+#+begin_src emacs-lisp :tangle yes
+;; (after! latex
+;;   (add-to-list 'org-latex-packages-alist '("" "qbase" t))
+;;   )
+
+(after! org
+  (add-to-list 'org-latex-default-packages-alist '("" "qbase")))
+
+#+end_src
+
+**** build process
+***** using =LatexMk=
+- works with bibliography
+- first did not work with source code blocks producing =png= files
+- got it running then using the =-cd %o= option
+
+#+BEGIN_SRC elisp
+(after! org
+  ;; general recommendation in different places:
+  ;; (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+  ;; makes latexmk work with latex source code blocks (source: https://emacs.stackexchange.com/questions/38834/org-babel-uses-wrong-directory-during-execution-of-source-blocks-org-compile-fi)
+  (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f -cd %o")))
+#+END_SRC
+
+***** KILL using multiple =pdflatex= runs :inact:
+does not work with bibliography
+#+BEGIN_SRC elisp :tangle no
+(after! org
+(setq org-latex-pdf-process
+    '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "bibtex %b"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f")))
+#+END_SRC
+
+**** =scrartcl=
+#+BEGIN_SRC elisp
+(with-eval-after-load "ox-latex"
+(add-to-list 'org-latex-classes
+            '("koma-article" "\\documentclass{scrartcl}"
+                ("\\section{%s}" . "\\section*{%s}")
+                ("\\subsection{%s}" . "\\subsection*{%s}")
+                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+END_SRC
+
+**** =keepaspectratio= for images
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (add-hook 'LaTeX-mode-hook
+            (setq org-export-latex-image-default-option "keepaspectratio=true")))
+#+END_SRC
+
+**** unicode symbols
+- all symbols work when typed literally
+- problems occur when formatted using =org-toggle-pretty-entities=
+- some symbols work: e.g. =\rarr=
+- others don't: e.g. =\harr=
+- workaround: disable 'pretty entities' before export
+- fixes
+- sticking with =pdflatex= and switchint to =\usepackage[utf8x]{inputenc}=
+- causes error with =biblatex=
+- switching to XeLaTeX: proper solution
+
+**** always use =booktabs=
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-latex-tables-booktabs t))
+#+END_SRC
+
+**** use =minted=
+***** config
+#+begin_src emacs-lisp :tangle no
+(after! org
+  (setq org-latex-listings 'minted
+        org-latex-packages-alist '(("" "minted"))))
+#+end_src
+
+***** include =example= blocks
+#+BEGIN_SRC elisp
+(after! org
+  (add-to-list 'org-latex-minted-langs '(example "python"))
+  )
+#+END_SRC
+
+*** KILL to separate export dir :inact:
+#+BEGIN_SRC emacs-lisp :tangle no
+(after! org
+(defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
+(unless pub-dir
+    (setq pub-dir "org-exp")
+    (unless (file-directory-p pub-dir)
+    (make-directory pub-dir)))
+(apply orig-fun extension subtreep pub-dir nil))
+(advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified))
+#+END_SRC
+
+** library of babel
+#+BEGIN_SRC elisp
+(after! evil-org
+  (org-babel-lob-ingest "qbabel.org"))
+#+END_SRC
+
+** default image size
+*** fixed width
+#+BEGIN_SRC elisp :tangle yes
+(after! org
+  (setq org-image-actual-width '(500))
+  )
+#+END_SRC
+
+*** KILL relative to display width :inact:
+#+BEGIN_SRC elisp :tangle no
+(setq org-image-actual-width (/ (display-pixel-width) 3))
+#+END_SRC
+
+** tables
+*** shrink
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "shrink table" "t s" #'org-table-shrink))
+#+END_SRC
+
+*** expand
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "expand table" "t e" #'org-table-expand))
+#+END_SRC
+
+** align stuff
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "align" "a l" #'align))
+#+END_SRC
+
+** =jupyter-python=
+#+BEGIN_SRC elisp :tangle yes
+(after! org
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                       (:session . "JuPy")
+                                                       (:kernel . "qw"))))
+#+END_SRC
+
+** =org-ref=
+#+BEGIN_SRC emacs-lisp
+(after! org-ref
+  (setq org-ref-default-bibliography '("/Users/quirin/promo/bib/references.bib")
+        org-ref-pdf-directory "/Users/quirin/promo/bib/pdfs/"))
+#+END_SRC
+
+** =org-roam=
+*** config
+#+BEGIN_SRC emacs-lisp
+(use-package! org-roam
+  :after org
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/roam")
+  (org-roam-dailies-directory "journal")
+  (org-roam-graph-viewer "/usr/bin/open")
+  :init
+  (setq org-roam-dailies-capture-templates '(
+                                             ("d" "daily" plain (function org-roam-capture--get-point) ""
+                                              :immediate-finish t
+                                              :file-name "journal/%<%Y-%m-%d>"
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
+                                             ))
+  :config
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (setq org-roam-graph-exclude-matcher '("dailies"))
+  (map!
+   :leader
+   :desc "add alias" "r a" #'org-roam-alias-add
+   :desc "add tag" "r l" #'org-roam-tag-add
+   :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
+   :desc "d / today" "r t" #'org-roam-dailies-find-today
+   :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
+   :desc "d / date" "r d" #'org-roam-dailies-find-date
+   :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
+   :desc "d / next" "r n" #'org-roam-dailies-find-next-note
+   :desc "insert" "r i" #'org-roam-insert
+   :desc "find file" "r f" #'org-roam-find-file
+   :desc "sidebar" "r r" #'org-roam
+   )
+  )
+#+END_SRC
+
+*** =org-roam-server=
+- could probably delete [[file:~/org-roam-server/]]
+#+BEGIN_SRC elisp
+(use-package! org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-label-truncate t
+        org-roam-server-label-truncate-length 60
+        org-roam-server-label-wrap-length 20))
+#+END_SRC
+
+*** =org-roam-bibtex=
+#+BEGIN_SRC elisp
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :bind (:map org-mode-map
+         (("C-c n a" . orb-note-actions)))
+  :config
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point) ""
+           :file-name "${citekey}"
+           :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
+           :unnarrowed t))))
+#+END_SRC
+
+** =deft=
+#+begin_src elisp
+(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/roam/"))
+#+end_src
+
+** =org-download=
+#+BEGIN_SRC emacs-lisp
+(use-package! org-download
+  :after org
+  :bind
+  (:map org-mode-map
+   (("s-Y" . org-download-screenshot)
+    ("s-y" . org-download-yank))))
+#+END_SRC
+
+** =org-journal=
+*** config
+source:  https://www.ianjones.us/blog/2020-05-05-doom-emacs/#org59f47bf
+#+BEGIN_SRC elisp
+(use-package! org-journal
+  :after org
+  :custom
+  (org-journal-dir "~/roam/journal/")
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-date-format "%A, %d %B %Y")
+  :config
+  (setq org-journal-enable-agenda-integration t))
+#+END_SRC
+
+*** KILL bindings :inact:
+#+BEGIN_SRC elisp :tangle no
+(defvar q/keymap-journal
+(let ((keymap (make-sparse-keymap)))
+(map!
+    :map keymap
+    :desc "new date entry" "n" #'org-journal-new-date-entry
+    )
+keymap)
+"Journal Keymap.")
+
+(map!
+:leader
+:desc "journal" "a j" q/keymap-journal)
+#+END_SRC
+
+** =org-gcal=
+#+BEGIN_SRC elisp
+(use-package! org-gcal
+  :after org
+  :config
+  (setq org-gcal-client-id "392299313207-r80relpbc39423ec25c3s690sl6nqlq6.apps.googleusercontent.com"
+        org-gcal-client-secret "1V9kRvf8-XtaQy1sdy4cWQB4"
+        ;; org-gcal-client-secret "4/5QHmgJRIbEYmCT8TmtG7dWjkJJur4oGCvDR7YlX3PQEEZI8Dst2L7dU"
+        org-gcal-fetch-file-alist '(("q.wuerschinger@gmail.com" . "/Users/quirin/org/cal/default.org"))))
+#+END_SRC
+
+** transclusion
+*** =org-transclusion=
+#+begin_src elisp
+(use-package! org-transclusion)
+#+end_src
+
+*** environment
+source: https://stackoverflow.com/questions/15328515/iso-transclusion-in-emacs-org-mode
+#+BEGIN_SRC elisp
+(after! org
+  (defun org-dblock-write:transclusion (params)
+    (progn
+      (with-temp-buffer
+        (insert-file-contents (plist-get params :filename))
+        (let ((range-start (or (plist-get params :min) (line-number-at-pos (point-min))))
+              (range-end (or (plist-get params :max) (line-number-at-pos (point-max)))))
+          (copy-region-as-kill (line-beginning-position range-start)
+                               (line-end-position range-end))))
+      (yank))))
+#+END_SRC
+
+*** KILL hook for automatic updates :inact:
+#+BEGIN_SRC elisp :tangle no
+;; (add-hook 'find-file-hook #'org-update-all-dblocks)
+(add-hook 'org-mode-hook #'org-update-all-dblocks)
+#+END_SRC
+
+*** KILL function for selecting region :inact:
+- mark region
+- copy
+- filename
+- first line
+- last line
+** inserting stuff
+*** insert entities
+**** using =helm=
+function by John Kitchin ([[https://kitchingroup.cheme.cmu.edu/blog/2015/11/21/Insert-org-entities-into-org-mode-with-helm/][source]])
+
+#+BEGIN_SRC emacs-lisp
+(defun helm-insert-org-entity ()
+  "Helm interface to insert an entity from `org-entities'.
+F1 inserts utf-8 character
+F2 inserts entity code
+F3 inserts LaTeX code (does not wrap in math-mode)
+F4 inserts HTML code"
+  (interactive)
+  (helm :sources (reverse
+                  (let ((sources '())
+                        toplevel
+                        secondlevel)
+                    (dolist (element (append
+                                      '("* User" "** User entities")
+                                      org-entities-user org-entities))
+                      (when (and (stringp element)
+                                 (s-starts-with? "* " element))
+                        (setq toplevel element))
+                      (when (and (stringp element)
+                                 (s-starts-with? "** " element))
+                        (setq secondlevel element)
+                        (add-to-list
+                         'sources
+                         `((name . ,(concat
+                                     toplevel
+                                     (replace-regexp-in-string
+                                      "\\*\\*" " - " secondlevel)))
+                           (candidates . nil)
+                           (action . (("insert utf-8 char" . (lambda (candidate)
+                                                               (insert (nth 6 candidate))))
+                                      ("insert org entity" . (lambda (candidate)
+                                                               (insert (concat "\\" (car candidate)))))
+                                      ("insert latex" . (lambda (candidate)
+                                                          (insert (nth 1 candidate))))
+                                      ("insert html" . (lambda (candidate)
+                                                         (insert (nth 3 candidate)))))))))
+                      (when (and element (listp element))
+                        (setf (cdr (assoc 'candidates (car sources)))
+                              (append
+                               (cdr (assoc 'candidates (car sources)))
+                               (list (cons
+                                      (format "%10s %s" (nth 6 element) element)
+                                      element))))))
+                    sources))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map!
+:leader
+:desc "insert org entity" "i e" #'helm-insert-org-entity)
+#+END_SRC
+
+**** KILL version using =counsel= :inact:
+problem:
+- insert's the unicode symbol and that causes problems with =pdflatex= export with non-standard symbold (e.g. \geq)
+- can't select how to insert entitiy: =LaTeX=, unicode, org
+
+*** insert timestamp / inactive
+#+BEGIN_SRC elisp
+(defun q/insert-timestamp-inactive ()
+  (interactive)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively 'org-time-stamp-inactive)))
+#+END_SRC
+[[https://emacs.stackexchange.com/questions/12130/how-to-insert-inactive-timestamp-via-function][source]]
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "timestamp" "i t" #'q/insert-timestamp-inactive
+ )
+#+END_SRC
+
+*** insert datestamp / inactive
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "datestamp" "i d" #'org-time-stamp-inactive
+ )
+#+END_SRC
+
+*** insert file link
+#+BEGIN_SRC elisp
+(defun q/insert-file-link ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'org-insert-link)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert file link" "l" #'q/insert-file-link)
+#+END_SRC
+
+*** insert file path
+#+begin_src elisp
+(defun my-counsel-insert-file-path ()
+  "Insert file path."
+  (interactive)
+  (unless (featurep 'counsel) (require 'counsel))
+  (ivy-read "Find file: " 'read-file-name-internal
+            :matcher #'counsel--find-file-matcher
+            :action
+            (lambda (x)
+              (insert x))))
+
+(map!
+ :leader
+ :desc "insert file path" "L" #'my-counsel-insert-file-path)
+#+end_src
+source: https://emacs.stackexchange.com/a/39107/29471
+
+*** insert checkbox
+#+BEGIN_SRC elisp
+(defun q/toggle-checkbox ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(4)))
+    (call-interactively 'org-toggle-checkbox)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert checkbox" "c h" #'q/toggle-checkbox)
+#+END_SRC
+
+** pdf annotation
+*** KILL =org-pdftools= :inact:
+needs to be installed in [[file:packages.el]]
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package! org-pdftools
+:hook (org-load . org-pdftools-setup-link))
+#+END_SRC
+
+*** KILL =org-noter-pdftools= :inact:
+needs to be installed in [[file:packages.el]]
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package! org-noter-pdftools
+:after org-noter
+:config
+(with-eval-after-load 'pdf-annot
+(add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+#+END_SRC
+
+** KILL cycle org bullets :inact:
+#+BEGIN_SRC emacs-lisp :tangle no
+(after! org
+(map! :leader
+    :desc "cycle org list bullet types" "a l" #'org-cycle-list-bullet))
+#+END_SRC
+
+** KILL screenshots :inact:
+embed screenshots in org files
+#+BEGIN_SRC emacs-lisp :tangle no
+(after! org
+(defun my-org-screenshot ()
+"Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+(interactive)
+(org-display-inline-images)
+(setq filename
+        (concat
+        (make-temp-name
+        (concat (file-name-nondirectory (buffer-file-name))
+                "_imgs/"
+                (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+(unless (file-exists-p (file-name-directory filename))
+    (make-directory (file-name-directory filename)))
+                                    ; take screenshot
+(if (eq system-type 'darwin)
+    (call-process "screencapture" nil nil nil "-i" filename))
+(if (eq system-type 'gnu/linux)
+    (call-process "import" nil nil nil filename))
+                                    ; insert into file if correctly taken
+(if (file-exists-p filename)
+    (insert (concat "[[file:" filename "]]")))))
+#+END_SRC
+
+** KILL hide markup :inact:
+#+BEGIN_SRC elisp :tangle no
+(setq org-hide-emphasis-markers nil)
+#+END_SRC
+
+* citations and bibliography (=helm-bibtex=)
+#+BEGIN_SRC elisp
+(after! helm-bibtex
+  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (map!
+   :leader
+   :desc "bibliography" "a b" #'helm-bibtex))
+#+END_SRC
+
+* LaTeX
+** evil shift width
+#+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-mode-hook
+        (function (lambda ()
+                    (setq evil-shift-width 2))))
+#+END_SRC
+
+** show table of contents
+using =reftex=
+#+begin_src elisp
+(map!
+ :leader
+ :desc "reftex-toc" "a t" #'reftex-toc)
+#+end_src
+
+
+** insert in-document reference
+#+begin_src elisp
+(map!
+ :leader
+ :desc "insert RefTex reference" "R" #'reftex-reference
+)
+#+end_src
+
+** compile without save query
+#+BEGIN_SRC emacs-lisp
+(after! latex
+  (setq TeX-save-query nil))
+#+END_SRC
+
+** show pdf in =pdf-tools=
+*** use =pdf-tools= as a viewer
+source: https://emacs.stackexchange.com/questions/19472/how-to-let-auctex-open-pdf-with-pdf-tools
+
+#+BEGIN_SRC elisp
+(after! latex
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+        TeX-source-correlate-start-server t)
+
+  ;; Update PDF buffers after successful LaTeX runs
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer)
+  )
+#+END_SRC
+
+*** use new frame
+source: https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
+
+- if only one frame is present: use new window
+- if separate frame available: use separate frame
+
+#+BEGIN_SRC elisp
+(after! latex
+  (defun framesMenus-display-buffer-use-some-frame (fun &rest args)
+    "Use `display-buffer-use-some-frame' as `display-buffer-overriding-action'.
+Then run FUN with ARGS."
+    (let ((display-buffer-overriding-action '(display-buffer-use-some-frame)))
+      (apply fun args)))
+
+  (advice-add 'TeX-pdf-tools-sync-view :around #'framesMenus-display-buffer-use-some-frame)
+  (advice-add 'pdf-sync-backward-search-mouse :around #'framesMenus-display-buffer-use-some-frame)
+  )
+#+END_SRC
+
+** =reftex=
+#+BEGIN_SRC emacs-lisp
+(after! reftex
+  (setq reftex-default-bibliography
+        '("~/promo/bib/references.bib")))
+#+END_SRC
+
+** folding
+*** fold custom macros
+source: https://emacs.stackexchange.com/a/33679/29471
+
+#+BEGIN_SRC elisp
+(after! latex
+  (setq TeX-fold-macro-spec-list '(
+                                   ("[f]" ("footnote" "marginpar"))
+                                   ("[c]" ("cite"))
+                                   ("[l]" ("label"))
+                                   ("[r]" ("ref" "pageref" "eqref"))
+                                   ("[i]" ("index" "glossary"))
+                                   ("[1]:||*" ("item"))
+                                   ("..." ("dots"))
+                                   ("(C)" ("copyright"))
+                                   ("(R)" ("textregistered"))
+                                   ("TM" ("texttrademark"))
+                                   (1 ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup"))
+                                   ("{1}" ("se" "sw" "sps" "sbs" "hw" "qpar" "cite" "parencite" "ol" "mn" "phnm" "mrphm" "enquote" "uline" "num"))
+                                   ))
+  )
+#+END_SRC
+
+*** using =outline-minor-mode= and =outline-magic=
+**** =outline-minor-mode=
+add fake sections to outline mode
+source: https://emacs.stackexchange.com/questions/3072/how-to-use-auctex-and-outline-minor-mode-together-for-folding
+
+***** extra outline headers
+#+BEGIN_SRC elisp
+(after! latex
+  (setq TeX-outline-extra
+        '(
+          (".*%chapter" 1)
+          (".*%section" 2)
+          (".*%subsection" 3)
+          (".*%subsubsection" 4)
+          (".*%paragraph" 5)
+          ("[ \t]*\\\\question\\b" 2)
+          ("[ \t]*\\\\part\\b" 3)
+          )))
+#+END_SRC
+
+***** add font locking to the headers
+#+BEGIN_SRC elisp
+(after! latex
+  (font-lock-add-keywords
+   'latex-mode
+   '((".*%\\(chapter\\|\\(sub\\|subsub\\)?section\\|paragraph\\)"
+      0 'font-lock-keyword-face t)
+     (".*%chapter{\\(.*\\)}"       1 'font-latex-sectioning-1-face t)
+     (".*%section{\\(.*\\)}"       1 'font-latex-sectioning-2-face t)
+     (".*%subsection{\\(.*\\)}"    1 'font-latex-sectioning-3-face t)
+     (".*%subsubsection{\\(.*\\)}" 1 'font-latex-sectioning-4-face t)
+     (".*%paragraph{\\(.*\\)}"     1 'font-latex-sectioning-5-face t))))
+#+END_SRC
+
+**** add macros (for exam class)
+#+BEGIN_SRC elisp
+(after! latex
+  (add-to-list 'LaTeX-fold-math-spec-list '(
+                                            "[p]" ("part")
+                                            "[q]" ("question"))))
+#+END_SRC
+
+**** =outline-magic=
+- source:
+- https://github.com/tj64/outline-magic
+- MELPA: https://melpa.org/#/outline-magic
+- extension to =outline-minor-mode=
+
+#+BEGIN_SRC emacs-lisp
+(after! latex
+  (map!
+   :leader
+   :desc "cycle outline" "a o" #'outline-cycle))
+#+END_SRC
+
+*** KILL using =latex-extra= :inact:
+- using =latex-extra= (and =outline-minor-mode=)
+- doesn't work
+#+BEGIN_SRC emacs-lisp :tangle no
+(map! :leader
+    :desc "fold tex section" "a t" #'latex/hide-show)
+#+END_SRC
+
+** use =helm= for includegraphics
+#+BEGIN_SRC elisp
+(after! latex
+  (setq LaTeX-includegraphics-read-file 'LaTeX-includegraphics-read-file-relative))
+#+END_SRC
+
+** word count
+source: https://superuser.com/questions/125027/word-count-for-latex-within-emacs
+
+#+BEGIN_SRC elisp
+(after! latex
+  (defun q/latex-word-count ()
+    (interactive)
+    (shell-command (concat "texcount " (buffer-file-name)))))
+#+END_SRC
+
+** replace obsolete macros
+*** macros
+#+BEGIN_SRC elisp
+(defun q/repl-macros ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\ra " "$\\rightarrow$~" nil (point-min) (point-max))
+    (replace-string "\\nlk " "\\textlnot{}~" nil (point-min) (point-max))
+    (replace-string "\\zit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\cittit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\phn{" "\\phnm{" nil (point-min) (point-max))
+    (replace-string "\\slash " "/" nil (point-min) (point-max))
+    (replace-string "\\;R" "\\textscr{}" nil (point-min) (point-max))
+    (replace-string "\\lra " "$\\longrightarrow$~" nil (point-min) (point-max))
+    (replace-string "\\ul{" "\\uline{" nil (point-min) (point-max))
+    (replace-string "\\fs{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\ae " "\\ae{}" nil (point-min) (point-max))
+    (replace-string "\\tit{" "\\emph{" nil (point-min) (point-max))
+    (replace-string "\\bf{" "\\textbf{" nil (point-min) (point-max))
+    (replace-string "\\gp{" "\\grphm{" nil (point-min) (point-max))
+    (replace-string "\\sc{" "\\textsc{" nil (point-min) (point-max))
+    (replace-string "\\lla " "$\\longleftarrow$~" nil (point-min) (point-max))
+    (replace-string "\\ldots " "\\ldots{} " nil (point-min) (point-max))
+    (replace-string "\\ldots" "\\ldots{}" nil (point-min) (point-max))
+    (replace-string "\\fbox{" "\\textbf{" nil (point-min) (point-max))
+    (replace-string "\\llra " "$\\longleftrightarrow{}$~" nil (point-min) (point-max))
+  )
+)
+#+END_SRC
+
+*** =qitem=
+#+BEGIN_SRC elisp
+(defun q/repl-qitem ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\sitem" "\\begin{qitem}" nil (point-min) (point-max))
+    (replace-string "\\begin{itemize}" "\\begin{qitem}" nil (point-min) (point-max))
+    (replace-string "\\item" "#" nil (point-min) (point-max))
+    (replace-string "\\end{itemize}" "\\end{qitem}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qitem}" nil (point-min) (point-max))
+    (q/repl-macros)
+    )
+  )
+#+END_SRC
+
+*** =qenum=
+#+BEGIN_SRC elisp
+(defun q/repl-qenum ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\senum" "\\begin{qenum}" nil (point-min) (point-max))
+    (replace-string "\\begin{enumerate}" "\\begin{qenum}" nil (point-min) (point-max))
+    (replace-string "\\item" "#" nil (point-min) (point-max))
+    (replace-string "\\end{enumerate}" "\\end{qenum}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qenum}" nil (point-min) (point-max))
+    (q/repl-macros)))
+#+END_SRC
+
+*** =qblank=
+#+BEGIN_SRC elisp
+(defun q/repl-qblank ()
+  (interactive)
+  (save-excursion
+    (replace-string "\\sitem" "\\begin{qblank}" nil (point-min) (point-max))
+    (replace-string "\\el" "\\end{qblank}" nil (point-min) (point-max))
+    (q/repl-macros)))
+#+END_SRC
+
+** enable =shell-escape= for =minted=
+https://tex.stackexchange.com/questions/430666/fancyverb-error-in-using-minted-package-with-beamer
+#+begin_src emacs-lisp :tangle no
+(after! latex
+  (eval-after-load "tex"
+    '(setcdr (assoc "LaTeX" TeX-command-list)
+             '("%`%l%(mode) -shell-escape%' %t"
+               TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")))
+  )
+#+end_src
+
+* Python
+** use =pyvenv= to work with my =anaconda= envs
+source: https://emacs.stackexchange.com/questions/20092/using-conda-environments-in-emacs
+
+#+BEGIN_SRC elisp :tangle yes
+(use-package! pyvenv
+  :config
+  (setenv "WORKON_HOME" "~/miniconda3/envs")
+  (pyvenv-mode 1))
+#+END_SRC
+
+** KILL =conda= mode :inact:
+don't think I need it, =pyvenv= should be enough
+
+#+BEGIN_SRC elisp :tangle no
+(use-package conda
+  :config (progn
+            (conda-env-initialize-interactive-shells)
+            (conda-env-initialize-eshell)
+            (conda-env-autoactivate-mode t)
+            (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
+            (setq conda-env-home-directory (expand-file-name "~/miniconda3"))))
+#+END_SRC
+
+sources:
+- https://github.com/necaris/conda.el
+- https://stackoverflow.com/questions/55175916/emacs-and-conda-workaround
+
+** KILL =company-jedi= :inact:
+- potential cause for heavy lags, might have broken sth.
+- also: not sure whether complete maybe even worked without it
+
+#+BEGIN_SRC elisp :tangle no
+(use-package! jedi
+  :init
+  (add-to-list 'company-backends 'company-jedi)
+  :config
+  (use-package! company-jedi
+    :init
+    (add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
+    (setq company-jedi-python-bin "python")))
+#+END_SRC
+source: https://github.com/howardabrams/dot-files/blob/master/emacs-python.org
+
+** KILL python mode hook :inact:
+#+BEGIN_SRC elisp :tangle no
+(defun tec-org-python ()
+  (if (eq major-mode 'python-mode)
+      (progn (anaconda-mode t)
+             (company-mode t)))
+  )
+(add-hook 'org-src-mode-hook 'tec-org-python)
+#+END_SRC
+source: https://tecosaur.github.io/emacs-config/config.html
+
+** KILL anaconda mode :inact:
+I use the standard settings that come with Doom
+
+#+BEGIN_SRC elisp :tangle no
+(eval-after-load "company"
+  '(add-to-list 'company-backends 'company-anaconda))
+;; (eval-after-load "company"
+;;  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
+
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+(add-hook 'python-mode-hook 'anaconda-mode)
+#+END_SRC
+
+** KILL =elpy= :inact:
+#+BEGIN_SRC elisp :tangle no
+(use-package! elpy
+  :init
+  (elpy-enable))
+#+END_SRC
+
+* R
+** KILL register =lsp-mode= client for org source blocks :inact:
+#+BEGIN_SRC elisp :tangle no
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection lsp-clients-r-server-command)
+                  :major-modes '(ess-r-mode)
+                  :server-id 'lsp-r))
+#+END_SRC
+source: https://github.com/emacs-lsp/lsp-mode/issues/2004
+
+* spell-checking
+** =flycheck=
+*** disable automatic checks
+- annoying because of =org-edit-special= blocks
+
+#+BEGIN_SRC elisp
+(after! flycheck
+  (setq flycheck-check-syntax-automatically '(nil)))
+#+END_SRC
+
+*** save current word in personal dictionary
+#+BEGIN_SRC elisp
+(defun my-save-word ()
+  (interactive)
+  (let ((current-location (point))
+        (word (flyspell-get-word)))
+    (when (consp word)
+      (flyspell-do-correct 'save nil (car word) current-location (cadr word) (caddr word) current-location))))
+#+END_SRC
+
+* =langtool=
+automatic language identification
+#+BEGIN_SRC elisp
+(setq langtool-default-language nil)
+#+END_SRC
+
+* =pdf-tools=
+#+BEGIN_SRC emacs-lisp
+(use-package! pdf-tools
+  :config
+  (setq-default pdf-view-display-size 'fit-width)
+  (setq pdf-annot-activate-created-annotations t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "annotate w/ text" "d t" #'pdf-annot-add-text-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ highlight" "d h" #'pdf-annot-add-highlight-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ underline" "d u" #'pdf-annot-add-underline-markup-annotation)
+
+(map!
+ :leader
+ :desc "annotate w/ strikeout" "d s" #'pdf-annot-add-strikeout-markup-annotation)
+
+(map!
+ :leader
+ :desc "delete annotation" "d d" #'pdf-annot-delete)
+
+(map!
+ :leader
+ :desc "jump back" "d b" #'pdf-history-goto)
+#+END_SRC
+
+* KILL =company= :inact:
+** KILL prioritize =company-anaconda=
+- done expicitly because completion in org-mode source blocks doesn't work otherwise
+- elegant solution should probably use Doom's =+company-backend-alist=
+
+#+BEGIN_SRC elisp :tangle no
+(setq company-backends '(company-anaconda company-dabbrev company-yasnippet company-ispell company-capf))
+company-back
+#+END_SRC
+
+** KILL dedicated binding for =company-anaconda=
+#+BEGIN_SRC elisp :tangle no
+(use-package! company-anaconda
+  :config
+  (map!
+   :desc "company-capf" "C-SPC" #'company-anaconda))
+#+END_SRC
+
+* KILL LSP :inact:
+great config using =Doom Emacs=, =lsp=, =jupyter-python=, =ein=
+https://lccambiaghi.github.io/.doom.d/readme.html
+
+** support for org src blocks :inact:
+#+BEGIN_SRC elisp :tangle no
+(cl-defmacro lsp-org-babel-enable (lang)
+"Support LANG in org source code block."
+(setq centaur-lsp 'lsp-mode)
+(cl-check-type lang stringp)
+(let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+        (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+`(progn
+    (defun ,intern-pre (info)
+        (let ((file-name (->> info caddr (alist-get :file))))
+        (unless file-name
+            (setq file-name (make-temp-file "babel-lsp-")))
+        (setq buffer-file-name file-name)
+        (lsp-deferred)))
+    (put ',intern-pre 'function-documentation
+        (format "Enable lsp-mode in the buffer of org source block (%s)."
+                (upcase ,lang)))
+    (if (fboundp ',edit-pre)
+        (advice-add ',edit-pre :after ',intern-pre)
+        (progn
+        (defun ,edit-pre (info)
+            (,intern-pre info))
+        (put ',edit-pre 'function-documentation
+            (format "Prepare local buffer environment for org source block (%s)."
+                    (upcase ,lang))))))))
+
+(defvar org-babel-lang-list
+'("go" "python" "ipython" "jupyter-python" "jupyter-R" "bash" "sh"))
+
+(dolist (lang org-babel-lang-list)
+(eval `(lsp-org-babel-enable ,lang)))
+#+END_SRC
+
+source: https://tecosaur.github.io/emacs-config/config.html
+
+** register =R= mode :inact:
+so that LSP picks up org-src blocks
+#+BEGIN_SRC elisp :tangle no
+(lsp-register-client
+(make-lsp-client :new-connection (lsp-stdio-connection lsp-clients-r-server-command)
+                :major-modes '(ess-r-mode r R jupyter-R)
+                :server-id 'lsp-r))
+#+END_SRC
+
+** set backend to =company-capf= :inact:
+instead of =company-lsp=
+#+BEGIN_SRC elisp :tangle no
+(setq +lsp-company-backend 'company-capf)
+#+END_SRC
+
+** disable lsp flycheck :inact:
+#+BEGIN_SRC elisp :tangle no
+(after! lsp-mode
+(setq lsp-diagnostic-package :none)
+(setq flycheck-disabled-checkers 'lsp))
+#+END_SRC
+
+** event and REPL handlers :inact:
+#+BEGIN_SRC elisp :tangle no
+(after! jupyter
+(set-eval-handler! 'jupyter-repl-interaction-mode #'jupyter-eval-line-or-region))
+
+(add-hook! python-mode
+(set-repl-handler! 'python-mode #'jupyter-repl-pop-to-buffer))
+#+END_SRC
+
+* KILL email :inact:
+** =offlineimap=
+#+BEGIN_SRC elisp :tangle no
+(setq +mu4e-backend 'offlineimap)
+(setq mu4e-get-mail-command "offlineimap")
+#+END_SRC
+
+#+BEGIN_SRC elisp :tangle no
+(set-email-account! "q.wuerschinger@gmail.com"
+'((mu4e-sent-folder       . "/q.wuerschinger@gmail.com/[Gmail].Gesendet/")
+(mu4e-drafts-folder     . "/q.wuerschinger@gmail.com/[Gmail].Entw&APw-rfe")
+(mu4e-trash-folder      . "/q.wuerschinger@gmail.com/[Gmail].Papierkorb")
+(mu4e-refile-folder     . "/q.wuerschinger@gmail.com/INBOX")
+(smtpmail-smtp-user     . "q.wuerschinger@gmail.com")
+(user-mail-address      . "q.wuerschinger@gmail.com")
+(mu4e-compose-signature . "---\nQuirin Würschinger"))
+t)
+#+END_SRC
+
+** manual fixes
+#+BEGIN_SRC elisp :tangle no
+;; (setq auth-sources '("/Users/quirin/.emacs.d/.local/etc/authinfo.gpg" "~/.authinfo.gpg"))
+(setq auth-sources '("~/.authinfo.gpg"))
+(setq user-mail-address "q.wuerschinger@gmail.com")
+;; (setq smtpmail-smtp-user "gmail")
+#+END_SRC
+
+** =mbsync= approach
+*** doom config
+#+BEGIN_SRC elisp :tangle no
+(set-email-account! "gmail"
+'((mu4e-sent-folder       . "/gmail/Sent Mail")
+(mu4e-drafts-folder     . "/gmail/Drafts")
+(mu4e-trash-folder      . "/gmail/Trash")
+(mu4e-refile-folder     . "/gmail/All Mail")
+(smtpmail-smtp-user     . "q.wuerschinger@gmail.com")
+(user-mail-address      . "q.wuerschinger@gmail.com")
+(mu4e-compose-signature . "---\nQuirin Würschinger"))
+t)
+#+END_SRC
+
+*** smtpmail
+source: https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html
+#+BEGIN_SRC elisp :tangle no
+(require 'smtpmail)
+(setq message-send-mail-function 'smtpmail-send-it
+starttls-use-gnutls t
+smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+smtpmail-auth-credentials
+    '(("smtp.gmail.com" 587 "q.wuerschinger@gmail.com" nil))
+smtpmail-default-smtp-server "smtp.gmail.com"
+smtpmail-smtp-server "smtp.gmail.com"
+smtpmail-smtp-service 587)
+#+END_SRC
+
+*** selected extensions
+#+BEGIN_SRC elisp :tangle no
+(set-email-account! "gmail"
+'(
+    (user-full-name . "Quirin Würschinger")
+    (message-send-mail-function . smtpmail-send-it)
+    (smtpmail-smtp-user . "gmail")
+    (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+    (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+    (smtpmail-default-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-service . 587)
+    (smtpmail-debug-info . t)
+    (smtpmail-debug-verbose . t)
+
+)
+t)
+#+END_SRC
+
+*** Doom-specific config
+#+BEGIN_SRC elisp :tangle no
+(after! mu4e
+(setq! mu4e-maildir (expand-file-name "~/.mail/gmail") ; the rest of the mu4e folders are RELATIVE to this one
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-index-update-in-background t
+        mu4e-compose-signature-auto-include t
+        mu4e-use-fancy-chars t
+        mu4e-view-show-addresses t
+        mu4e-view-show-images t
+        mu4e-compose-format-flowed t
+                                    ;mu4e-compose-in-new-frame t
+        mu4e-change-filenames-when-moving t ;; http://pragmaticemacs.com/emacs/fixing-duplicate-uid-errors-when-using-mbsync-and-mu4e/
+        mu4e-maildir-shortcuts
+        '( ("/Inbox" . ?i)
+        ("/Archive" . ?a)
+        ("/Drafts" . ?d)
+        ("/Deleted Items" . ?t)
+        ("/Sent Items" . ?s))
+
+        ;; Message Formatting and sending
+        message-send-mail-function 'smtpmail-send-it
+        ;; message-signature-file "~/Documents/dotfiles/Emacs/.doom.d/.mailsignature"
+        message-citation-line-format "On %a %d %b %Y at %R, %f wrote:\n"
+        message-citation-line-function 'message-insert-formatted-citation-line
+        message-kill-buffer-on-exit t
+
+        ;; Org mu4e
+        org-mu4e-convert-to-html t
+        ))
+(set-email-account! "work@email.com"
+                '((user-mail-address      . "work@email.com")
+                    (user-full-name         . "Chris Lockard")
+                    (smtpmail-smtp-server   . "smtp.office365.com")
+                    (smtpmail-smtp-service  . 587)
+                    (smtpmail-stream-type   . starttls)
+                    (smtpmail-debug-info    . t)
+                    (mu4e-drafts-folder     . "/Drafts")
+                    (mu4e-refile-folder     . "/Archive")
+                    (mu4e-sent-folder       . "/Sent Items")
+                    (mu4e-trash-folder      . "/Deleted Items")
+                    (mu4e-update-interval   . 1800)
+                                    ;(mu4e-sent-messages-behavior . 'delete)
+                    )
+                nil)
+#+END_SRC
+
+*** elaborate config
+#+BEGIN_SRC elisp :tangle no
+(require 'org-mime)
+
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e/")
+(require 'mu4e)
+
+(setq mu4e-maildir (expand-file-name "~/Maildir"))
+
+; get mail
+(setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
+;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+mu4e-view-prefer-html t
+mu4e-update-interval 180
+mu4e-headers-auto-update t
+mu4e-compose-signature-auto-include nil
+mu4e-compose-format-flowed t)
+
+;; to view selected message in the browser, no signin, just html mail
+(add-to-list 'mu4e-view-actions
+'("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+;; enable inline images
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+(imagemagick-register-types))
+
+;; every new email composition gets its own frame!
+(setq mu4e-compose-in-new-frame t)
+
+;; don't save message to Sent Messages, IMAP takes care of this
+(setq mu4e-sent-messages-behavior 'delete)
+
+(add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+
+;; <tab> to navigate to links, <RET> to open them in browser
+(add-hook 'mu4e-view-mode-hook
+(lambda()
+;; try to emulate some of the eww key-bindings
+(local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+(local-set-key (kbd "<tab>") 'shr-next-link)
+(local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
+(add-hook 'mu4e-headers-mode-hook
+    (defun my/mu4e-change-headers ()
+(interactive)
+(setq mu4e-headers-fields
+        `((:human-date . 25) ;; alternatively, use :date
+    (:flags . 6)
+    (:from . 22)
+    (:thread-subject . ,(- (window-body-width) 70)) ;; alternatively, use :subject
+    (:size . 7)))))
+
+;; if you use date instead of human-date in the above, use this setting
+;; give me ISO(ish) format date-time stamps in the header list
+;(setq mu4e-headers-date-format "%Y-%m-%d %H:%M")
+
+;; spell check
+(add-hook 'mu4e-compose-mode-hook
+(defun my-do-compose-stuff ()
+    "My settings for message composition."
+    (visual-line-mode)
+    (org-mu4e-compose-org-mode)
+        (use-hard-newlines -1)
+    (flyspell-mode)))
+
+(require 'smtpmail)
+
+;;rename files when moving
+;;NEEDED FOR MBSYNC
+(setq mu4e-change-filenames-when-moving t)
+
+;;set up queue for offline email
+;;use mu mkdir  ~/Maildir/acc/queue to set up first
+(setq smtpmail-queue-mail nil)  ;; start in normal mode
+
+;;from the info manual
+(setq mu4e-attachment-dir  "~/Downloads")
+
+(setq message-kill-buffer-on-exit t)
+(setq mu4e-compose-dont-reply-to-self t)
+
+(require 'org-mu4e)
+
+;; convert org mode to HTML automatically
+(setq org-mu4e-convert-to-html t)
+
+;;from vxlabs config
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses 't)
+
+;; don't ask when quitting
+(setq mu4e-confirm-quit nil)
+
+;; mu4e-context
+(setq mu4e-context-policy 'pick-first)
+(setq mu4e-compose-context-policy 'always-ask)
+(setq mu4e-contexts
+(list
+(make-mu4e-context
+:name "work" ;;for acc1-gmail
+:enter-func (lambda () (mu4e-message "Entering context work"))
+:leave-func (lambda () (mu4e-message "Leaving context work"))
+:match-func (lambda (msg)
+        (when msg
+    (mu4e-message-contact-field-matches
+        msg '(:from :to :cc :bcc) "q.wuerschinger@gmail.com")))
+:vars '((user-mail-address . "q.wuerschinger@gmail.com")
+    (user-full-name . "User Account1")
+    (mu4e-sent-folder . "/acc1-gmail/[acc1].Sent Mail")
+    (mu4e-drafts-folder . "/acc1-gmail/[acc1].drafts")
+    (mu4e-trash-folder . "/acc1-gmail/[acc1].Bin")
+    (mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+    (mu4e-compose-format-flowed . t)
+    (smtpmail-queue-dir . "~/Maildir/acc1-gmail/queue/cur")
+    (message-send-mail-function . smtpmail-send-it)
+    (smtpmail-smtp-user . "acc1")
+    (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+    (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+    (smtpmail-default-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-service . 587)
+    (smtpmail-debug-info . t)
+    (smtpmail-debug-verbose . t)
+    (mu4e-maildir-shortcuts . ( ("/acc1-gmail/INBOX"            . ?i)
+                ("/acc1-gmail/[acc1].Sent Mail" . ?s)
+                ("/acc1-gmail/[acc1].Bin"       . ?t)
+                ("/acc1-gmail/[acc1].All Mail"  . ?a)
+                ("/acc1-gmail/[acc1].Starred"   . ?r)
+                ("/acc1-gmail/[acc1].drafts"    . ?d)
+                ))))
+(make-mu4e-context
+:name "personal" ;;for acc2-gmail
+:enter-func (lambda () (mu4e-message "Entering context personal"))
+:leave-func (lambda () (mu4e-message "Leaving context personal"))
+:match-func (lambda (msg)
+        (when msg
+    (mu4e-message-contact-field-matches
+        msg '(:from :to :cc :bcc) "acc2@gmail.com")))
+:vars '((user-mail-address . "acc2@gmail.com")
+    (user-full-name . "User Account2")
+    (mu4e-sent-folder . "/acc2-gmail/[acc2].Sent Mail")
+    (mu4e-drafts-folder . "/acc2-gmail/[acc2].drafts")
+    (mu4e-trash-folder . "/acc2-gmail/[acc2].Trash")
+    (mu4e-compose-signature . (concat "Informal Signature\n" "Emacs is awesome!\n"))
+    (mu4e-compose-format-flowed . t)
+    (smtpmail-queue-dir . "~/Maildir/acc2-gmail/queue/cur")
+    (message-send-mail-function . smtpmail-send-it)
+    (smtpmail-smtp-user . "acc2")
+    (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+    (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+    (smtpmail-default-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-server . "smtp.gmail.com")
+    (smtpmail-smtp-service . 587)
+    (smtpmail-debug-info . t)
+    (smtpmail-debug-verbose . t)
+    (mu4e-maildir-shortcuts . ( ("/acc2-gmail/INBOX"            . ?i)
+                ("/acc2-gmail/[acc2].Sent Mail" . ?s)
+                ("/acc2-gmail/[acc2].Trash"     . ?t)
+                ("/acc2-gmail/[acc2].All Mail"  . ?a)
+                ("/acc2-gmail/[acc2].Starred"   . ?r)
+                ("/acc2-gmail/[acc2].drafts"    . ?d)
+                ))))))
+#+END_SRC
