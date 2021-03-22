@@ -177,12 +177,13 @@ Current pattern: %`evil-mc-pattern
 #+BEGIN_SRC elisp
 (map!
  :leader
- :prefix "a"
- :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
- :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
- :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
- :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
- :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
+ :prefix "a d"
+ :desc "open home" "h" (lambda () (interactive) (find-file "~"))
+ :desc "open Desktop" "d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "open promo" "p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "open Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
+ :desc "open bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ :desc "open Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
  )
 #+END_SRC
 
