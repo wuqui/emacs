@@ -49,13 +49,6 @@
 (setq system-time-locale "C")
 #+END_SRC
 
-* toggle modeline
-#+begin_src elisp
-(map!
- :leader
- :desc "toggle modeline" "t m" #'doom-modeline-mode)
-#+end_src
-
 * windows and frames
 ** =ace-window=
 #+BEGIN_SRC elisp
