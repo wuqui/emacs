@@ -200,7 +200,9 @@ Current pattern: %`evil-mc-pattern
 
                                     ;; teaching
                                     "~/promo/lehre/2020-21_ue_morph-wf/"
-                                    "~/promo/lehre/2020-21_ps_itl/"
+                                    "~/promo/lehre/2021_ps_itl/"
+                                    "~/promo/lehre/2021_sem_lexical-innovation/"
+                                    "~/promo/lehre/2021_ue_social-media/"
 
                                     ;; projects
                                     "~/promo/neocrawler/"
