@@ -564,7 +564,7 @@ source: https://stackoverflow.com/a/33716338/4165300
                                              ("d" "daily" plain (function org-roam-capture--get-point) ""
                                               :immediate-finish t
                                               :file-name "journal/%<%Y-%m-%d>"
-                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n** negativ\n- \n** positiv\n- \n* Memoranda")
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda")
                                              ))
   :config
   (setq +org-roam-open-buffer-on-find-file nil)
