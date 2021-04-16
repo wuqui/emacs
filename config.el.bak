@@ -7,6 +7,10 @@
 
 (setq doom-font (font-spec :family "monospace" :size 16))
 
+(map!
+ :leader
+ :desc "toggle modeline" "t m" #'doom-modeline-mode)
+
 (defun clone-indirect-buffer-other-frame (newname display-flag &optional norecord)
   "Like `clone-indirect-buffer' but display in another window."
   (interactive
@@ -84,12 +88,13 @@ Current pattern: %`evil-mc-pattern
 
 (map!
  :leader
- :prefix "a"
- :desc "open home" "d h" (lambda () (interactive) (find-file "~"))
- :desc "open Desktop" "d d" (lambda () (interactive) (find-file "~/Desktop"))
- :desc "open promo" "d p" (lambda () (interactive) (find-file "~/promo"))
- :desc "open bib/pdfs" "d b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
- :desc "open Volumes" "d v" (lambda () (interactive) (find-file "/Volumes"))
+ :prefix "a d"
+ :desc "open home" "h" (lambda () (interactive) (find-file "~"))
+ :desc "open Desktop" "d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "open promo" "p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "open Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
+ :desc "open bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ :desc "open Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
  )
 
 (after! projectile
@@ -103,7 +108,9 @@ Current pattern: %`evil-mc-pattern
 
                                     ;; teaching
                                     "~/promo/lehre/2020-21_ue_morph-wf/"
-                                    "~/promo/lehre/2020-21_ps_itl/"
+                                    "~/promo/lehre/2021_ps_itl/"
+                                    "~/promo/lehre/2021_sem_lexical-innovation/"
+                                    "~/promo/lehre/2021_ue_social-media/"
 
                                     ;; projects
                                     "~/promo/neocrawler/"
@@ -122,33 +129,59 @@ Current pattern: %`evil-mc-pattern
 (after! org
   (setq org-startup-folded t))
 
+(defun org-show-current-heading-tidily ()
+  (interactive)  ;Inteactive
+  "Show next entry, keeping other entries closed."
+  (if (save-excursion (end-of-line) (outline-invisible-p))
+      (progn (org-show-entry) (show-children))
+    (outline-back-to-heading)
+    (unless (and (bolp) (org-on-heading-p))
+      (org-up-heading-safe)
+      (hide-subtree)
+      (error "Boundary reached"))
+    (org-overview)
+    (org-reveal t)
+    (org-show-entry)
+    (show-children)))
+
 (after! org
-    (setq org-agenda-files (list
-    "~/.doom.d/config.org"
-    "~/org/temp.org"
+  (map!
+   :leader
+   :desc "fold other trees" "a f" #'org-show-current-heading-tidily
+   )
+  )
 
-    ;; projects
-    "~/promo/sna/sna.org"
-    "~/promo/haiku/haiku.org"
-    "~/promo/IndVarBNC/IndVarBNC.org"
-    "~/promo/AngloSaxon/AngloSaxon.org"
-    "~/promo/socemb/socemb.org"
-    "~/promo/CoVid/CoVid.org"
+(after! org
+  (setq org-agenda-files (list
+                          "~/.doom.d/config.org"
+                          "~/org/temp.org"
 
-    ;; ongoing
-    "~/org/work.org"
+                          ;; projects
+                          "~/promo/sna/sna.org"
+                          "~/promo/haiku/haiku.org"
+                          "~/promo/IndVarBNC/IndVarBNC.org"
+                          "~/promo/AngloSaxon/AngloSaxon.org"
+                          "~/promo/socemb/socemb.org"
+                          "~/promo/CoVid/CoVid.org"
 
-    ;; teaching
-    "~/promo/lehre/2020-21_ps_itl/itl202021.org"
-    "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+                          ;; ongoing
+                          "~/org/work.org"
+                          "~/promo/lehrveranstaltungen/2021_os_english-linguistics/2021_os_english-linguistics.org"
 
-    ;; private
-    "~/org/cal/default.org"
-    "~/Dropbox/orgzly/mobin.org"
-    "~/org/rout.org"
-    "~/org/privat.org"
-    "~/org/sport.org"
-    )))
+                          ;; teaching
+                          "~/promo/lehre/2020-21_ps_itl/itl202021.org"
+                          "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+                          "~/promo/lehre/2021_ps_itl/"
+                          "~/promo/lehre/2021_sem_lexical-innovation/"
+                          "~/promo/lehre/2021_ue_social-media/"
+
+                          ;; private
+                          "~/org/cal/default.org"
+                          "~/Dropbox/orgzly/mobin.org"
+                          "~/org/rout.org"
+                          "~/org/privat.org"
+                          "~/org/sport.org"
+                          )))
 
 (after! org
   (defun q/org-agenda ()
@@ -156,11 +189,18 @@ Current pattern: %`evil-mc-pattern
     (interactive)
     (setq org-agenda-start-with-log-mode t)
     (org-agenda nil "a")
-    (org-agenda-day-view))
+    (org-agenda-day-view)
+    (org-agenda-goto-today)
+    )
 
   (map! :leader
         :desc "q agenda" "a q" #'q/org-agenda)
   )
+
+(after! org
+  (setq org-highest-priority 1)
+  (setq org-lowest-priority 9)
+  (setq org-default-priority 5))
 
 (after! org
   (setq org-log-into-drawer t))
@@ -262,6 +302,26 @@ Current pattern: %`evil-mc-pattern
          )
        )
     )
+
+(setq org-noter-notes-window-location 'other-frame)
+
+(defun org-noter-insert-selected-text-inside-note-content ()
+(interactive)
+(progn (setq currenb (buffer-name))
+        (org-noter-insert-precise-note)
+        (set-buffer currenb)
+        (org-noter-insert-note)))
+
+(map!
+:leader
+:desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
+
+(fset 'org-noter-wrap-quote
+      (kmacro-lambda-form [?  ?: ?j ?o ?i ?n ?e ?  backspace backspace return ?V ?  ?i ?s ?q ?u ?o ?t ?e return escape ?\{ ?\{ ?d ?d] 0 "%d"))
+
+(map!
+ :leader
+ :desc "wrap extracted text in quote block" "d w" #'org-noter-wrap-quote)
 
 (after! latex
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
@@ -500,7 +560,7 @@ F4 inserts HTML code"
                                              ("d" "daily" plain (function org-roam-capture--get-point) ""
                                               :immediate-finish t
                                               :file-name "journal/%<%Y-%m-%d>"
-                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n* Dank\n* Was will ich heute machen?\n* Wie war mein Tag?\n** negativ\n** positiv\n* Memoranda")
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda")
                                              ))
   :config
   (setq +org-roam-open-buffer-on-find-file nil)
