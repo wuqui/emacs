@@ -184,6 +184,7 @@ Current pattern: %`evil-mc-pattern
  :desc "open Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
  :desc "open bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
  :desc "open Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
+ :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  )
 #+END_SRC
 
