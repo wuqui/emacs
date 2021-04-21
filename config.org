@@ -19,9 +19,24 @@
 source: https://stackoverflow.com/a/3378391
 
 * font
+** set font size
 #+BEGIN_SRC elisp
 (setq doom-font (font-spec :family "monospace" :size 16))
 #+END_SRC
+
+** change font size
+#+begin_src elisp
+(defhydra hydra-zoom ()
+  "zoom"
+  ("k" text-scale-increase "in")
+  ("j" text-scale-decrease "out"))
+
+(map!
+ :leader
+ :desc "zoom hydra" "t p" #'hydra-zoom/body
+ )
+#+end_src
+
 * toggle modeline
 #+begin_src elisp
 (map!
