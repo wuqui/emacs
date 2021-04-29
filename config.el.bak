@@ -7,6 +7,16 @@
 
 (setq doom-font (font-spec :family "monospace" :size 16))
 
+(defhydra hydra-zoom ()
+  "zoom"
+  ("k" text-scale-increase "in")
+  ("j" text-scale-decrease "out"))
+
+(map!
+ :leader
+ :desc "zoom hydra" "f s" #'hydra-zoom/body
+ )
+
 (map!
  :leader
  :desc "toggle modeline" "t m" #'doom-modeline-mode)
@@ -95,6 +105,7 @@ Current pattern: %`evil-mc-pattern
  :desc "open Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
  :desc "open bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
  :desc "open Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
+ :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  )
 
 (after! projectile
@@ -183,6 +194,14 @@ Current pattern: %`evil-mc-pattern
                           "~/org/sport.org"
                           )))
 
+(setq org-agenda-sorting-strategy
+      '(
+        (agenda habit-down time-up priority-down)
+        (todo priority-down category-keep)
+        (tags priority-down category-keep)
+        (search category-keep))
+      )
+
 (after! org
   (defun q/org-agenda ()
     "My personal agenda view."
@@ -198,11 +217,6 @@ Current pattern: %`evil-mc-pattern
   )
 
 (after! org
-  (setq org-highest-priority 1)
-  (setq org-lowest-priority 9)
-  (setq org-default-priority 5))
-
-(after! org
   (setq org-log-into-drawer t))
 
 (after! org
@@ -212,6 +226,10 @@ Current pattern: %`evil-mc-pattern
   (setq org-agenda-skip-scheduled-if-done t))
 
 (setq org-agenda-show-future-repeats nil)
+
+(setq org-highest-priority 1)
+(setq org-default-priority 5)
+(setq org-lowest-priority 9)
 
 (defun q/insert-timestamp-inactive ()
   (interactive)
