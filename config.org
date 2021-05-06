@@ -931,3 +931,7 @@ source: https://emacs.stackexchange.com/a/33679/29471
     (q/repl-macros)))
 #+END_SRC
 
+
+* =writeroom-mode=
+- change ~writeroom-mode-hook~
+- could remove ~mixed-pitch-mode~
