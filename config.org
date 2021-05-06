@@ -87,8 +87,7 @@ source: https://stackoverflow.com/a/3378391
 #+begin_src elisp
 (map!
  :leader
- :desc "helm-buffers-list" "b h" #'helm-buffers-list
-)
+ :desc "helm-buffers-list" "b h" #'helm-buffers-list)
 #+end_src
 
 ** copy file (to current dir)
@@ -269,9 +268,7 @@ backup: ~(setq-default org-startup-folded t)~
 (after! org
   (map!
    :leader
-   :desc "fold other trees" "a f" #'org-show-current-heading-tidily
-   )
-  )
+   :desc "fold other trees" "a f" #'org-show-current-heading-tidily))
 #+end_src
 
 ** agenda
@@ -318,7 +315,8 @@ backup: ~(setq-default org-startup-folded t)~
         (agenda habit-down time-up priority-down)
         (todo priority-down category-keep)
         (tags priority-down category-keep)
-        (search category-keep))
+        (search category-keep)
+        )
       )
 #+end_src
 
@@ -452,8 +450,7 @@ F4 inserts HTML code"
 #+BEGIN_SRC elisp
 (map!
  :leader
- :desc "datestamp" "i d" #'org-time-stamp-inactive
- )
+ :desc "datestamp" "i d" #'org-time-stamp-inactive)
 #+END_SRC
 
 *** insert file link
@@ -861,7 +858,7 @@ source: https://emacs.stackexchange.com/a/33679/29471
 
 ** replace obsolete macros
 *** macros
-#+BEGIN_SRC elisp
+#+begin_src elisp
 (defun q/repl-macros ()
   (interactive)
   (save-excursion
@@ -887,7 +884,7 @@ source: https://emacs.stackexchange.com/a/33679/29471
     (replace-string "\\llra " "$\\longleftrightarrow{}$~" nil (point-min) (point-max))
   )
 )
-#+END_SRC
+#+end_src
 
 *** =qitem=
 #+BEGIN_SRC elisp
