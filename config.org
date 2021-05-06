@@ -508,12 +508,19 @@ source: https://emacs.stackexchange.com/a/39107/29471
    :desc "align" "a l" #'align))
 #+END_SRC
 
-** copy subtrees
+** subtree operations
+*** copy subtree
 #+begin_src elisp
 (map!
  :leader
- :desc "org-copy-subtree" "m s c" #'org-copy-subtree
- )
+ :desc "org-copy-subtree" "m s c" #'org-copy-subtree)
+#+end_src
+
+*** mark subtree
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-mark-subtree" "m s m" #'org-mark-subtree)
 #+end_src
 
 ** export
