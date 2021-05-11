@@ -6,7 +6,7 @@
 * personal info
 #+BEGIN_SRC elisp
 (setq user-full-name "Quirin Würschinger"
-    user-mail-address "q.wuerschinger@gmail.com")
+      user-mail-address "q.wuerschinger@gmail.com")
 #+END_SRC
 
 * use =Alt= key for non-ASCII chars
@@ -426,8 +426,8 @@ F4 inserts HTML code"
 
 #+BEGIN_SRC emacs-lisp
 (map!
-:leader
-:desc "insert org entity" "i e" #'helm-insert-org-entity)
+ :leader
+ :desc "insert org entity" "i e" #'helm-insert-org-entity)
 #+END_SRC
 
 *** insert timestamp / inactive
@@ -531,12 +531,12 @@ source: https://stackoverflow.com/a/33716338/4165300
 (defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
   "removes relevant brackets from a timestamp"
   (cond
-    ((org-export-derived-backend-p backend 'latex)
-     (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
-    ((org-export-derived-backend-p backend 'html)
-     (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+   )
   )
-)
 
 (eval-after-load 'ox '(add-to-list
                        'org-export-filter-timestamp-functions
@@ -567,6 +567,10 @@ source: https://stackoverflow.com/a/33716338/4165300
 (after! org
   (setq org-latex-tables-booktabs t))
 #+END_SRC
+**** use =listings=
+#+begin_src elisp
+(setq org-latex-listings 'listings)
+#+end_src
 
 *** to =docx=
 #+BEGIN_SRC elisp
@@ -640,16 +644,16 @@ source: https://stackoverflow.com/a/33716338/4165300
 (use-package! org-roam-bibtex
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode))
-  :config
-    (setq orb-templates
+:config
+(setq orb-templates
       '(
-         ("r" "ref" plain (function org-roam-capture--get-point) ""
-            :file-name "${citekey}"
-            :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
-            :unnarrowed t
+        ("r" "ref" plain (function org-roam-capture--get-point) ""
+         :file-name "${citekey}"
+         :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
+         :unnarrowed t
          )
-       )
-    )
+        )
+      )
 #+end_src
 
 ** =org-noter=
@@ -662,17 +666,17 @@ source: https://stackoverflow.com/a/33716338/4165300
 source: https://github.com/weirdNox/org-noter/issues/88
 #+BEGIN_SRC elisp
 (defun org-noter-insert-selected-text-inside-note-content ()
-(interactive)
-(progn (setq currenb (buffer-name))
-        (org-noter-insert-precise-note)
-        (set-buffer currenb)
-        (org-noter-insert-note)))
+  (interactive)
+  (progn (setq currenb (buffer-name))
+         (org-noter-insert-precise-note)
+         (set-buffer currenb)
+         (org-noter-insert-note)))
 #+END_SRC
 
 #+BEGIN_SRC elisp
 (map!
-:leader
-:desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
+ :leader
+ :desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
 #+END_SRC
 
 *** wrap text in =quote= block
@@ -889,8 +893,8 @@ source: https://emacs.stackexchange.com/a/33679/29471
     (replace-string "\\ldots" "\\ldots{}" nil (point-min) (point-max))
     (replace-string "\\fbox{" "\\textbf{" nil (point-min) (point-max))
     (replace-string "\\llra " "$\\longleftrightarrow{}$~" nil (point-min) (point-max))
+    )
   )
-)
 #+end_src
 
 *** =qitem=
@@ -930,7 +934,6 @@ source: https://emacs.stackexchange.com/a/33679/29471
     (replace-string "\\el" "\\end{qblank}" nil (point-min) (point-max))
     (q/repl-macros)))
 #+END_SRC
-
 
 * =writeroom-mode=
 - change ~writeroom-mode-hook~
