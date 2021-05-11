@@ -1,0 +1,12 @@
+#+title: Tower Of Babel
+
+* convert =org-table= to =pandas= =DataFrame=
+#+name: tbl_to_df
+#+begin_src jupyter-python :kernel qw :session tmp :var tbl=tbl
+import pandas as pd
+
+df = pd.DataFrame(
+    data=tbl[1:],
+    columns=tbl[0]
+).set_index('i')
+#+end_src
