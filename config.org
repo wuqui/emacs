@@ -700,6 +700,11 @@ source: https://github.com/weirdNox/org-noter/issues/88
  :desc "wrap extracted text in quote block" "d w" #'org-noter-wrap-quote)
 #+END_SRC
 
+** =org-transclusion=
+#+begin_src elisp
+(require 'org-transclusion)
+#+end_src
+
 * citations and bibliography (=helm-bibtex=)
 #+BEGIN_SRC elisp
 (after! helm-bibtex
