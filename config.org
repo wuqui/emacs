@@ -573,6 +573,14 @@ source: https://stackoverflow.com/a/33716338/4165300
 (setq org-latex-listings 'listings)
 #+end_src
 
+**** ignore specific headings
+by tagging them with ~:ignore:~
+#+begin_src elisp
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+#+end_src
+[[https://emacs.stackexchange.com/a/41685/29471][source]]
+
 *** to =docx=
 #+BEGIN_SRC elisp
 (use-package ox-word)
