@@ -701,9 +701,16 @@ source: https://github.com/weirdNox/org-noter/issues/88
 #+END_SRC
 
 ** =org-transclusion=
+*** load package
 #+begin_src elisp
 (require 'org-transclusion)
 #+end_src
+
+*** fix bug =re-centering= bug with Doom Emacs
+#+begin_src elisp
+(advice-remove 'org-link-search '+org--recenter-after-follow-link-a)
+#+end_src
+[[https://github.com/nobiot/org-transclusion/issues/52#issuecomment-766439396][nobiot/org-transclusion#52 Transclusion of anything other than files not working]]
 
 * citations and bibliography (=helm-bibtex=)
 #+BEGIN_SRC elisp
