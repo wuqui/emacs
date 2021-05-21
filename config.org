@@ -706,9 +706,23 @@ source: https://github.com/weirdNox/org-noter/issues/88
 (require 'org-transclusion)
 #+end_src
 
+*** customize fringes
+#+begin_src elisp
+(set-face-attribute
+ 'org-transclusion-fringe nil
+ :foreground "gray"
+ :background "gray")
+
+(set-face-attribute
+ 'org-transclusion-source-fringe nil
+ :foreground "gray"
+ :background "gray")
+#+end_src
+
 *** fix bug =re-centering= bug with Doom Emacs
 #+begin_src elisp
-(advice-remove 'org-link-search '+org--recenter-after-follow-link-a)
+(after! org
+  (advice-remove 'org-link-search '+org--recenter-after-follow-link-a))
 #+end_src
 [[https://github.com/nobiot/org-transclusion/issues/52#issuecomment-766439396][nobiot/org-transclusion#52 Transclusion of anything other than files not working]]
 
