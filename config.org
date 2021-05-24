@@ -510,18 +510,25 @@ source: https://emacs.stackexchange.com/a/39107/29471
 #+END_SRC
 
 ** subtree operations
-*** copy subtree
+*** mark
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-mark-subtree" "m s m" #'org-mark-subtree)
+#+end_src
+
+*** copy
 #+begin_src elisp
 (map!
  :leader
  :desc "org-copy-subtree" "m s c" #'org-copy-subtree)
 #+end_src
 
-*** mark subtree
+*** paste
 #+begin_src elisp
 (map!
  :leader
- :desc "org-mark-subtree" "m s m" #'org-mark-subtree)
+ :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
 #+end_src
 
 ** export
