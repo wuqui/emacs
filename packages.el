@@ -62,7 +62,7 @@
   :recipe (:host github
            :repo "nobiot/org-transclusion"
            :branch "main"
-           :files ("org-transclusion.el")))
+           :files ("*.el")))
 
 (package! dired-narrow)
 
