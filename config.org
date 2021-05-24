@@ -717,13 +717,13 @@ source: https://github.com/weirdNox/org-noter/issues/88
 #+begin_src elisp
 (set-face-attribute
  'org-transclusion-fringe nil
- :foreground "gray"
- :background "gray")
+ :foreground "#999966"
+ :background "#999966")
 
 (set-face-attribute
  'org-transclusion-source-fringe nil
- :foreground "gray"
- :background "gray")
+ :foreground "#999966"
+ :background "#999966")
 #+end_src
 
 *** fix bug =re-centering= bug with Doom Emacs
