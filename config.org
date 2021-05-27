@@ -733,6 +733,19 @@ source: https://github.com/weirdNox/org-noter/issues/88
 #+end_src
 [[https://github.com/nobiot/org-transclusion/issues/52#issuecomment-766439396][nobiot/org-transclusion#52 Transclusion of anything other than files not working]]
 
+* =deft=
+#+begin_src elisp
+(use-package! deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/org/roam/"))
+#+end_src
+
 * citations and bibliography (=helm-bibtex=)
 #+BEGIN_SRC elisp
 (after! helm-bibtex
