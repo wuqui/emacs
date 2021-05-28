@@ -514,14 +514,14 @@ source: https://emacs.stackexchange.com/a/39107/29471
 #+begin_src elisp
 (map!
  :leader
- :desc "org-mark-subtree" "m s m" #'org-mark-subtree)
+ :desc "org-mark-subtree" "m s v" #'org-mark-subtree)
 #+end_src
 
 *** copy
 #+begin_src elisp
 (map!
  :leader
- :desc "org-copy-subtree" "m s c" #'org-copy-subtree)
+ :desc "org-copy-subtree" "m s y" #'org-copy-subtree)
 #+end_src
 
 *** paste
