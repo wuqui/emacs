@@ -202,6 +202,20 @@ Current pattern: %`evil-mc-pattern
  )
 #+END_SRC
 
+** copy full file path
+#+begin_src elisp
+(defun q/dired-copy-filename-as-kill ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(0)))
+    (call-interactively 'dired-copy-filename-as-kill)))
+
+(map!
+ :leader
+ :desc "copy full file path" "a d y" #'q/dired-copy-filename-as-kill
+ )
+#+end_src
+
 * projectile
 #+BEGIN_SRC elisp
 (after! projectile
