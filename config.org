@@ -322,6 +322,11 @@ backup: ~(setq-default org-startup-folded t)~
                           )))
 #+END_SRC
 
+*** include archive files
+#+begin_src elisp
+(setq org-agenda-archives-mode 't)
+#+end_src
+
 *** agenda view
 **** sorting strategy
 #+begin_src elisp
