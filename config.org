@@ -1012,3 +1012,41 @@ source: https://emacs.stackexchange.com/a/33679/29471
 * =writeroom-mode=
 - change ~writeroom-mode-hook~
 - could remove ~mixed-pitch-mode~
+
+* email
+** configure =mu4e=
+#+begin_src emacs-lisp
+;; Each path is relative to `+mu4e-mu4e-mail-path', which is ~/.mail by default
+(set-email-account! "gmail"
+  '((mu4e-sent-folder       . "/gmail/[Gmail]/Sent Mail")
+    (mu4e-drafts-folder     . "/gmail/[Gmail]/Drafts")
+    (mu4e-trash-folder      . "/gmail/Deleted Messages")
+    (mu4e-refile-folder     . "/gmail/INBOX")
+    (smtpmail-smtp-user     . "q.wuerschinger@gmail.com")
+    (user-mail-address      . "q.wuerschinger@gmail.com")    ;; only needed for mu < 1.4
+    (mu4e-compose-signature . "---\nQuirin"))
+  t)
+#+end_src
+from Doom docs
+
+** =org-msg=
+#+begin_src elisp
+(setq org-msg-convert-citation 't)
+#+end_src
+
+** for sending mails vis =smtpmail=
+- not sure if this is currently used
+- alternative: [[file:../org/roam/20210603160520-msmtp.org][msmtp]]
+#+begin_src elisp
+(setq
+ send-mail-function 'smtpmail-send-it
+ message-send-mail-function 'smtpmail-send-it
+ user-mail-address "q.wuerschinger@gmail.com"
+ smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
+ smtpmail-auth-credentials (expand-file-name "~/.authinfo")
+ smtpmail-default-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-service 587
+ smtpmail-debug-info t
+ )
+#+end_src
