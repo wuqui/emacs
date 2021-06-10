@@ -1,5 +1,5 @@
 (setq user-full-name "Quirin Würschinger"
-    user-mail-address "q.wuerschinger@gmail.com")
+      user-mail-address "q.wuerschinger@gmail.com")
 
 (setq mac-option-modifier nil
       mac-command-modifier 'meta
@@ -16,6 +16,8 @@
  :leader
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
+
+(require 'nano-theme)
 
 (map!
  :leader
@@ -44,8 +46,7 @@
 
 (map!
  :leader
- :desc "helm-buffers-list" "b h" #'helm-buffers-list
-)
+ :desc "helm-buffers-list" "b h" #'helm-buffers-list)
 
 (map!
  :leader
@@ -108,6 +109,17 @@ Current pattern: %`evil-mc-pattern
  :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  )
 
+(defun q/dired-copy-filename-as-kill ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(0)))
+    (call-interactively 'dired-copy-filename-as-kill)))
+
+(map!
+ :leader
+ :desc "copy full file path" "a d y" #'q/dired-copy-filename-as-kill
+ )
+
 (after! projectile
   (setq projectile-known-projects '(
                                     ;; private
@@ -122,6 +134,7 @@ Current pattern: %`evil-mc-pattern
                                     "~/promo/lehre/2021_ps_itl/"
                                     "~/promo/lehre/2021_sem_lexical-innovation/"
                                     "~/promo/lehre/2021_ue_social-media/"
+                                    "~/promo/lehre/2021_vl_dh/"
 
                                     ;; projects
                                     "~/promo/neocrawler/"
@@ -158,9 +171,7 @@ Current pattern: %`evil-mc-pattern
 (after! org
   (map!
    :leader
-   :desc "fold other trees" "a f" #'org-show-current-heading-tidily
-   )
-  )
+   :desc "fold other trees" "a f" #'org-show-current-heading-tidily))
 
 (after! org
   (setq org-agenda-files (list
@@ -194,12 +205,15 @@ Current pattern: %`evil-mc-pattern
                           "~/org/sport.org"
                           )))
 
+(setq org-agenda-archives-mode 't)
+
 (setq org-agenda-sorting-strategy
       '(
         (agenda habit-down time-up priority-down)
         (todo priority-down category-keep)
         (tags priority-down category-keep)
-        (search category-keep))
+        (search category-keep)
+        )
       )
 
 (after! org
@@ -243,8 +257,7 @@ Current pattern: %`evil-mc-pattern
 
 (map!
  :leader
- :desc "datestamp" "i d" #'org-time-stamp-inactive
- )
+ :desc "datestamp" "i d" #'org-time-stamp-inactive)
 
 (defun q/insert-file-link ()
   (interactive)
@@ -279,15 +292,27 @@ Current pattern: %`evil-mc-pattern
  :leader
  :desc "insert checkbox" "c h" #'q/toggle-checkbox)
 
+(map!
+ :leader
+ :desc "org-mark-subtree" "m s v" #'org-mark-subtree)
+
+(map!
+ :leader
+ :desc "org-copy-subtree" "m s y" #'org-copy-subtree)
+
+(map!
+ :leader
+ :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
+
 (defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
   "removes relevant brackets from a timestamp"
   (cond
-    ((org-export-derived-backend-p backend 'latex)
-     (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
-    ((org-export-derived-backend-p backend 'html)
-     (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+   )
   )
-)
 
 (eval-after-load 'ox '(add-to-list
                        'org-export-filter-timestamp-functions
@@ -305,34 +330,39 @@ Current pattern: %`evil-mc-pattern
 (after! org
   (setq org-latex-tables-booktabs t))
 
+(setq org-latex-listings 'listings)
+
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+
 (use-package ox-word)
 
 (use-package! org-roam-bibtex
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode))
-  :config
-    (setq orb-templates
+:config
+(setq orb-templates
       '(
-         ("r" "ref" plain (function org-roam-capture--get-point) ""
-            :file-name "${citekey}"
-            :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
-            :unnarrowed t
+        ("r" "ref" plain (function org-roam-capture--get-point) ""
+         :file-name "${citekey}"
+         :head "#+TITLE: ${citekey}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: " ; <--
+         :unnarrowed t
          )
-       )
-    )
+        )
+      )
 
 (setq org-noter-notes-window-location 'other-frame)
 
 (defun org-noter-insert-selected-text-inside-note-content ()
-(interactive)
-(progn (setq currenb (buffer-name))
-        (org-noter-insert-precise-note)
-        (set-buffer currenb)
-        (org-noter-insert-note)))
+  (interactive)
+  (progn (setq currenb (buffer-name))
+         (org-noter-insert-precise-note)
+         (set-buffer currenb)
+         (org-noter-insert-note)))
 
 (map!
-:leader
-:desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
+ :leader
+ :desc "copy text as note" "d q" #'org-noter-insert-selected-text-inside-note-content)
 
 (fset 'org-noter-wrap-quote
       (kmacro-lambda-form [?  ?: ?j ?o ?i ?n ?e ?  backspace backspace return ?V ?  ?i ?s ?q ?u ?o ?t ?e return escape ?\{ ?\{ ?d ?d] 0 "%d"))
@@ -340,6 +370,37 @@ Current pattern: %`evil-mc-pattern
 (map!
  :leader
  :desc "wrap extracted text in quote block" "d w" #'org-noter-wrap-quote)
+
+(require 'org-transclusion)
+
+(set-face-attribute
+ 'org-transclusion-fringe nil
+ :foreground "#999966"
+ :background "#999966")
+
+(set-face-attribute
+ 'org-transclusion-source-fringe nil
+ :foreground "#999966"
+ :background "#999966")
+
+(after! org
+  (advice-remove 'org-link-search '+org--recenter-after-follow-link-a))
+
+(use-package! deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory "~/org/roam/"))
+
+(after! helm-bibtex
+  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (map!
+   :leader
+   :desc "bibliography" "a b" #'helm-bibtex))
 
 (after! latex
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
@@ -433,8 +494,8 @@ Then run FUN with ARGS."
     (replace-string "\\ldots" "\\ldots{}" nil (point-min) (point-max))
     (replace-string "\\fbox{" "\\textbf{" nil (point-min) (point-max))
     (replace-string "\\llra " "$\\longleftrightarrow{}$~" nil (point-min) (point-max))
+    )
   )
-)
 
 (defun q/repl-qitem ()
   (interactive)
@@ -465,11 +526,19 @@ Then run FUN with ARGS."
     (replace-string "\\el" "\\end{qblank}" nil (point-min) (point-max))
     (q/repl-macros)))
 
-(after! helm-bibtex
-  (setq bibtex-completion-bibliography '("~/promo/bib/references.bib"))
-  (map!
-   :leader
-   :desc "bibliography" "a b" #'helm-bibtex))
+(setq org-msg-convert-citation 't)
+
+(setq
+ send-mail-function 'smtpmail-send-it
+ message-send-mail-function 'smtpmail-send-it
+ user-mail-address "q.wuerschinger@gmail.com"
+ smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
+ smtpmail-auth-credentials (expand-file-name "~/.authinfo")
+ smtpmail-default-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-service 587
+ smtpmail-debug-info t
+ )
 
 (map!
  :leader
@@ -540,8 +609,8 @@ F4 inserts HTML code"
                     sources))))
 
 (map!
-:leader
-:desc "insert org entity" "i e" #'helm-insert-org-entity)
+ :leader
+ :desc "insert org entity" "i e" #'helm-insert-org-entity)
 
 (after! org
   (map!
@@ -599,18 +668,6 @@ F4 inserts HTML code"
    )
   )
 
-(after! reftex
-  (setq reftex-default-bibliography
-        '("~/promo/bib/references.bib")))
-
-(after! latex
-  (setq TeX-save-query nil))
-
-(after! latex
-  (map!
-   :leader
-   :desc "cycle outline" "a o" #'outline-cycle))
-
 (use-package! pdf-tools
   :config
   (setq-default pdf-view-display-size 'fit-width)
@@ -639,3 +696,26 @@ F4 inserts HTML code"
 (map!
  :leader
  :desc "jump back" "d b" #'pdf-history-goto)
+
+(after! reftex
+  (setq reftex-default-bibliography
+        '("~/promo/bib/references.bib")))
+
+(after! latex
+  (setq TeX-save-query nil))
+
+(after! latex
+  (map!
+   :leader
+   :desc "cycle outline" "a o" #'outline-cycle))
+
+;; Each path is relative to `+mu4e-mu4e-mail-path', which is ~/.mail by default
+(set-email-account! "gmail"
+  '((mu4e-sent-folder       . "/gmail/[Gmail]/Sent Mail")
+    (mu4e-drafts-folder     . "/gmail/[Gmail]/Drafts")
+    (mu4e-trash-folder      . "/gmail/Deleted Messages")
+    (mu4e-refile-folder     . "/gmail/INBOX")
+    (smtpmail-smtp-user     . "q.wuerschinger@gmail.com")
+    (user-mail-address      . "q.wuerschinger@gmail.com")    ;; only needed for mu < 1.4
+    (mu4e-compose-signature . "---\nQuirin"))
+  t)
