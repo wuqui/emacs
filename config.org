@@ -1,7 +1,7 @@
-#+STARTUP: overview
-#+TITLE: Doom Emacs configuration
-#+AUTHOR: Quirin Würschinger
-#+PROPERTY: header-args :results silent :tangle yes
+#+startup: overview
+#+title: Doom Emacs configuration
+#+author: Quirin Würschinger
+#+property: header-args :results silent :tangle yes
 
 * personal info
 #+BEGIN_SRC elisp
