@@ -550,6 +550,11 @@ source: https://emacs.stackexchange.com/a/39107/29471
  :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
 #+end_src
 
+** image width
+#+begin_src elisp
+(setq org-image-actual-width (/ (display-pixel-width) 3))
+#+end_src
+
 ** export
 *** remove brackets around timestamps
 source: https://stackoverflow.com/a/33716338/4165300
