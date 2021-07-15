@@ -319,7 +319,9 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/org/rout.org"
                           "~/org/privat.org"
                           "~/org/sport.org"
-                          )))
+                          )
+        )
+  )
 #+END_SRC
 
 *** include archive files
