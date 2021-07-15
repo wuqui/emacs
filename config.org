@@ -665,9 +665,15 @@ by tagging them with ~:ignore:~
 [[https://emacs.stackexchange.com/a/41685/29471][source]]
 
 *** to =docx=
+**** using =ox-word=
 #+BEGIN_SRC elisp
 (use-package ox-word)
 #+END_SRC
+
+**** via =odt=
+#+begin_src elisp
+(setq org-odt-preferred-output-format "docx")
+#+end_src
 
 ** tables
 *** shrink
