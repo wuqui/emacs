@@ -707,7 +707,7 @@ by tagging them with ~:ignore:~
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/org/roam")
+  (org-roam-directory "~/roam")
   (org-roam-dailies-directory "journal")
   (org-roam-graph-viewer "/usr/bin/open")
   :init
