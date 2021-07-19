@@ -21,7 +21,7 @@ source: https://stackoverflow.com/a/3378391
 * font
 ** set font size
 #+BEGIN_SRC elisp
-(setq doom-font (font-spec :family "monospace" :size 16))
+(setq doom-font (font-spec :family "monospace" :size 18))
 #+END_SRC
 
 ** change font size
