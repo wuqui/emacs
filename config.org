@@ -21,7 +21,7 @@ source: https://stackoverflow.com/a/3378391
 * font
 ** set font size
 #+BEGIN_SRC elisp
-(setq doom-font (font-spec :family "monospace" :size 16))
+(setq doom-font (font-spec :family "monospace" :size 18))
 #+END_SRC
 
 ** change font size
@@ -319,7 +319,9 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/org/rout.org"
                           "~/org/privat.org"
                           "~/org/sport.org"
-                          )))
+                          )
+        )
+  )
 #+END_SRC
 
 *** include archive files
@@ -363,17 +365,67 @@ backup: ~(setq-default org-startup-folded t)~
   (setq org-log-into-drawer t))
 #+END_SRC
 
-*** clock into drawer
+*** clocking
+**** clock into drawer
 #+BEGIN_SRC elisp
 (after! org
   (setq org-clock-into-drawer "CLOCKBOOK"))
 #+END_SRC
 
-*** clocking status
+**** clocking status
 #+BEGIN_SRC emacs-lisp
 (after! org
   (setq org-clock-mode-line-total 'current))
 #+END_SRC
+
+**** clocktable by tags
+source: [[https://stackoverflow.com/a/17399961/4165300][emacs - Timetable grouped by tag - Stack Overflow]]
+#+begin_src elisp
+(defun clocktable-by-tag/shift-cell (n)
+  (let ((str ""))
+    (dotimes (i n)
+      (setq str (concat str "| ")))
+    str))
+
+(defun clocktable-by-tag/insert-tag (params)
+  (let ((tag (plist-get params :tags)))
+    (insert "|--\n")
+    (insert (format "| %s | *Tag time* |\n" tag))
+    (let ((total 0))
+      (mapcar
+       (lambda (file)
+         (let ((clock-data (with-current-buffer (find-file-noselect file)
+                             (org-clock-get-table-data (buffer-name) params))))
+           (when (> (nth 1 clock-data) 0)
+             (setq total (+ total (nth 1 clock-data)))
+             (insert (format "| | File *%s* | %.2f |\n"
+                             (file-name-nondirectory file)
+                             (/ (nth 1 clock-data) 60.0)))
+             (dolist (entry (nth 2 clock-data))
+               (insert (format "| | . %s%s | %s %.2f |\n"
+                               (org-clocktable-indent-string (nth 0 entry))
+                               (nth 1 entry)
+                               (clocktable-by-tag/shift-cell (nth 0 entry))
+                               (/ (nth 4 entry) 60.0)))))))
+       (org-agenda-files))
+      (save-excursion
+        (re-search-backward "*Tag time*")
+        (org-table-next-field)
+        (org-table-blank-field)
+        (insert (format "*%.2f*" (/ total 60.0)))))
+    (org-table-align)))
+
+(defun org-dblock-write:clocktable-by-tag (params)
+  (insert "| Tag | Headline | Time (h) |\n")
+  (insert "|     |          | <r>  |\n")
+  (let ((tags (plist-get params :tags)))
+    (mapcar (lambda (tag)
+              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
+            tags)))
+#+end_src
+
+#+RESULTS:
+: org-dblock-write:clocktable-by-tag
 
 *** hide =DONE= from agenda
 #+BEGIN_SRC elisp
@@ -551,8 +603,15 @@ source: https://emacs.stackexchange.com/a/39107/29471
 #+end_src
 
 ** image width
+*** TODO absolute
 #+begin_src elisp
 (setq org-image-actual-width (/ (display-pixel-width) 3))
+#+end_src
+
+*** KILL relative
+not working
+#+begin_src elisp
+(setq org-image-actual-width '(300))
 #+end_src
 
 ** export
@@ -613,9 +672,15 @@ by tagging them with ~:ignore:~
 [[https://emacs.stackexchange.com/a/41685/29471][source]]
 
 *** to =docx=
+**** using =ox-word=
 #+BEGIN_SRC elisp
 (use-package ox-word)
 #+END_SRC
+
+**** via =odt=
+#+begin_src elisp
+(setq org-odt-preferred-output-format "docx")
+#+end_src
 
 ** tables
 *** shrink
@@ -649,7 +714,7 @@ by tagging them with ~:ignore:~
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/org/roam")
+  (org-roam-directory "~/roam")
   (org-roam-dailies-directory "journal")
   (org-roam-graph-viewer "/usr/bin/open")
   :init
@@ -657,7 +722,7 @@ by tagging them with ~:ignore:~
                                              ("d" "daily" plain (function org-roam-capture--get-point) ""
                                               :immediate-finish t
                                               :file-name "journal/%<%Y-%m-%d>"
-                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda")
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda\n* Clocktable\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\") :maxlevel 2 :block %<%Y-%m-%d>\n#+end:")
                                              ))
   :config
   (setq +org-roam-open-buffer-on-find-file nil)

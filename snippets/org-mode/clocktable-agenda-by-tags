@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: clocktable-agenda-by-tags
+# key: clocktable-agenda-by-tags
+# --
+#+begin: clocktable-by-tag :tags ("work" "privat" "rout") :maxlevel 2 :block today
+#+end:
