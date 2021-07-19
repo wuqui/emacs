@@ -76,3 +76,13 @@
 (package! outline-magic
   :recipe (:host github
            :repo "tj64/outline-magic"))
+
+(package! org-ql
+  :recipe (:host github
+           :repo "alphapapa/org-ql"
+           :files (:defaults (:exclude "helm-org-ql.el"))))
+
+(package! helm-org-ql
+  :recipe (:host github
+           :repo "alphapapa/org-ql"
+           :files ("helm-org-ql.el")))
