@@ -603,8 +603,15 @@ source: https://emacs.stackexchange.com/a/39107/29471
 #+end_src
 
 ** image width
+*** TODO absolute
 #+begin_src elisp
 (setq org-image-actual-width (/ (display-pixel-width) 3))
+#+end_src
+
+*** KILL relative
+not working
+#+begin_src elisp
+(setq org-image-actual-width '(300))
 #+end_src
 
 ** export
