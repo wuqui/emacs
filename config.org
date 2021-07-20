@@ -602,6 +602,13 @@ source: https://emacs.stackexchange.com/a/39107/29471
  :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
 #+end_src
 
+*** widen
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-paste-subtree" "m s w" #'widen)
+#+end_src
+
 ** image width
 *** TODO absolute
 #+begin_src elisp
