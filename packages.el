@@ -86,3 +86,7 @@
   :recipe (:host github
            :repo "alphapapa/org-ql"
            :files ("helm-org-ql.el")))
+
+(package! orgtbl-aggregate
+  :recipe (:host github
+           :repo "tbanel/orgaggregate"))
