@@ -181,8 +181,9 @@ Current pattern: %`evil-mc-pattern
   (setq trash-directory "~/.Trash"))
 #+END_SRC
 
-** icons from =treemacs=
-#+BEGIN_SRC elisp
+** KILL icons from =treemacs=
+not needed anymore because I'm now using module flag ~+icons~ for the =dired= module in [[file:init.el]]
+#+BEGIN_SRC elisp :tangle no
 (after! dired
   (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
 #+END_SRC
