@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: Emacs binding
-# key: ebind
-# --
-\begin{tabular}{r | >{\ttfamily}l}
-  keys & $2 \\\
-  cmd  & $1 \\\
-\end{tabular}
