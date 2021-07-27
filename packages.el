@@ -90,3 +90,7 @@
 (package! orgtbl-aggregate
   :recipe (:host github
            :repo "tbanel/orgaggregate"))
+
+(package! org-download
+  :recipe (:host github
+           :repo "abo-abo/org-download"))

@@ -828,6 +828,14 @@ source: https://github.com/weirdNox/org-noter/issues/88
   (advice-remove 'org-link-search '+org--recenter-after-follow-link-a))
 #+end_src
 [[https://github.com/nobiot/org-transclusion/issues/52#issuecomment-766439396][nobiot/org-transclusion#52 Transclusion of anything other than files not working]]
+** =org-download=
+#+begin_src elisp
+(use-package! org-download
+  :after org
+  :custom
+    (setq-default org-download-image-dir "./img/")
+  )
+#+END_SRC
 
 * =deft=
 #+begin_src elisp
