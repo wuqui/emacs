@@ -841,8 +841,9 @@ source: https://github.com/weirdNox/org-noter/issues/88
 *** retain =evil= bindings
 fix for Doom Emacs from GitHub issue in package repo
 #+begin_src elisp
-(setq org-super-agenda-header-map evil-org-agenda-mode-map)
+(setq org-super-agenda-header-map (make-sparse-keymap))
 #+end_src
+source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
 
 *** configure view
 **** by categories via top-level tags
