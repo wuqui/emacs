@@ -76,6 +76,14 @@ source: https://stackoverflow.com/a/3378391
 #+END_SRC
 
 * buffers and files
+** open file in new window
+#+begin_src elisp
+(map!
+ :leader
+ :desc "find-file-other-window" "f w" #'find-file-other-window
+ )
+#+end_src
+
 ** kill buffer and window
 #+BEGIN_SRC elisp
 (map!
