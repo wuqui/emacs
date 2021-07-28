@@ -264,6 +264,15 @@ not needed anymore because I'm now using module flag ~+icons~ for the =dired= mo
 #+BEGIN_SRC elisp
 (setq org-directory "~/org/")
 #+END_SRC
+** shifting timestamps
+#+begin_src elisp
+(map!
+ :after evil-org
+ :map evil-org-mode-map
+ :n "C-j" #'org-shiftdown
+ :n "C-k" #'org-shiftup
+ )
+#+end_src
 
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
