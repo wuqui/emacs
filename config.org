@@ -835,8 +835,10 @@ source: https://github.com/weirdNox/org-noter/issues/88
   :after org
   :config
     (setq-default org-download-image-dir "./img/")
+    (setq-default org-download-heading-lvl nil)
   )
 #+END_SRC
+
 ** =org-super-agenda=
 *** retain =evil= bindings
 fix for Doom Emacs from GitHub issue in package repo
