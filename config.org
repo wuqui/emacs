@@ -315,11 +315,9 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/promo/lehre/2021_ue_social-media/"
 
                           ;; private
-                          "~/org/cal/default.org"
                           "~/Dropbox/orgzly/mobin.org"
                           "~/org/rout.org"
                           "~/org/privat.org"
-                          "~/org/sport.org"
                           )
         )
   )
