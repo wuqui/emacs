@@ -94,3 +94,5 @@
 (package! org-download
   :recipe (:host github
            :repo "abo-abo/org-download"))
+
+(package! lorem-ipsum)
