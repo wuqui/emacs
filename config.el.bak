@@ -5,7 +5,7 @@
       mac-command-modifier 'meta
       x-select-enable-clipboard t)
 
-(setq doom-font (font-spec :family "monospace" :size 16))
+(setq doom-font (font-spec :family "monospace" :size 18))
 
 (defhydra hydra-zoom ()
   "zoom"
@@ -16,8 +16,6 @@
  :leader
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
-
-(require 'nano-theme)
 
 (map!
  :leader
@@ -93,9 +91,6 @@ Current pattern: %`evil-mc-pattern
 (map!
  :leader
  :desc "dired narrow" "a d n" #'dired-narrow)
-
-(after! dired
-  (add-hook 'dired-mode-hook 'treemacs-icons-dired-mode))
 
 (map!
  :leader
@@ -198,12 +193,12 @@ Current pattern: %`evil-mc-pattern
                           "~/promo/lehre/2021_ue_social-media/"
 
                           ;; private
-                          "~/org/cal/default.org"
                           "~/Dropbox/orgzly/mobin.org"
                           "~/org/rout.org"
                           "~/org/privat.org"
-                          "~/org/sport.org"
-                          )))
+                          )
+        )
+  )
 
 (setq org-agenda-archives-mode 't)
 
@@ -235,6 +230,48 @@ Current pattern: %`evil-mc-pattern
 
 (after! org
   (setq org-clock-into-drawer "CLOCKBOOK"))
+
+(defun clocktable-by-tag/shift-cell (n)
+  (let ((str ""))
+    (dotimes (i n)
+      (setq str (concat str "| ")))
+    str))
+
+(defun clocktable-by-tag/insert-tag (params)
+  (let ((tag (plist-get params :tags)))
+    (insert "|--\n")
+    (insert (format "| %s | *Tag time* |\n" tag))
+    (let ((total 0))
+      (mapcar
+       (lambda (file)
+         (let ((clock-data (with-current-buffer (find-file-noselect file)
+                             (org-clock-get-table-data (buffer-name) params))))
+           (when (> (nth 1 clock-data) 0)
+             (setq total (+ total (nth 1 clock-data)))
+             (insert (format "| | File *%s* | %.2f |\n"
+                             (file-name-nondirectory file)
+                             (/ (nth 1 clock-data) 60.0)))
+             (dolist (entry (nth 2 clock-data))
+               (insert (format "| | . %s%s | %s %.2f |\n"
+                               (org-clocktable-indent-string (nth 0 entry))
+                               (nth 1 entry)
+                               (clocktable-by-tag/shift-cell (nth 0 entry))
+                               (/ (nth 4 entry) 60.0)))))))
+       (org-agenda-files))
+      (save-excursion
+        (re-search-backward "*Tag time*")
+        (org-table-next-field)
+        (org-table-blank-field)
+        (insert (format "*%.2f*" (/ total 60.0)))))
+    (org-table-align)))
+
+(defun org-dblock-write:clocktable-by-tag (params)
+  (insert "| Tag | Headline | Time (h) |\n")
+  (insert "|     |          | <r>  |\n")
+  (let ((tags (plist-get params :tags)))
+    (mapcar (lambda (tag)
+              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
+            tags)))
 
 (after! org
   (setq org-agenda-skip-scheduled-if-done t))
@@ -304,6 +341,16 @@ Current pattern: %`evil-mc-pattern
  :leader
  :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
 
+(map!
+ :leader
+ :desc "org-paste-subtree" "m s w" #'widen)
+
+(setq org-image-actual-width (/ (display-pixel-width) 3))
+
+(after! org
+  (setq org-image-actual-width '(300))
+  )
+
 (defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
   "removes relevant brackets from a timestamp"
   (cond
@@ -336,6 +383,8 @@ Current pattern: %`evil-mc-pattern
 (ox-extras-activate '(ignore-headlines))
 
 (use-package ox-word)
+
+(setq org-odt-preferred-output-format "docx")
 
 (use-package! org-roam-bibtex
   :after org-roam
@@ -385,6 +434,20 @@ Current pattern: %`evil-mc-pattern
 
 (after! org
   (advice-remove 'org-link-search '+org--recenter-after-follow-link-a))
+
+(use-package! org-download
+  :after org
+  :config
+    (setq-default org-download-image-dir "./img/")
+  )
+
+(let (
+      (org-super-agenda-groups
+       '((:auto-parent t))
+       ))
+  (org-agenda-list))
+
+(setq org-super-agenda-header-map evil-org-agenda-mode-map)
 
 (use-package! deft
   :after org
@@ -639,7 +702,7 @@ F4 inserts HTML code"
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/org/roam")
+  (org-roam-directory "~/roam")
   (org-roam-dailies-directory "journal")
   (org-roam-graph-viewer "/usr/bin/open")
   :init
@@ -647,7 +710,7 @@ F4 inserts HTML code"
                                              ("d" "daily" plain (function org-roam-capture--get-point) ""
                                               :immediate-finish t
                                               :file-name "journal/%<%Y-%m-%d>"
-                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda")
+                                              :head "#+TITLE: %<%A, %d %B %Y>\n#+PROPERTY: quality=\n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda\n* Clocktable\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\") :maxlevel 2 :block %<%Y-%m-%d>\n#+end:")
                                              ))
   :config
   (setq +org-roam-open-buffer-on-find-file nil)
