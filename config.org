@@ -838,28 +838,23 @@ source: https://github.com/weirdNox/org-noter/issues/88
   )
 #+END_SRC
 ** =org-super-agenda=
-*** configure view
-**** locally
-#+begin_src elisp
-(let (
-      (org-super-agenda-groups
-       '((:auto-parent t))
-       )
-      )
-  (org-agenda-list))
-#+end_src
-
-***** globally
-#+begin_src elisp
-(setq org-super-agenda-groups
- '((:auto-parent t))
- )
-#+end_src
-
 *** retain =evil= bindings
 fix for Doom Emacs from GitHub issue in package repo
 #+begin_src elisp
 (setq org-super-agenda-header-map evil-org-agenda-mode-map)
+#+end_src
+
+*** configure view
+**** by categories via top-level tags
+#+begin_src elisp
+(setq org-super-agenda-groups
+      '(
+        (:time-grid t)
+        (:tag "rout")
+        (:tag "work")
+        (:tag "privat")
+        )
+      )
 #+end_src
 
 * =deft=
