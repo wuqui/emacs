@@ -262,8 +262,10 @@ Current pattern: %`evil-mc-pattern
 (map!
  :after evil-org
  :map evil-org-mode-map
+ :n "C-h" #'org-shiftleft
  :n "C-j" #'org-shiftdown
  :n "C-k" #'org-shiftup
+ :n "C-l" #'org-shiftright
  )
 #+end_src
 
