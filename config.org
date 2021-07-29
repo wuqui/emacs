@@ -863,7 +863,7 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
 #+begin_src elisp
 (setq org-super-agenda-groups
       '(
-        (:time-grid t)
+        (:name "time" :time-grid t)
         (:name "prio" :priority>= "9")
         (:name "rout" :tag "rout")
         (:name "work" :tag "work")
