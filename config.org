@@ -864,9 +864,10 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
 (setq org-super-agenda-groups
       '(
         (:time-grid t)
-        (:tag "rout")
-        (:tag "work")
-        (:tag "privat")
+        (:name "prio" :priority>= "9")
+        (:name "rout" :tag "rout")
+        (:name "work" :tag "work")
+        (:name "privat" :tag "privat")
         )
       )
 #+end_src
