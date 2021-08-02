@@ -803,6 +803,8 @@ by tagging them with ~:ignore:~
       )
 #+end_src
 
+*** kill =dailies= buffers
+
 ** =org-noter=
 *** default window location
 #+BEGIN_SRC elisp
@@ -892,6 +894,7 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
         (:name "rout" :tag "rout")
         (:name "work" :tag "work")
         (:name "privat" :tag "privat")
+        (:name "method" :tag "method")
         )
       )
 #+end_src
