@@ -925,6 +925,17 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
         )
       )
 #+end_src
+** format timestamps
+#+begin_src elisp
+(setq org-time-stamp-custom-formats '("%e %B, %Y" . "%e %B, %Y, %H:%M h"))
+
+(defun my-org-export-ensure-custom-times (backend)
+  (setq-local org-display-custom-times t)
+  )
+
+(add-hook 'org-export-before-processing-hook 'my-org-export-ensure-custom-times)
+#+end_src
+https://emacs.stackexchange.com/a/34436/29471
 
 * =deft=
 #+begin_src elisp
