@@ -317,6 +317,7 @@ backup: ~(setq-default org-startup-folded t)~
 
                           ;; ongoing
                           "~/org/work.org"
+                          "~/org/method.org"
                           "~/promo/lehrveranstaltungen/2021_os_english-linguistics/2021_os_english-linguistics.org"
 
                           ;; teaching
