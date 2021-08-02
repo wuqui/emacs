@@ -99,3 +99,6 @@
 
 (package! helm-org-rifle)
 
+(package! vulpea
+  :recipe (:host github
+           :repo "d12frosted/vulpea"))
