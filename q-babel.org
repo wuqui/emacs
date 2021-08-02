@@ -1,0 +1,28 @@
+#+title: Q-Babel
+
+* =tbl-to-df=
+#+name: tbl-to-df
+#+BEGIN_SRC jupyter-python :kernel qw :session tmp :noweb yes
+import pandas as pd
+
+df = pd.DataFrame(
+  columns=tbl[1],
+  data=tbl[2:]
+)
+
+df
+#+END_SRC
+
+* =df-to-tbl=
+#+name: df-to-tbl
+#+begin_src jupyter-python :kernel qw :session tmp
+import pandas as pd
+from tabulate import tabulate
+
+print(tabulate(
+    df,
+    headers=df.columns,
+    tablefmt='orgtbl',
+    showindex=False
+))
+#+end_src
