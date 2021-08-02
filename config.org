@@ -906,7 +906,7 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
   (deft-recursive t)
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
-  (deft-directory "~/org/roam/"))
+  (deft-directory "~/roam/"))
 #+end_src
 
 * citations and bibliography (=helm-bibtex=)
