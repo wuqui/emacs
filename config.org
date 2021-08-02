@@ -749,6 +749,7 @@ by tagging them with ~:ignore:~
       ,(concat
         "#+TITLE: %<%A, %d %B %Y>\n"
         "#+PROPERTY: quality=\n"
+        "\n"
         "* Affirm\n"
             "- \n"
         "* Dank\n"
