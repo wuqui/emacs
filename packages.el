@@ -96,3 +96,6 @@
            :repo "abo-abo/org-download"))
 
 (package! lorem-ipsum)
+
+(package! helm-org-rifle)
+
