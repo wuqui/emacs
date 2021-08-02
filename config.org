@@ -112,6 +112,27 @@ source: https://stackoverflow.com/a/3378391
  :desc "move file (here)" "a m" #'rename-file)
 #+END_SRC
 
+** kill buffers based on file paths
+#+begin_src elisp
+(defun qw/kill-buffers-file-name-regexp (regexp)
+  (mapc (lambda (buffer)
+          (let ((file-name
+                 (or (buffer-file-name buffer)
+                     ;; In dired-mode we need `dired-directory' which
+                     ;; might be a list and may not be fully expanded.
+                     (with-current-buffer buffer
+                       (and (eq major-mode 'dired-mode)
+                            (expand-file-name
+                             (if (consp dired-directory)
+                                 (car dired-directory)
+                               dired-directory)))))))
+            (when (and file-name
+                       (string-match regexp file-name))
+              (kill-buffer buffer))))
+        (buffer-list))
+  )
+#+end_src
+
 * editing
 ** expand region
 #+BEGIN_SRC emacs-lisp
@@ -803,7 +824,13 @@ by tagging them with ~:ignore:~
       )
 #+end_src
 
-*** kill =dailies= buffers
+*** kill all journal buffers
+#+begin_src elisp :results silent
+(defun qw/kill-org-roam-journal-buffers ()
+  (interactive)
+  (qw/kill-buffers-file-name-regexp "roam/journal/202[0-9]-[0-9][0-9]-[0-9][0-9]\.org")
+  )
+#+end_src
 
 ** =org-noter=
 *** default window location
