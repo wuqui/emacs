@@ -769,7 +769,7 @@ by tagging them with ~:ignore:~
     :head
       ,(concat
         "#+TITLE: %<%A, %d %B %Y>\n"
-        "#+PROPERTY: quality=\n"
+        "#+PROPERTY: quality \n"
         "\n"
         "* Affirm\n"
             "- \n"
