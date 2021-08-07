@@ -829,7 +829,7 @@ by tagging them with ~:ignore:~
         "* Memoranda\n"
             "** \n"
         "* Clocktable\n"
-        "#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 2 :block %<%Y-%m-%d>\n#+end:"
+        "#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:"
        )
     )
     )
