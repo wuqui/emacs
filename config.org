@@ -787,6 +787,12 @@ by tagging them with ~:ignore:~
    :leader
    :desc "expand table" "t e" #'org-table-expand))
 #+END_SRC
+*** =orgtbljoin=
+#+begin_src elisp
+(use-package! 'orgtbl-join
+  :after org
+  )
+#+end_src
 
 ** =org-ref=
 #+BEGIN_SRC emacs-lisp

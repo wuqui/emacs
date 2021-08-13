@@ -102,3 +102,7 @@
 (package! vulpea
   :recipe (:host github
            :repo "d12frosted/vulpea"))
+
+(package! orgtbljoin
+  :recipe (:host github
+           :repo "tbanel/orgtbljoin"))
