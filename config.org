@@ -744,7 +744,7 @@ by tagging them with ~:ignore:~
 #+END_SRC
 *** =orgtbljoin=
 #+begin_src elisp
-(use-package! 'orgtbl-join
+(use-package! orgtbl-join
   :after org
   )
 #+end_src
