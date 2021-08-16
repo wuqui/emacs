@@ -6,7 +6,7 @@
 * personal info
 #+BEGIN_SRC elisp
 (setq user-full-name "Quirin Würschinger"
-      user-mail-address "q.wuerschinger@gmail.com")
+     user-mail-address "q.wuerschinger@gmail.com")
 #+END_SRC
 
 * use =Alt= key for non-ASCII chars
