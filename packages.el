@@ -106,3 +106,5 @@
 (package! orgtbljoin
   :recipe (:host github
            :repo "tbanel/orgtbljoin"))
+
+(package! csv-mode)
