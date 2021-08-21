@@ -655,7 +655,7 @@ source: https://emacs.stackexchange.com/a/39107/29471
 not working
 #+begin_src elisp
 (after! org
-  (setq org-image-actual-width '(300))
+  (setq org-image-actual-width '(500))
   )
 #+end_src
 
