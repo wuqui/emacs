@@ -419,6 +419,7 @@ backup: ~(setq-default org-startup-folded t)~
   - set column width to =19= to fit on split windows
   - file names could be removed by commenting out the respective lines below
 
+***** old
 #+begin_src elisp
 (defun clocktable-by-tag/shift-cell (n)
   (let ((str ""))
@@ -742,6 +743,11 @@ by tagging them with ~:ignore:~
    :leader
    :desc "expand table" "t e" #'org-table-expand))
 #+END_SRC
+*** =orgtbl-aggregate=
+#+begin_src elisp
+(use-package! orgtbl-aggregate)
+#+end_src
+
 *** =orgtbljoin=
 #+begin_src elisp
 (use-package! orgtbl-join
