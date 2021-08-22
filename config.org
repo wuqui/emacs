@@ -990,6 +990,13 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (setq pdf-annot-activate-created-annotations t))
 #+END_SRC
 
+** use as default app for opening pdfs
+#+begin_src elisp
+(add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
+#+end_src
+
+** custom keybindings
+
 #+BEGIN_SRC emacs-lisp
 (map!
  :leader
