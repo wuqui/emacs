@@ -950,6 +950,15 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
 (add-hook 'org-export-before-processing-hook 'my-org-export-ensure-custom-times)
 #+end_src
 https://emacs.stackexchange.com/a/34436/29471
+** =org-babel=
+*** default arguments for =jupyter-python=
+for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
+#+begin_src elisp
+(setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                     (:kernel . "qw")
+                                                     (:session . "jupy")
+                                                     ))
+#+end_src
 
 * =deft=
 #+begin_src elisp
