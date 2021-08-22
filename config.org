@@ -983,6 +983,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+END_SRC
 
 * =pdf-tools=
+** config
 #+BEGIN_SRC emacs-lisp
 (use-package! pdf-tools
   :config
