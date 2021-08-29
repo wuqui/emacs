@@ -644,6 +644,11 @@ source: https://emacs.stackexchange.com/a/39107/29471
  :leader
  :desc "org-paste-subtree" "m s w" #'widen)
 #+end_src
+*** show contents in sparse trees
+#+begin_src elisp
+(push '(tags-tree . local) org-show-context-detail)
+#+end_src
+[[https://emacs.stackexchange.com/a/18477/29471][org mode - How do I get an expanded sparse tree? - Emacs Stack Exchange]]
 
 ** image width
 *** TODO absolute
