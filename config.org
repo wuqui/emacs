@@ -931,11 +931,11 @@ fix for Doom Emacs from GitHub issue in package repo
 source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
 
 *** configure view
-**** by categories via top-level tags
 #+begin_src elisp
 (setq org-super-agenda-groups
       '(
         (:name "time" :time-grid t)
+        (:name "overdue" :scheduled past :time-grid t)
         (:name "prio" :priority>= "9")
         (:name "rout" :tag "rout")
         (:name "work" :tag "work")
@@ -944,6 +944,7 @@ source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org
         )
       )
 #+end_src
+
 ** format timestamps
 #+begin_src elisp
 (setq org-time-stamp-custom-formats '("%e %B, %Y" . "%e %B, %Y, %H:%M h"))
