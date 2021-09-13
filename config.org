@@ -289,6 +289,11 @@ Current pattern: %`evil-mc-pattern
  :n "C-l" #'org-shiftright
  )
 #+end_src
+** calendar start weekday on Mondays
+#+begin_src elisp
+(after! org
+  (setq calendar-week-start-day 1))
+#+end_src
 
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
