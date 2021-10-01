@@ -743,6 +743,11 @@ source: https://stackoverflow.com/a/33716338/4165300
 (after! org
   (setq org-latex-tables-booktabs t))
 #+END_SRC
+**** don't center tables
+#+begin_src elisp
+(setq org-latex-tables-centered nil)
+#+end_src
+
 **** use =listings=
 #+begin_src elisp
 (setq org-latex-listings 'listings)
