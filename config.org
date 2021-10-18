@@ -284,6 +284,8 @@ Current pattern: %`evil-mc-pattern
                                     "~/promo/lehre/2021_sem_lexical-innovation/"
                                     "~/promo/lehre/2021_ue_social-media/"
                                     "~/promo/lehre/2021_vl_dh/"
+                                    "~/promo/lehre/2021-22_ps_itl/"
+                                    "~/promo/lehre/2021-22_sem_morph-wf/"
 
                                     ;; projects
                                     "~/promo/neocrawler/"
@@ -377,14 +379,19 @@ backup: ~(setq-default org-startup-folded t)~
                           ;; teaching
                           "~/promo/lehre/2020-21_ps_itl/itl202021.org"
                           "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
-                          "~/promo/lehre/2021_ps_itl/"
-                          "~/promo/lehre/2021_sem_lexical-innovation/"
-                          "~/promo/lehre/2021_ue_social-media/"
+
+                          "~/promo/lehre/2021_ps_itl/ps_itl.org"
+                          "~/promo/lehre/2021_sem_lexical-innovation/sem_lexical-innovation.org"
+                          "~/promo/lehre/2021_ue_social-media/ue_social-media.org"
+
+                          "~/promo/lehre/2021-22_ps_itl/2021-22_ps_itl.org"
+                          "~/promo/lehre/2021-22_sem_morph-wf/sem_morph-wf.org"
 
                           ;; private
                           "~/Dropbox/orgzly/mobin.org"
                           "~/org/rout.org"
                           "~/org/privat.org"
+                          "~/org/dp.org"
                           )
         )
   )
