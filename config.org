@@ -2,3 +2,10 @@
 #+title: Doom Emacs configuration
 #+author: Quirin Würschinger
 #+property: header-args :results silent :tangle yes
+
+* personal info
+#+BEGIN_SRC elisp
+(setq user-full-name "Quirin Würschinger"
+     user-mail-address "q.wuerschinger@gmail.com")
+#+END_SRC
+
