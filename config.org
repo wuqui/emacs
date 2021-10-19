@@ -9,3 +9,9 @@
      user-mail-address "q.wuerschinger@gmail.com")
 #+END_SRC
 
+* font
+** set font size
+#+BEGIN_SRC elisp
+(setq doom-font (font-spec :family "monospace" :size 18))
+#+END_SRC
+
