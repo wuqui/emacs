@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: clocktable-agenda
-# key: clocktable-agenda
-# --
-#+begin: clocktable :scope agenda-with-archives :maxlevel 2 :block yesterday :fileskip0 t
-#+end:

@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: qitem
-# uuid:
-# key: qitem
-# condition: t
-# --
-\begin{qitem}
-  # $0
-\end{qitem}

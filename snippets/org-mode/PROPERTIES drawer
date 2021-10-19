@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: PROPERTIES drawer
-# key: propdraw
-# --
-:PROPERTIES:
-$1
-:END:

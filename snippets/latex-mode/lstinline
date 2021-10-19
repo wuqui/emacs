@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: lstinline
-# key: lsil
-# --
-\lstinline[language=$1]{$2}$0

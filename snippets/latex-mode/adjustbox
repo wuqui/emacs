@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: adjustbox
-# key: adjbox
-# --
-$1
-\begin{adjustbox}{max size={\linewidth}{\textheight}}
-`yas-selected-text`
-\end{adjustbox}

@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: keybinding
-# key: keyb
-# --
-\begin{tabular}{l | >{\ttfamily}l}
-  keys & $1 \\\\
-  cmd &  \\\\
-\end{tabular}

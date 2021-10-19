@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: booktabs rules
-# key: btrl
-# --
-\toprule
-\midrule
-\bottomrule

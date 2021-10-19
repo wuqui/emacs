@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: frzadj
-# key: frzadj
-# --
-\begin{tabular}{c | l >{/\textipa\bgroup}l<{\egroup/}}
-  m & $1 & $2 \\$0
-\end{tabular}

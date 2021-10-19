@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: adjbox-wrap
-# key: adjbox-wrap
-# --
-#+latex: \begin{adjustbox}{max size={$1\linewidth}{$2\textheight}}
-#+attr_latex: :center nil
-`yas-selected-text`
-#+latex: \end{adjustbox}$0

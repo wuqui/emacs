@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: superscript
-# key: sps
-# --
-\sps{$1}$0

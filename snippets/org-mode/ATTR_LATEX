@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: ATTR_LATEX
-# key: attex
-# --
-#+ATTR_LATEX: $1

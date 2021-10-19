@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: solutionordottedlines
-# key: solodl
-# --
-\begin{solutionordottedlines}[${1:1cm}]
-  $2
-\end{solutionordottedlines}
