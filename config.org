@@ -119,23 +119,6 @@ source: https://stackoverflow.com/a/3378391
 #+end_src
 
 *** agenda view
-**** custom command
-#+BEGIN_SRC elisp
-(after! org
-  (defun q/org-agenda ()
-    "My personal agenda view."
-    (interactive)
-    (setq org-agenda-start-with-log-mode t)
-    (org-agenda nil "a")
-    (org-agenda-day-view)
-    (org-agenda-goto-today)
-    )
-
-  (map! :leader
-        :desc "q agenda" "a q" #'q/org-agenda)
-  )
-#+END_SRC
-
 **** sorting strategy
 #+begin_src elisp
 (setq org-agenda-sorting-strategy
