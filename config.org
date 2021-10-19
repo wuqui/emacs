@@ -15,3 +15,15 @@
 (setq doom-font (font-spec :family "monospace" :size 18))
 #+END_SRC
 
+** change font size
+#+begin_src elisp
+(defhydra hydra-zoom ()
+  "zoom"
+  ("k" text-scale-increase "in")
+  ("j" text-scale-decrease "out"))
+
+(map!
+ :leader
+ :desc "zoom hydra" "f s" #'hydra-zoom/body
+ )
+#+end_src
