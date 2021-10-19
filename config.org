@@ -36,8 +36,56 @@ source: https://stackoverflow.com/a/3378391
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
 #+end_src
+* buffers and files
+** kill buffer and window
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "kill buffer and window" "b D" #'kill-buffer-and-window)
+#+END_SRC
+
+* editing
+** multiple cursors
+*** hydra for =evil-mc=
+source: [[https://hungyi.net/posts/hydra-for-evil-mc/][An evil-mc Emacs Hydra - Hung-Yi’s Journal]]
+#+begin_src elisp
+(defhydra my-mc-hydra (:color pink
+                       :hint nil
+                       :pre (evil-mc-pause-cursors))
+  "
+^Match^            ^Line-wise^           ^Manual^
+^^^^^^----------------------------------------------------
+_Z_: match all     _J_: make & go down   _z_: toggle here
+_m_: make & next   _K_: make & go up     _r_: remove last
+_M_: make & prev   ^ ^                   _R_: remove all
+_n_: skip & next   ^ ^                   _p_: pause/resume
+_N_: skip & prev
+
+Current pattern: %`evil-mc-pattern
+
+"
+  ("Z" #'evil-mc-make-all-cursors)
+  ("m" #'evil-mc-make-and-goto-next-match)
+  ("M" #'evil-mc-make-and-goto-prev-match)
+  ("n" #'evil-mc-skip-and-goto-next-match)
+  ("N" #'evil-mc-skip-and-goto-prev-match)
+  ("J" #'evil-mc-make-cursor-move-next-line)
+  ("K" #'evil-mc-make-cursor-move-prev-line)
+  ("z" #'+multiple-cursors/evil-mc-toggle-cursor-here)
+  ("r" #'+multiple-cursors/evil-mc-undo-cursor)
+  ("R" #'evil-mc-undo-all-cursors)
+  ("p" #'+multiple-cursors/evil-mc-toggle-cursors)
+  ("q" #'evil-mc-resume-cursors "quit" :color blue)
+  ("<escape>" #'evil-mc-resume-cursors "quit" :color blue))
+
+(map!
+ (:when (featurep! :editor multiple-cursors)
+  :prefix "g"
+  :nv "z" #'my-mc-hydra/body))
+#+end_src
 
 * projectile
+** set projects
 #+BEGIN_SRC elisp
 (after! projectile
   (setq projectile-known-projects '(
@@ -65,7 +113,22 @@ source: https://stackoverflow.com/a/3378391
                                     "~/promo/NeoCov/"
                                     )))
 #+END_SRC
+
+** switch between workspaces
+#+begin_src elisp
+(map!
+ :leader
+ :desc "switch workspace" "y" #'+workspace/switch-to)
+#+end_src
+
 * org
+** fold files on startup
+backup: ~(setq-default org-startup-folded t)~
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-startup-folded t))
+#+END_SRC
+
 ** org dir
 #+BEGIN_SRC elisp
 (setq org-directory "~/org/")
@@ -452,3 +515,109 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
                                                      (:session . "jupy")
                                                      ))
 #+end_src
+** =org-roam=
+*** config
+#+BEGIN_SRC emacs-lisp
+(use-package! org-roam
+  :after org
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/roam")
+  (org-roam-dailies-directory "journal")
+  (org-roam-graph-viewer "/usr/bin/open")
+  :init
+  (setq org-roam-dailies-capture-templates `(
+    (
+     "d" "daily" plain (function org-roam-capture--get-point) ""
+    :immediate-finish t
+    :file-name "journal/%<%Y-%m-%d>"
+    ;; :head "#+TITLE: %<%A, %d %B %Y>\n,#+PROPERTY: quality \n\n* Affirm\n- \n* Dank\n- \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n- \n* Memoranda\n* Clocktable\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\") :maxlevel 2 :block %<%Y-%m-%d>\n#+end:")
+    :head
+      ,(concat
+        "#+TITLE: %<%A, %d %B %Y>\n"
+        "#+PROPERTY: quality \n"
+        "\n"
+        "* Affirm\n"
+            "- \n"
+        "* Dank\n"
+            "** \n"
+        "* Was will ich heute machen?\n"
+            "** TODO\n"
+        "* Wie war mein Tag?\n"
+            "** \n"
+        "* Memoranda\n"
+            "** \n"
+        "* Clocktable\n"
+        "#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:"
+       )
+    )
+    )
+        )
+  :config
+  (setq +org-roam-open-buffer-on-find-file nil)
+  (setq org-roam-graph-exclude-matcher '("dailies"))
+  ;; (map!
+  ;;  :leader
+  ;;  :desc "add alias" "r a" #'org-roam-alias-add
+  ;;  :desc "add tag" "r l" #'org-roam-tag-add
+  ;;  :desc "d / yesterday" "r y" #'org-roam-dailies-find-yesterday
+  ;;  :desc "d / today" "r t" #'org-roam-dailies-find-today
+  ;;  :desc "d / tomorrow" "r m" #'org-roam-dailies-find-tomorrow
+  ;;  :desc "d / date" "r d" #'org-roam-dailies-find-date
+  ;;  :desc "d / previous" "r p" #'org-roam-dailies-find-previous-note
+  ;;  :desc "d / next" "r n" #'org-roam-dailies-find-next-note
+  ;;  :desc "insert" "r i" #'org-roam-insert
+  ;;  :desc "find file" "r f" #'org-roam-find-file
+  ;;  :desc "sidebar" "r r" #'org-roam
+  ;;  )
+  )
+#+END_SRC
+*** =org-roam-ui=
+**** install
+#+begin_src elisp :tangle packages.el
+(unpin! org-roam)
+(package! websocket)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+#+end_src
+
+**** config
+#+begin_src elisp
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+#+end_src
+
+* workspaces
+#+begin_src elisp
+(map!
+ :leader
+ :desc "switch workspace" "y" #'+workspace/switch-to)
+#+end_src
+* =dired=
+** hide details by default
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (dired-hide-details-mode))))
+#+END_SRC
+
+** delete files to Trash
+#+BEGIN_SRC emacs-lisp
+(after! dired
+  (setq delete-by-moving-to-trash t)
+  (setq trash-directory "~/.Trash"))
+#+END_SRC
+
