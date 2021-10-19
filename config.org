@@ -9,6 +9,15 @@
      user-mail-address "q.wuerschinger@gmail.com")
 #+END_SRC
 
+* use =Alt= key for non-ASCII chars
+#+begin_src elisp
+(setq mac-option-modifier nil
+      mac-command-modifier 'meta
+      x-select-enable-clipboard t)
+
+#+end_src
+source: https://stackoverflow.com/a/3378391
+
 * font
 ** set font size
 #+BEGIN_SRC elisp
@@ -56,3 +65,407 @@
                                     "~/promo/NeoCov/"
                                     )))
 #+END_SRC
+* org
+** org dir
+#+BEGIN_SRC elisp
+(setq org-directory "~/org/")
+#+END_SRC
+ org
+** agenda
+*** agenda files
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-agenda-files (list
+                          "~/.doom.d/config.org"
+                          "~/org/temp.org"
+
+                          ;; projects
+                          "~/promo/sna/sna.org"
+                          "~/promo/haiku/haiku.org"
+                          "~/promo/IndVarBNC/IndVarBNC.org"
+                          "~/promo/AngloSaxon/AngloSaxon.org"
+                          "~/promo/socemb/socemb.org"
+                          "~/promo/CoVid/CoVid.org"
+
+                          ;; ongoing
+                          "~/org/work.org"
+                          "~/org/method.org"
+                          "~/promo/lehrveranstaltungen/2021_os_english-linguistics/2021_os_english-linguistics.org"
+
+                          ;; teaching
+                          "~/promo/lehre/2020-21_ps_itl/itl202021.org"
+                          "~/promo/lehre/2020-21_ue_morph-wf/morph-wf_2020-21.org"
+
+                          "~/promo/lehre/2021_ps_itl/ps_itl.org"
+                          "~/promo/lehre/2021_sem_lexical-innovation/sem_lexical-innovation.org"
+                          "~/promo/lehre/2021_ue_social-media/ue_social-media.org"
+
+                          "~/promo/lehre/2021-22_ps_itl/2021-22_ps_itl.org"
+                          "~/promo/lehre/2021-22_sem_morph-wf/sem_morph-wf.org"
+
+                          ;; private
+                          "~/Dropbox/orgzly/mobin.org"
+                          "~/org/rout.org"
+                          "~/org/privat.org"
+                          "~/org/dp.org"
+                          )
+        )
+  )
+#+END_SRC
+
+*** include archive files
+#+begin_src elisp
+(setq org-agenda-archives-mode 't)
+#+end_src
+
+*** agenda view
+**** custom command
+#+BEGIN_SRC elisp
+(after! org
+  (defun q/org-agenda ()
+    "My personal agenda view."
+    (interactive)
+    (setq org-agenda-start-with-log-mode t)
+    (org-agenda nil "a")
+    (org-agenda-day-view)
+    (org-agenda-goto-today)
+    )
+
+  (map! :leader
+        :desc "q agenda" "a q" #'q/org-agenda)
+  )
+#+END_SRC
+
+**** sorting strategy
+#+begin_src elisp
+(setq org-agenda-sorting-strategy
+      '(
+        (agenda habit-down time-up priority-down)
+        (todo priority-down category-keep)
+        (tags priority-down category-keep)
+        (search category-keep)
+        )
+      )
+#+end_src
+
+*** log into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-log-into-drawer t))
+#+END_SRC
+
+*** clocking
+**** clock into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-clock-into-drawer "CLOCKBOOK"))
+#+END_SRC
+
+**** clocking status
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (setq org-clock-mode-line-total 'current))
+#+END_SRC
+
+**** clocktable by tags
+- source
+  + Stack Overflow / comment: https://emacs.stackexchange.com/a/32182/29471
+  + gist: https://gist.github.com/ironchicken/6b5424bc2024b3d0a58a8a130f73c2ee
+- my adjustment:
+  - set column width to =19= to fit on split windows
+  - file names could be removed by commenting out the respective lines below
+
+#+begin_src elisp
+(defun clocktable-by-tag/shift-cell (n)
+  (let ((str ""))
+    (dotimes (i n)
+      (setq str (concat str "| ")))
+    str))
+
+(defun clocktable-by-tag/insert-tag (params)
+  (let ((tag (plist-get params :tags)))
+    (insert "|--\n")
+    (insert (format "| %s | *Tag time* |\n" tag))
+    (let ((total 0))
+      (mapcar
+       (lambda (file)
+         (let ((clock-data (with-current-buffer (find-file-noselect file)
+                             (org-clock-get-table-data (buffer-name) params))))
+           (when (> (nth 1 clock-data) 0)
+             (setq total (+ total (nth 1 clock-data)))
+             (insert (format "| | File *%s* | %.2f |\n"
+                             (file-name-nondirectory file)
+                             (/ (nth 1 clock-data) 60.0)))
+             (dolist (entry (nth 2 clock-data))
+               (insert (format "| | . %s%s | %s %.2f |\n"
+                               (org-clocktable-indent-string (nth 0 entry))
+                               (nth 1 entry)
+                               (clocktable-by-tag/shift-cell (nth 0 entry))
+                               (/ (nth 4 entry) 60.0)))))))
+       (org-agenda-files))
+      (save-excursion
+        (re-search-backward "*Tag time*")
+        (org-table-next-field)
+        (org-table-blank-field)
+        (insert (format "*%.2f*" (/ total 60.0)))))
+    (org-table-align)))
+
+(defun org-dblock-write:clocktable-by-tag (params)
+  (insert "| Tag | Headline | Time (h) |\n")
+  (insert "|     | <l19>    | <r>  |\n")
+  (let ((tags (plist-get params :tags)))
+    (mapcar (lambda (tag)
+              (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
+            tags)))
+#+end_src
+
+** subtree operations
+*** mark
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-mark-subtree" "m s v" #'org-mark-subtree)
+#+end_src
+
+*** copy
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-copy-subtree" "m s y" #'org-copy-subtree)
+#+end_src
+
+*** paste
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-paste-subtree" "m s p" #'org-paste-subtree)
+#+end_src
+
+*** widen
+#+begin_src elisp
+(map!
+ :leader
+ :desc "org-paste-subtree" "m s w" #'widen)
+#+end_src
+** shifting timestamps
+#+begin_src elisp
+(map!
+ :after evil-org
+ :map evil-org-mode-map
+ :n "C-h" #'org-shiftleft
+ :n "C-j" #'org-shiftdown
+ :n "C-k" #'org-shiftup
+ :n "C-l" #'org-shiftright
+ )
+#+end_src
+** calendar start weekday on Mondays
+#+begin_src elisp
+(after! org
+  (setq calendar-week-start-day 1))
+#+end_src
+** insert stuff
+*** insert datetime / inactive
+#+BEGIN_SRC elisp
+(defun q/insert-timestamp-inactive ()
+  (interactive)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively 'org-time-stamp-inactive)))
+#+END_SRC
+[[https://emacs.stackexchange.com/questions/12130/how-to-insert-inactive-timestamp-via-function][source]]
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "timestamp" "i t" #'q/insert-timestamp-inactive
+ )
+#+END_SRC
+
+*** insert date / inactive
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "datestamp" "i d" #'org-time-stamp-inactive)
+#+END_SRC
+
+*** insert entities
+function by John Kitchin ([[https://kitchingroup.cheme.cmu.edu/blog/2015/11/21/Insert-org-entities-into-org-mode-with-helm/][source]])
+
+#+BEGIN_SRC emacs-lisp
+(defun helm-insert-org-entity ()
+  "Helm interface to insert an entity from `org-entities'.
+F1 inserts utf-8 character
+F2 inserts entity code
+F3 inserts LaTeX code (does not wrap in math-mode)
+F4 inserts HTML code"
+  (interactive)
+  (helm :sources (reverse
+                  (let ((sources '())
+                        toplevel
+                        secondlevel)
+                    (dolist (element (append
+                                      '("* User" "** User entities")
+                                      org-entities-user org-entities))
+                      (when (and (stringp element)
+                                 (s-starts-with? "* " element))
+                        (setq toplevel element))
+                      (when (and (stringp element)
+                                 (s-starts-with? "** " element))
+                        (setq secondlevel element)
+                        (add-to-list
+                         'sources
+                         `((name . ,(concat
+                                     toplevel
+                                     (replace-regexp-in-string
+                                      "\\*\\*" " - " secondlevel)))
+                           (candidates . nil)
+                           (action . (("insert utf-8 char" . (lambda (candidate)
+                                                               (insert (nth 6 candidate))))
+                                      ("insert org entity" . (lambda (candidate)
+                                                               (insert (concat "\\" (car candidate)))))
+                                      ("insert latex" . (lambda (candidate)
+                                                          (insert (nth 1 candidate))))
+                                      ("insert html" . (lambda (candidate)
+                                                         (insert (nth 3 candidate)))))))))
+                      (when (and element (listp element))
+                        (setf (cdr (assoc 'candidates (car sources)))
+                              (append
+                               (cdr (assoc 'candidates (car sources)))
+                               (list (cons
+                                      (format "%10s %s" (nth 6 element) element)
+                                      element))))))
+                    sources))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :desc "insert org entity" "i e" #'helm-insert-org-entity)
+#+END_SRC
+
+*** insert file link
+#+BEGIN_SRC elisp
+(defun q/insert-file-link ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'org-insert-link)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert file link" "l" #'q/insert-file-link)
+#+END_SRC
+
+*** insert file path
+#+begin_src elisp
+(defun my-counsel-insert-file-path ()
+  "Insert file path."
+  (interactive)
+  (unless (featurep 'counsel) (require 'counsel))
+  (ivy-read "Find file: " 'read-file-name-internal
+            :matcher #'counsel--find-file-matcher
+            :action
+            (lambda (x)
+              (insert x))))
+
+(map!
+ :leader
+ :desc "insert file path" "L" #'my-counsel-insert-file-path)
+#+end_src
+source: https://emacs.stackexchange.com/a/39107/29471
+
+*** insert checkbox
+#+BEGIN_SRC elisp
+(defun q/toggle-checkbox ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(4)))
+    (call-interactively 'org-toggle-checkbox)))
+#+END_SRC
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "insert checkbox" "c h" #'q/toggle-checkbox)
+#+END_SRC
+** export
+*** format datetime stamps
+**** remove brackets
+source: https://stackoverflow.com/a/33716338/4165300
+
+#+BEGIN_SRC elisp
+(defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
+  "removes relevant brackets from a timestamp"
+  (cond
+   ((org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+   ((org-export-derived-backend-p backend 'html)
+    (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))
+   )
+  )
+
+(eval-after-load 'ox '(add-to-list
+                       'org-export-filter-timestamp-functions
+                       'org-export-filter-timestamp-remove-brackets))
+#+END_SRC
+**** custom format
+#+begin_src elisp
+(setq org-time-stamp-custom-formats '("%e %B, %Y" . "%e %B, %Y, %H:%M h"))
+
+(defun my-org-export-ensure-custom-times (backend)
+  (setq-local org-display-custom-times t)
+  )
+
+(add-hook 'org-export-before-processing-hook 'my-org-export-ensure-custom-times)
+#+end_src
+https://emacs.stackexchange.com/a/34436/29471
+
+** tables
+*** shrink
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "shrink table" "t s" #'org-table-shrink))
+#+END_SRC
+
+*** expand
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (map!
+   :leader
+   :desc "expand table" "t e" #'org-table-expand))
+#+END_SRC
+** =org-super-agenda=
+*** retain =evil= bindings
+fix for Doom Emacs from GitHub issue in package repo
+#+begin_src elisp
+(setq org-super-agenda-header-map (make-sparse-keymap))
+#+end_src
+source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
+
+*** configure view
+no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
+#+begin_src elisp
+(setq org-super-agenda-groups
+      '(
+        (:name "time" :time-grid t)
+        (:name "overdue" :scheduled past :time-grid t)
+        (:name "prio" :auto-priority)
+        (:name "rout" :tag "rout")
+        (:name "work" :tag "work")
+        (:name "privat" :tag "privat")
+        (:name "method" :tag "method")
+        )
+      )
+#+end_src
+
+** =org-babel=
+*** default arguments for =jupyter-python=
+for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
+#+begin_src elisp
+(setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                     (:kernel . "qw")
+                                                     (:session . "jupy")
+                                                     ))
+#+end_src
