@@ -885,3 +885,8 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (deft-default-extension "org")
   (deft-directory "~/roam/"))
 #+end_src
+** set bibliography path
+#+begin_src elisp
+(setq reftex-default-bibliography "~/promo/bib/references.bib")
+#+end_src
+
