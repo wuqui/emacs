@@ -749,7 +749,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (setq
     org-ref-default-bibliography '("/Users/quirin/promo/bib/references.bib")
     org-ref-pdf-directory "/Users/quirin/promo/bib/pdfs/"
-    org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f")
+    ;; org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f")
     bibtex-completion-bibliography '("/Users/quirin/promo/bib/references.bib")
     bibtex-completion-library-path '("/Users/quirin/promo/bib/pdfs/")
     ;; bibtex-completion-notes-path "~/Dropbox/emacs/bibliography/notes/"
