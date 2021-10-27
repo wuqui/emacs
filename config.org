@@ -783,9 +783,16 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   :config
   (setq-default org-download-image-dir "./img/")
   (setq-default org-download-heading-lvl nil)
-   (setq org-download-annotate-function (lambda (_link) ""))
+  (setq org-download-annotate-function (lambda (_link) ""))
+  (map!
+   :leader
+   :prefix "j l"
+   :desc "org-download-clipboard" "c" #'org-download-clipboard
+   :desc "org-download-rename-last-file" "r" #'org-download-rename-last-file
+   )
   )
 #+END_SRC
+
 ** =org-transclusion=
 *** install
 #+begin_src elisp :tangle packages.el
