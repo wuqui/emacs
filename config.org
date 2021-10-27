@@ -867,9 +867,16 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (map!
    :leader
    :prefix "j a"
-   :desc "Anki / insert note" "i" #'anki-editor-insert-note
-   :desc "Anki / push notes" "i" #'anki-editor-push-notes
+   :desc "anki-editor / insert note" "i" #'anki-editor-insert-note
+   :desc "anki-editor / push notes" "p" #'anki-editor-push-notes
+   :desc "anki-editor / mode" "m" #'anki-editor-mode
    )
+  (fset 'anki-editor-copy-heading
+        (kmacro-lambda-form [?v ?_ ?l ?l ?y ?j ?j ?j ?o escape ?p ?j ?j ?j ?i] 0 "%d"))
+  (map!
+    :leader
+    :prefix "j a"
+    :desc "wrap extracted text in quote block" "h" #'anki-editor-copy-heading)
   )
 #+end_src
 
