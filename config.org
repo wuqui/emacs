@@ -890,3 +890,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 (setq reftex-default-bibliography "~/promo/bib/references.bib")
 #+end_src
 
+** set viewer app
+#+BEGIN_SRC elisp
+(setq +latex-viewers '(skim))
+#+END_SRC
