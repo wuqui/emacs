@@ -853,3 +853,11 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+BEGIN_SRC elisp
 (setq +latex-viewers '(skim))
 #+END_SRC
+* emojis
+#+begin_src elisp
+(map!
+ :leader
+ :prefix "i"
+ :desc "insert emoji" "e" #'emojify-insert-emoji
+ )
+#+end_src
