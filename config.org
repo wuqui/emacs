@@ -431,61 +431,6 @@ backup: ~(setq-default org-startup-folded t)~
  :desc "datestamp" "i d" #'org-time-stamp-inactive)
 #+END_SRC
 
-*** insert entities
-function by John Kitchin ([[https://kitchingroup.cheme.cmu.edu/blog/2015/11/21/Insert-org-entities-into-org-mode-with-helm/][source]])
-
-#+BEGIN_SRC emacs-lisp
-(defun helm-insert-org-entity ()
-  "Helm interface to insert an entity from `org-entities'.
-F1 inserts utf-8 character
-F2 inserts entity code
-F3 inserts LaTeX code (does not wrap in math-mode)
-F4 inserts HTML code"
-  (interactive)
-  (helm :sources (reverse
-                  (let ((sources '())
-                        toplevel
-                        secondlevel)
-                    (dolist (element (append
-                                      '("* User" "** User entities")
-                                      org-entities-user org-entities))
-                      (when (and (stringp element)
-                                 (s-starts-with? "* " element))
-                        (setq toplevel element))
-                      (when (and (stringp element)
-                                 (s-starts-with? "** " element))
-                        (setq secondlevel element)
-                        (add-to-list
-                         'sources
-                         `((name . ,(concat
-                                     toplevel
-                                     (replace-regexp-in-string
-                                      "\\*\\*" " - " secondlevel)))
-                           (candidates . nil)
-                           (action . (("insert utf-8 char" . (lambda (candidate)
-                                                               (insert (nth 6 candidate))))
-                                      ("insert org entity" . (lambda (candidate)
-                                                               (insert (concat "\\" (car candidate)))))
-                                      ("insert latex" . (lambda (candidate)
-                                                          (insert (nth 1 candidate))))
-                                      ("insert html" . (lambda (candidate)
-                                                         (insert (nth 3 candidate)))))))))
-                      (when (and element (listp element))
-                        (setf (cdr (assoc 'candidates (car sources)))
-                              (append
-                               (cdr (assoc 'candidates (car sources)))
-                               (list (cons
-                                      (format "%10s %s" (nth 6 element) element)
-                                      element))))))
-                    sources))))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(map!
- :leader
- :desc "insert org entity" "i e" #'helm-insert-org-entity)
-#+END_SRC
-
 *** insert file link
 #+BEGIN_SRC elisp
 (defun q/insert-file-link ()
