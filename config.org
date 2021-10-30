@@ -671,6 +671,52 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+begin_src elisp :tangle yes
 (use-package! vulpea)
 #+end_src
+**** [[id:b33061d6-d377-4403-941d-ff7e25aa5c08][search for backlinks intersection]]
+***** basic function
+#+begin_src elisp
+(defun vulpea-backlinks-many (notes)
+  "Return notes that link to all NOTES at the same time."
+  (let* ((blinks-all
+          (emacsql-with-transaction (org-roam-db)
+            (seq-map
+             (lambda (note)
+               (seq-map
+                #'vulpea-db--from-node
+                (seq-map
+                 #'org-roam-backlink-source-node
+                 (org-roam-backlinks-get
+                  (org-roam-populate
+                   (org-roam-node-from-id (vulpea-note-id note)))))))
+             notes))))
+    (seq-reduce
+     (lambda (r e)
+       (seq-intersection
+        r e
+        (lambda (a b)
+          (string-equal (vulpea-note-id a)
+                        (vulpea-note-id b)))))
+     blinks-all
+     (seq-uniq (apply #'append blinks-all)))))
+#+end_src
+
+#+RESULTS:
+: vulpea-backlinks-many
+
+***** interactive function
+#+begin_src elisp
+(defun select-backlinks-many ()
+  "It's hard to explain."
+  (interactive)
+  (let* ((notes (vulpea-utils-collect-while
+                 #'vulpea-select
+                 nil
+                 "Note" :require-match t))
+         (blinks (vulpea-backlinks-many notes)))
+    (completing-read
+     "Backlink: "
+     (seq-map #'vulpea-note-title blinks))))
+#+end_src
+
 
 ** =org-ref=
 *** install
