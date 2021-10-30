@@ -653,7 +653,11 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+begin_src elisp :tangle packages.el
 (unpin! org-roam)
 (package! websocket)
-(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+(package! org-roam-ui
+  :recipe (
+           :host github
+           :repo "org-roam/org-roam-ui"
+           :files ("*.el" "out")))
 #+end_src
 
 **** config
