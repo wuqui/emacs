@@ -3,6 +3,18 @@
 #+author: Quirin Würschinger
 #+property: header-args :results silent :tangle yes
 
+* fix for =native-comp :temp:
+** error
+#+begin_quote
+org-element-cache-map: Symbol’s function definition is void: native-comp-available-p
+#+end_quote
+
+** fix
+#+begin_src elisp
+(defun native-comp-available-p nil)
+#+end_src
+source: https://github.com/hlissner/doom-emacs/issues/5706#issuecomment-954966740
+
 * personal info
 #+BEGIN_SRC elisp
 (setq user-full-name "Quirin Würschinger"
