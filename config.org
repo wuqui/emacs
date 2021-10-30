@@ -127,7 +127,6 @@ Current pattern: %`evil-mc-pattern
   :prefix "g"
   :nv "z" #'my-mc-hydra/body))
 #+end_src
-
 * projectile
 ** set projects
 #+BEGIN_SRC elisp
@@ -227,6 +226,7 @@ backup: ~(setq-default org-startup-folded t)~
    :desc "q agenda" "q" #'q/org-agenda)
   )
 #+END_SRC
+
 *** agenda files
 #+BEGIN_SRC elisp
 (after! org
@@ -273,8 +273,7 @@ backup: ~(setq-default org-startup-folded t)~
 (setq org-agenda-archives-mode 't)
 #+end_src
 
-*** agenda view
-**** sorting strategy
+*** agenda view / sorting strategy
 #+begin_src elisp
 (setq org-agenda-sorting-strategy
       '(
@@ -286,12 +285,6 @@ backup: ~(setq-default org-startup-folded t)~
       )
 #+end_src
 
-*** log into drawer
-#+BEGIN_SRC elisp
-(after! org
-  (setq org-log-into-drawer t))
-#+END_SRC
-
 *** clocking
 **** clock into drawer
 #+BEGIN_SRC elisp
@@ -299,6 +292,11 @@ backup: ~(setq-default org-startup-folded t)~
   (setq org-clock-into-drawer "CLOCKBOOK"))
 #+END_SRC
 
+**** log into drawer
+#+BEGIN_SRC elisp
+(after! org
+  (setq org-log-into-drawer t))
+#+END_SRC
 **** clocking status
 #+BEGIN_SRC emacs-lisp
 (after! org
@@ -355,6 +353,10 @@ backup: ~(setq-default org-startup-folded t)~
     (mapcar (lambda (tag)
               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
             tags)))
+#+end_src
+**** don't remove clocking durations of =0=
+#+begin_src elisp
+(setq org-clock-out-remove-zero-time-clocks nil)
 #+end_src
 
 *** hide repeating items
@@ -728,7 +730,6 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
      "Backlink: "
      (seq-map #'vulpea-note-title blinks))))
 #+end_src
-
 
 ** =org-ref=
 *** install
