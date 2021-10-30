@@ -574,27 +574,29 @@ https://emacs.stackexchange.com/a/34436/29471
 (package! org-super-agenda)
 #+end_src
 
-*** retain =evil= bindings
-fix for Doom Emacs from GitHub issue in package repo
+*** configure
 #+begin_src elisp
-(setq org-super-agenda-header-map (make-sparse-keymap))
-#+end_src
-source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
-
-*** configure view
-no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
-#+begin_src elisp
-(setq org-super-agenda-groups
-      '(
-        (:name "time" :time-grid t)
-        (:name "overdue" :scheduled past :time-grid t)
-        (:name "prio" :auto-priority)
-        (:name "rout" :tag "rout")
-        (:name "work" :tag "work")
-        (:name "privat" :tag "privat")
-        (:name "method" :tag "method")
+(use-package! org-super-agenda
+  :after org
+  :init
+  ;; fix to retain evil bindings for Doom Emacs from GitHub issue in package repo; source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
+  (setq org-super-agenda-header-map (make-sparse-keymap))
+  :hook
+  (after-init . org-super-agenda-mode)
+  :config
+  (setq org-super-agenda-groups
+        ;; no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
+        '(
+          (:name "time" :time-grid t)
+          (:name "overdue" :scheduled past :time-grid t)
+          (:name "prio" :auto-priority)
+          (:name "rout" :tag "rout")
+          (:name "work" :tag "work")
+          (:name "privat" :tag "privat")
+          (:name "method" :tag "method")
+          )
         )
-      )
+  )
 #+end_src
 
 ** =org-babel=
