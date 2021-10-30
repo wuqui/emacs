@@ -825,6 +825,20 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (require 'org-transclusion-indent-mode)
   )
 #+end_src
+** bookmark headings using =org-bookmark-heading=
+*** install
+
+#+begin_src elisp :tangle packages.el
+(package! org-bookmark-heading
+  :recipe (:host github
+           :repo "alphapapa/org-bookmark-heading"))
+#+end_src
+
+*** configure
+
+#+begin_src elisp
+(use-package! org-bookmark-heading)
+#+end_src
 
 * workspaces
 #+begin_src elisp
