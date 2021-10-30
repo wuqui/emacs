@@ -605,6 +605,9 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (map!
    :leader
    :prefix "r"
+   :desc "sidebar" "r" #'org-roam-buffer-toggle
+   :desc "find file" "f" #'org-roam-node-find
+   :desc "insert" "i" #'org-roam-node-insert
    :desc "add alias" "a" #'org-roam-alias-add
    :desc "add tag" "l" #'org-roam-tag-add
    :desc "d / yesterday" "y" #'org-roam-dailies-goto-yesterday
@@ -613,9 +616,6 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
    :desc "d / date" "d" #'org-roam-dailies-goto-date
    :desc "d / previous" "p" #'org-roam-dailies-goto-previous-note
    :desc "d / next" "n" #'org-roam-dailies-goto-next-note
-   :desc "insert" "i" #'org-roam-insert
-   :desc "find file" "f" #'org-roam-node-find
-   :desc "sidebar" "r" #'org-roam-buffer-toggle
    )
   )
 #+END_SRC
@@ -844,6 +844,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (deft-default-extension "org")
   (deft-directory "~/roam/"))
 #+end_src
+* =LaTeX=
 ** set bibliography path
 #+begin_src elisp
 (setq reftex-default-bibliography "~/promo/bib/references.bib")
