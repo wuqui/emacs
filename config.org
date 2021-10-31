@@ -374,7 +374,6 @@ backup: ~(setq-default org-startup-folded t)~
             tags)))
 #+end_src
 **** don't remove clocking durations of =0=
-
 #+begin_src elisp
 (setq org-clock-out-remove-zero-time-clocks nil)
 #+end_src
@@ -800,38 +799,156 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+end_src
 
 ** =org-cite= et al.
-*** =citeproc=
+*** via =biblio= module only [2021-10-31 Sun]
+**** custom
+:PROPERTIES:
+:ID:       7dcf6a83-4019-41c9-90a3-6f002f6319b2
+:END:
+
+#+BEGIN_src  elisp
+(after! bibtex-completion
+  (setq! bibtex-completion-bibliography '("~/promo/bib/references.bib"))
+  (setq! bibtex-actions-bibliography '("~/promo/bib/references.bib"))
+  (setq! bibtex-completion-library-path '("~/promo/bib/pdfs/")
+         bibtex-completion-notes-path "~/roam/")
+  (setq! bibtex-actions-library-paths '("~/promo/bib/pdfs/")
+         bibtex-actions-notes-paths '("~/roam/")))
+#+END_src
+
+**** =config.el=
+#+begin_src elisp
+(use-package! bibtex-completion
+  :defer t
+  :config
+  (setq bibtex-completion-additional-search-fields '(keywords)
+        bibtex-completion-pdf-field "file"));; This tell bibtex-completion to look at the File field of the bibtex to figure out which pdf to open
+
+(use-package! ivy-bibtex
+  :when (featurep! :completion ivy)
+  :defer t
+  :config
+  (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-plus)))
+
+(use-package! bibtex-actions
+  :when (featurep! :completion vertico)
+  :after embark bibtex-completion
+  :config
+  (add-to-list 'embark-keymap-alist '(bib-reference . bibtex-actions-map))
+  (when (featurep! +roam2)
+    setq bibtex-actions-file-note-org-include '(org-id org-roam-ref)))
+
+(use-package! citeproc
+  :defer t)
+
+;;; Org-Cite configuration
+
+(use-package! oc
+  :after org bibtex-completion bibtex-actions
+  :config
+  (require 'ox)
+  (map! :map org-mode-map
+        :localleader
+        :desc "Insert citation" "@" #'org-cite-insert)
+  (setq org-cite-global-bibliography
+        (let ((paths (or bibtex-actions-bibliography
+                         bibtex-completion-bibliography)))
+          ;; Always return bibliography paths as list for org-cite.
+          (if (stringp paths) (list paths) paths)))
+  ;; setup export processor; default csl/citeproc-el, with biblatex for latex
+  (setq org-cite-export-processors
+        '((latex biblatex)
+          (t csl))))
+
+  ;;; Org-cite processors
+(use-package! oc-biblatex
+  :after oc)
+
+(use-package! oc-csl
+  :after oc)
+
+(use-package! oc-natbib
+  :after oc)
+
+;;;; Third-party
+
+(use-package! oc-bibtex-actions
+  :when (featurep! :completion vertico)
+  :after oc
+  :defer t
+  :init
+  ;; While this processor is registered within 'oc-bibtex-actions', we do it here
+  ;; to avoid having to load it upfront.
+
+  ;; the following lines produce the current error
+  ;; (org-cite-register-processor 'oc-bibtex-actions
+  ;;   :insert (org-cite-make-insert-processor
+  ;;            #'oc-bibtex-actions-insert
+  ;;            #'oc-bibtex-actions-select-style)
+  ;;   :follow #'oc-bibtex-actions-follow
+  ;;   :activate #'oc-bibtex-actions-activate)
+
+  (setq org-cite-insert-processor 'oc-bibtex-actions
+        org-cite-follow-processor 'oc-bibtex-actions
+        org-cite-activate-processor 'oc-bibtex-actions
+        ;; The activate processor relies on shift-select, so we set to t.
+        org-support-shift-select t)
+  :config
+  (when (featurep! :lang org +roam2)
+    ;; Include property drawer metadata for 'org-roam' v2.
+    (setq bibtex-actions-file-note-org-include '(org-id org-roam-ref))))
+#+end_src
+
+**** =packages.el=
 
 #+begin_src elisp :tangle packages.el
+(package! bibtex-completion :pin "bb47f355b0da8518aa3fb516019120c14c8747c9")
+(when (featurep! :completion ivy)
+  (package! ivy-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
+(when (featurep! :completion helm)
+  (package! helm-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
+(when (featurep! :completion vertico)
+  (package! bibtex-actions :pin "e9128d8faf9f6e038eb84a718abba2e415e92fdf"))
+
+(package! citeproc :pin "c8ff95862823cdff067e8cc9bb7f5ef537e8f1d9")
+#+end_src
+
+*** manual setup :inactive:
+**** =citeproc= :inactive:
+:PROPERTIES:
+:ID:       4b0ddf4f-7dc9-4726-9de7-48d5c74db733
+:END:
+
+#+begin_src elisp :tangle no
 (package! citeproc)
 #+end_src
 
-*** =oc=
+**** =oc= :inactive:
 
-#+begin_src elisp :tangle yes
+#+begin_src elisp :tangle no
 (use-package! oc)
 #+end_src
 
-*** =oc-csl=
+**** =oc-csl= :inactive:
 
-#+begin_src elisp :tangle yes
+#+begin_src elisp :tangle no
 (use-package! oc-csl)
 #+end_src
 
-*** =oc-biblatex=
+**** =oc-biblatex= :inactive:
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package! oc-biblatex)
 #+end_src
-*** =bibtex-completion=
 
-#+begin_src elisp
+**** =bibtex-completion= :inactive:
+
+#+begin_src elisp :tangle no
 (use-package! bibtex-completion)
 #+end_src
 
-*** =bibtex-actions=
+**** =bibtex-actions= :inactive:
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package! bibtex-actions
   :bind (("C-c b" . bibtex-actions-insert-citation)
          :map minibuffer-local-map
