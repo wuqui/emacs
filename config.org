@@ -800,19 +800,25 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 
 ** =org-cite= et al.
 *** via =biblio= module only [2021-10-31 Sun]
-**** custom
+**** custom settings
 :PROPERTIES:
 :ID:       7dcf6a83-4019-41c9-90a3-6f002f6319b2
 :END:
 
 #+BEGIN_src  elisp
+(defvar qw/ref-bib '("/Users/quirin/promo/bib/references.bib"))
+(defvar qw/ref-pdfs '("/Users/quirin/promo/bib/pdfs/"))
+(defvar qw/ref-notes "/Users/quirin/roam/")
+
 (after! bibtex-completion
-  (setq! bibtex-completion-bibliography '("~/promo/bib/references.bib"))
-  (setq! bibtex-actions-bibliography '("~/promo/bib/references.bib"))
-  (setq! bibtex-completion-library-path '("~/promo/bib/pdfs/")
-         bibtex-completion-notes-path "~/roam/")
-  (setq! bibtex-actions-library-paths '("~/promo/bib/pdfs/")
-         bibtex-actions-notes-paths '("~/roam/")))
+  (setq org-cite-global-bibliography qw/ref-bib)
+  (setq bibtex-completion-bibliography qw/ref-bib)
+  (setq bibtex-actions-bibliography qw/ref-bib)
+  (setq! bibtex-completion-library-path qw/ref-pdfs)
+  (setq! bibtex-completion-notes-path qw/ref-notes)
+  (setq! bibtex-actions-library-paths qw/ref-pdfs)
+  (setq! bibtex-actions-notes-paths qw/ref-notes)
+  )
 #+END_src
 
 **** =config.el=
