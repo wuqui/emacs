@@ -1107,7 +1107,8 @@ source: https://github.com/bdarcus/bibtex-actions
   (require 'org-transclusion-indent-mode)
   )
 #+end_src
-** bookmark headings using =org-bookmark-heading=
+** =org-bookmark-heading=
+for bookmarking org headings
 *** install
 
 #+begin_src elisp :tangle packages.el
@@ -1120,6 +1121,15 @@ source: https://github.com/bdarcus/bibtex-actions
 
 #+begin_src elisp
 (use-package! org-bookmark-heading)
+#+end_src
+** =org-babel=
+*** default header arguments: don't evaluate for export
+
+#+begin_src elisp
+(after! org
+  (setq org-babel-default-header-args
+        (cons '(:eval . "no-export")
+              (assq-delete-all :noweb org-babel-default-header-args))))
 #+end_src
 
 * workspaces
