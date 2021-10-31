@@ -759,14 +759,14 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
      (seq-map #'vulpea-note-title blinks))))
 #+end_src
 
-** =org-ref=
+** =org-ref= :inactive:
 *** install
-#+begin_src elisp :tangle packages.el
+#+begin_src elisp :tangle no
 (package! org-ref)
 #+end_src
 
 *** configure
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package! org-ref
   :after org
   :init
@@ -799,13 +799,130 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 )
 #+end_src
 
+** =org-cite= et al.
+*** =citeproc=
+
+#+begin_src elisp :tangle packages.el
+(package! citeproc)
+#+end_src
+
+*** =oc=
+
+#+begin_src elisp :tangle yes
+(use-package! oc)
+#+end_src
+
+*** =oc-csl=
+
+#+begin_src elisp :tangle yes
+(use-package! oc-csl)
+#+end_src
+
+*** =oc-biblatex=
+
+#+begin_src elisp
+(use-package! oc-biblatex)
+#+end_src
+*** =bibtex-completion=
+
+#+begin_src elisp
+(use-package! bibtex-completion)
+#+end_src
+
+*** =bibtex-actions=
+
+#+begin_src elisp
+(use-package! bibtex-actions
+  :bind (("C-c b" . bibtex-actions-insert-citation)
+         :map minibuffer-local-map
+         ("M-b" . bibtex-actions-insert-preset))
+  :after (embark bibtex-completion)
+  :config
+  (add-to-list 'embark-target-finders 'bibtex-actions-citation-key-at-point)
+  (add-to-list 'embark-keymap-alist '(bib-reference . bibtex-actions-map))
+  (add-to-list 'embark-keymap-alist '(citation-key . bibtex-actions-buffer-map))
+  (setq bibtex-actions-bibliography '("~/promo/bib/references.bib"))
+
+;; use consult-completing-read for enhanced interface
+(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple))
+#+end_src
+
+#+RESULTS:
+: bibtex-actions-insert-preset
+
+*** =oc-bibtex-actions=
+
+**** install
+
+#+begin_src elisp :tangle packages.el
+(package! bibtex-actions
+  :recipe (:host github
+           :repo "bdarcus/bibtex-actions"))
+#+end_src
+
+**** configure
+#+begin_src elisp :tangle yes
+(defvar my/bibs '("~promo/bib/references.bib"))
+
+(use-package oc-bibtex-actions
+  :bind (("C-c b" . org-cite-insert)
+         ("M-o" . org-open-at-point)
+         :map minibuffer-local-map
+         ("M-b" . bibtex-actions-insert-preset))
+  :after (embark oc)
+  :config
+  (setq bibtex-actions-bibliography my/bibs
+        org-cite-global-bibliography my/bibs
+        org-cite-insert-processor 'oc-bibtex-actions
+        org-cite-follow-processor 'oc-bibtex-actions
+        org-cite-activate-processor 'oc-bibtex-actions))
+
+;; Use consult-completing-read for enhanced interface.
+(advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
+#+end_src
+source: https://github.com/bdarcus/bibtex-actions
+
+#+begin_src elisp :tangle no
+(setq bibtex-actions-at-point-function 'embark-act)
+#+end_src
+
+*** =bibtex-actions= templates
+
+#+begin_src elisp
+(setq bibtex-actions-templates
+      '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
+        (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
+        (note . "#+title: Notes on ${author editor}, ${title}")))
+#+end_src
+
+*** using =all-the-icons= for =bibtex-actions=
+
+#+begin_src elisp
+(setq bibtex-actions-symbols
+  `((file . (,(all-the-icons-icon-for-file "foo.pdf" :face 'all-the-icons-dred) .
+            ,(all-the-icons-icon-for-file "foo.pdf" :face 'bibtex-actions-icon-dim)))
+    (note . (,(all-the-icons-icon-for-file "foo.txt") .
+            ,(all-the-icons-icon-for-file "foo.txt" :face 'bibtex-actions-icon-dim)))
+    (link .
+        (,(all-the-icons-faicon "external-link-square" :v-adjust 0.02 :face 'all-the-icons-dpurple) .
+        ,(all-the-icons-faicon "external-link-square" :v-adjust 0.02 :face 'bibtex-actions-icon-dim)))))
+;; Here we define a face to dim non 'active' icons, but preserve alignment
+(defface bibtex-actions-icon-dim
+    '((((background dark)) :foreground "#282c34")
+     (((background light)) :foreground "#fafafa"))
+     "Face for obscuring/dimming icons"
+     :group 'all-the-icons-faces)
+#+end_src
+source: https://github.com/bdarcus/bibtex-actions
+
+#+RESULTS:
+: bibtex-actions-icon-dim
 ** =org-download=
 *** installation
 #+begin_src elisp :tangle packages.el
 (package! org-download
   :recipe (:host github
            :repo "abo-abo/org-download"))
-
 #+end_src
 
 *** configuration
