@@ -865,6 +865,20 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
                                      (html csl))))
 #+end_src
 
+**** =packages.el=
+
+#+begin_src elisp :tangle packages.el
+(package! bibtex-completion :pin "bb47f355b0da8518aa3fb516019120c14c8747c9")
+(when (featurep! :completion ivy)
+  (package! ivy-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
+(when (featurep! :completion helm)
+  (package! helm-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
+(when (featurep! :completion vertico)
+  (package! bibtex-actions :pin "e9128d8faf9f6e038eb84a718abba2e415e92fdf"))
+
+(package! citeproc :pin "c8ff95862823cdff067e8cc9bb7f5ef537e8f1d9")
+#+end_src
+
 **** =config.el=
 #+begin_src elisp
 (use-package! bibtex-completion
@@ -949,20 +963,6 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (when (featurep! :lang org +roam2)
     ;; Include property drawer metadata for 'org-roam' v2.
     (setq bibtex-actions-file-note-org-include '(org-id org-roam-ref))))
-#+end_src
-
-**** =packages.el=
-
-#+begin_src elisp :tangle packages.el
-(package! bibtex-completion :pin "bb47f355b0da8518aa3fb516019120c14c8747c9")
-(when (featurep! :completion ivy)
-  (package! ivy-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
-(when (featurep! :completion helm)
-  (package! helm-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
-(when (featurep! :completion vertico)
-  (package! bibtex-actions :pin "e9128d8faf9f6e038eb84a718abba2e415e92fdf"))
-
-(package! citeproc :pin "c8ff95862823cdff067e8cc9bb7f5ef537e8f1d9")
 #+end_src
 
 *** manual setup :inactive:
@@ -1157,16 +1157,6 @@ for bookmarking org headings
 #+begin_src elisp
 (use-package! org-bookmark-heading)
 #+end_src
-** =org-babel=
-*** default header arguments: don't evaluate for export
-
-#+begin_src elisp
-(after! org
-  (setq org-babel-default-header-args
-        (cons '(:eval . "no-export")
-              (assq-delete-all :noweb org-babel-default-header-args))))
-#+end_src
-
 * workspaces
 #+begin_src elisp
 (map!
