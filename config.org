@@ -558,7 +558,7 @@ https://emacs.stackexchange.com/a/34436/29471
 (setq org-odt-preferred-output-format "docx")
 #+end_src
 
-** tables
+** =org-tables=
 *** shrink
 #+BEGIN_SRC emacs-lisp
 (after! org
@@ -574,6 +574,33 @@ https://emacs.stackexchange.com/a/34436/29471
    :leader
    :desc "expand table" "t e" #'org-table-expand))
 #+END_SRC
+*** =orgtbl-aggregate=
+:PROPERTIES:
+:ID:       a6973000-50f7-448f-b5f7-feeb01770e8c
+:END:
+**** install
+#+begin_src elisp :tangle packages.el
+(package! orgtbl-aggregate)
+#+end_src
+*** =orgtbljoin=
+:PROPERTIES:
+:ID:       bd489b47-ecb9-4f8f-ad3a-9a32e3fe0ce5
+:END:
+**** install
+
+#+begin_src elisp :tangle packages.el
+(package! orgtbl-join
+  :recipe (:host github
+           :repo "tbanel/orgtbljoin"))
+#+end_src
+
+**** config
+
+#+begin_src elisp
+(use-package! orgtbl-join
+  :after org)
+#+end_src
+
 ** =org-super-agenda=
 *** install
 #+begin_src elisp :tangle packages.el
