@@ -641,6 +641,14 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
                                                      (:session . "jupy")
                                                      ))
 #+end_src
+*** default header arguments: don't evaluate for export
+
+#+begin_src elisp
+(after! org
+  (setq org-babel-default-header-args
+        (cons '(:eval . "no-export")
+              (assq-delete-all :noweb org-babel-default-header-args))))
+#+end_src
 ** =org-roam=
 *** config
 #+BEGIN_SRC emacs-lisp
