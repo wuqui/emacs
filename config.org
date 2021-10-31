@@ -967,18 +967,19 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+RESULTS:
 : bibtex-actions-insert-preset
 
-*** =oc-bibtex-actions=
+**** =oc-bibtex-actions=
 
-**** install
+***** install :inactive:
 
-#+begin_src elisp :tangle packages.el
+#+begin_src elisp :tangle no
 (package! bibtex-actions
   :recipe (:host github
            :repo "bdarcus/bibtex-actions"))
 #+end_src
 
-**** configure
-#+begin_src elisp :tangle yes
+***** configure :inactive:
+
+#+begin_src elisp :tangle no
 (defvar my/bibs '("~promo/bib/references.bib"))
 
 (use-package oc-bibtex-actions
@@ -1003,18 +1004,18 @@ source: https://github.com/bdarcus/bibtex-actions
 (setq bibtex-actions-at-point-function 'embark-act)
 #+end_src
 
-*** =bibtex-actions= templates
+**** =bibtex-actions= templates :inactive:
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (setq bibtex-actions-templates
       '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
         (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
         (note . "#+title: Notes on ${author editor}, ${title}")))
 #+end_src
 
-*** using =all-the-icons= for =bibtex-actions=
+**** using =all-the-icons= for =bibtex-actions= :inactive:
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (setq bibtex-actions-symbols
   `((file . (,(all-the-icons-icon-for-file "foo.pdf" :face 'all-the-icons-dred) .
             ,(all-the-icons-icon-for-file "foo.pdf" :face 'bibtex-actions-icon-dim)))
@@ -1036,6 +1037,7 @@ source: https://github.com/bdarcus/bibtex-actions
 : bibtex-actions-icon-dim
 ** =org-download=
 *** installation
+
 #+begin_src elisp :tangle packages.el
 (package! org-download
   :recipe (:host github
