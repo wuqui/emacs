@@ -850,10 +850,10 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   (setq org-cite-global-bibliography qw/ref-bib)
   (setq bibtex-completion-bibliography qw/ref-bib)
   (setq bibtex-actions-bibliography qw/ref-bib)
-  (setq! bibtex-completion-library-path qw/ref-pdfs)
-  (setq! bibtex-completion-notes-path qw/ref-notes)
-  (setq! bibtex-actions-library-paths qw/ref-pdfs)
-  (setq! bibtex-actions-notes-paths qw/ref-notes)
+  (setq bibtex-completion-library-path qw/ref-pdfs)
+  (setq bibtex-completion-notes-path qw/ref-notes)
+  (setq bibtex-actions-library-paths qw/ref-pdfs)
+  (setq bibtex-actions-notes-paths qw/ref-notes)
   )
 #+END_src
 
