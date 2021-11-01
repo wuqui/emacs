@@ -134,7 +134,7 @@ Current pattern: %`evil-mc-pattern
   :prefix "g"
   :nv "z" #'my-mc-hydra/body))
 #+end_src
-* projectile
+* =projectile=
 ** set projects
 #+BEGIN_SRC elisp
 (after! projectile
@@ -171,7 +171,7 @@ Current pattern: %`evil-mc-pattern
  :desc "switch workspace" "y" #'+workspace/switch-to)
 #+end_src
 
-* org
+* =org-mode=
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
 #+BEGIN_SRC elisp
@@ -208,12 +208,6 @@ backup: ~(setq-default org-startup-folded t)~
 (setq org-directory "~/org/")
 #+END_SRC
  org
-** image width
-#+begin_src elisp
-(after! org
-  (setq org-image-actual-width 500))
-#+end_src
-
 ** agenda
 *** custom agenda command
 #+BEGIN_SRC elisp
@@ -362,8 +356,12 @@ backup: ~(setq-default org-startup-folded t)~
             tags)))
 #+end_src
 **** don't remove clocking durations of =0=
+:PROPERTIES:
+:ID:       bf7b878f-a4f9-4034-821a-ae8d73b6b661
+:END:
 #+begin_src elisp
-(setq org-clock-out-remove-zero-time-clocks nil)
+(after! org
+  (setq org-clock-out-remove-zero-time-clocks nil))
 #+end_src
 
 *** hide repeating items
@@ -377,6 +375,16 @@ backup: ~(setq-default org-startup-folded t)~
 (after! org
   (setq org-agenda-skip-scheduled-if-done t))
 #+END_SRC
+** use IDs for links
+#+begin_src elisp
+(setq org-id-link-to-org-use-id 'use-existing)
+#+end_src
+
+** image width
+#+begin_src elisp
+(after! org
+  (setq org-image-actual-width 500))
+#+end_src
 
 ** subtree operations
 *** mark
