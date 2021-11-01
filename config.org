@@ -1154,9 +1154,9 @@ for bookmarking org headings
 #+begin_src elisp
 (use-package! org-bookmark-heading)
 #+end_src
-** =org-tree-slide=
+** =org-tree-slide= :inactive:
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (after! org-tree-slide
   (advice-remove 'org-tree-slide--display-tree-with-narrow
                  #'+org-present--narrow-to-subtree-a)
