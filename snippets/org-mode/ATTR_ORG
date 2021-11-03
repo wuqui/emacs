@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ATTR_ORG
+# key: attrorg
+# --
+#+ATTR_ORG: $1

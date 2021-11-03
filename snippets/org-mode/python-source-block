@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: python-source-block
+# key: <p
+# --
+#+begin_src jupyter-python
+$0
+#+end_src

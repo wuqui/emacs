@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: startup
+# key: stup
+# --
+#+STARTUP: overview$1
