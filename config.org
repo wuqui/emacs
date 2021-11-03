@@ -139,7 +139,8 @@ Current pattern: %`evil-mc-pattern
 ** set =yasnippets= completion key
 
 #+begin_src elisp
-(define-key yas-minor-mode-map (kbd "<") yas-maybe-expand)
+(after! yasnippet
+  (define-key yas-minor-mode-map (kbd "<") yas-maybe-expand))
 #+end_src
 
 * =projectile=
