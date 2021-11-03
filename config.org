@@ -58,25 +58,6 @@ source: https://stackoverflow.com/a/3378391
  :prefix "j"
  :desc "move file here" "m" #'rename-file)
 #+END_SRC
-** switch to recents using =dogears=
-*** install
-#+begin_src elisp :tangle packages.el
-(package! dogears
-  :recipe (:host github
-           :repo "alphapapa/dogears.el"
-           :files (:defaults (:exclude "helm-dogears.el"))))
-#+end_src
-
-*** configure
-#+begin_src elisp
-(use-package! dogears
-  :bind (:map global-map
-         ("M-g d" . dogears-go)
-         ("M-g M-b" . dogears-back)
-         ("M-g M-f" . dogears-forward)
-         ("M-g M-d" . dogears-list)
-         ("M-g M-D" . dogears-sidebar)))
-#+end_src
 ** save all buffers & session
 :PROPERTIES:
 :ID:       58d59619-a84d-4396-ab58-81ebaca0c0ed
