@@ -1,5 +1,5 @@
-# key: keyb
+# key: kbd
 # name: org-keybinding
 # --
-| kbd | =$1= |
+| kbd | =$0= |
 | cmd | ~~ |
