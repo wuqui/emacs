@@ -884,11 +884,11 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 ;; (after! bibtex-completion
   (setq org-cite-global-bibliography qw/ref-bib)
   (setq bibtex-completion-bibliography qw/ref-bib)
-  (setq bibtex-actions-bibliography qw/ref-bib)
+  (setq citar-bibliography qw/ref-bib)
   (setq bibtex-completion-library-path qw/ref-pdfs)
   (setq bibtex-completion-notes-path qw/ref-notes)
-  (setq bibtex-actions-library-paths qw/ref-pdfs)
-  (setq bibtex-actions-notes-paths qw/ref-notes)
+  (setq citar-library-paths qw/ref-pdfs)
+  (setq citar-notes-paths qw/ref-notes)
   ;; )
 #+END_src
 
@@ -909,7 +909,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 (when (featurep! :completion helm)
   (package! helm-bibtex :pin "bb47f355b0da8518aa3fb516019120c14c8747c9"))
 (when (featurep! :completion vertico)
-  (package! bibtex-actions :pin "e9128d8faf9f6e038eb84a718abba2e415e92fdf"))
+  (package! citar :pin "e9128d8faf9f6e038eb84a718abba2e415e92fdf"))
 
 (package! citeproc :pin "c8ff95862823cdff067e8cc9bb7f5ef537e8f1d9")
 #+end_src
@@ -928,13 +928,13 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   :config
   (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-plus)))
 
-(use-package! bibtex-actions
+(use-package! citar
   :when (featurep! :completion vertico)
   :after embark bibtex-completion
   :config
-  (add-to-list 'embark-keymap-alist '(bib-reference . bibtex-actions-map))
+  (add-to-list 'embark-keymap-alist '(bib-reference . citar-map))
   (when (featurep! +roam2)
-    setq bibtex-actions-file-note-org-include '(org-id org-roam-ref)))
+    setq citar-file-note-org-include '(org-id org-roam-ref)))
 
 (use-package! citeproc
   :defer t)
@@ -942,14 +942,14 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 ;;; Org-Cite configuration
 
 (use-package! oc
-  :after org bibtex-completion bibtex-actions
+  :after org bibtex-completion citar
   :config
   (require 'ox)
   (map! :map org-mode-map
         :localleader
         :desc "Insert citation" "@" #'org-cite-insert)
   (setq org-cite-global-bibliography
-        (let ((paths (or bibtex-actions-bibliography
+        (let ((paths (or citar-bibliography
                          bibtex-completion-bibliography)))
           ;; Always return bibliography paths as list for org-cite.
           (if (stringp paths) (list paths) paths)))
@@ -973,31 +973,31 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 
 ;;;; Third-party
 
-(use-package! oc-bibtex-actions
+(use-package! oc-citar
   :when (featurep! :completion vertico)
   :after oc
   :defer t
   :init
-  ;; While this processor is registered within 'oc-bibtex-actions', we do it here
+  ;; While this processor is registered within 'oc-citar', we do it here
   ;; to avoid having to load it upfront.
 
   ;; the following lines produce the current error
-  ;; (org-cite-register-processor 'oc-bibtex-actions
+  ;; (org-cite-register-processor 'oc-citar
   ;;   :insert (org-cite-make-insert-processor
-  ;;            #'oc-bibtex-actions-insert
-  ;;            #'oc-bibtex-actions-select-style)
-  ;;   :follow #'oc-bibtex-actions-follow
-  ;;   :activate #'oc-bibtex-actions-activate)
+  ;;            #'oc-citar-insert
+  ;;            #'oc-citar-select-style)
+  ;;   :follow #'oc-citar-follow
+  ;;   :activate #'oc-citar-activate)
 
-  (setq org-cite-insert-processor 'oc-bibtex-actions
-        org-cite-follow-processor 'oc-bibtex-actions
-        org-cite-activate-processor 'oc-bibtex-actions
+  (setq org-cite-insert-processor 'oc-citar
+        org-cite-follow-processor 'oc-citar
+        org-cite-activate-processor 'oc-citar
         ;; The activate processor relies on shift-select, so we set to t.
         org-support-shift-select t)
   :config
   (when (featurep! :lang org +roam2)
     ;; Include property drawer metadata for 'org-roam' v2.
-    (setq bibtex-actions-file-note-org-include '(org-id org-roam-ref))))
+    (setq citar-file-note-org-include '(org-id org-roam-ref))))
 #+end_src
 
 *** manual setup :inactive:
@@ -1034,35 +1034,35 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 (use-package! bibtex-completion)
 #+end_src
 
-**** =bibtex-actions= :inactive:
+**** =citar= :inactive:
 
 #+begin_src elisp :tangle no
-(use-package! bibtex-actions
-  :bind (("C-c b" . bibtex-actions-insert-citation)
+(use-package! citar
+  :bind (("C-c b" . citar-insert-citation)
          :map minibuffer-local-map
-         ("M-b" . bibtex-actions-insert-preset))
+         ("M-b" . citar-insert-preset))
   :after (embark bibtex-completion)
   :config
-  (add-to-list 'embark-target-finders 'bibtex-actions-citation-key-at-point)
-  (add-to-list 'embark-keymap-alist '(bib-reference . bibtex-actions-map))
-  (add-to-list 'embark-keymap-alist '(citation-key . bibtex-actions-buffer-map))
-  (setq bibtex-actions-bibliography '("~/promo/bib/references.bib"))
+  (add-to-list 'embark-target-finders 'citar-citation-key-at-point)
+  (add-to-list 'embark-keymap-alist '(bib-reference . citar-map))
+  (add-to-list 'embark-keymap-alist '(citation-key . citar-buffer-map))
+  (setq citar-bibliography '("~/promo/bib/references.bib"))
 
 ;; use consult-completing-read for enhanced interface
 (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple))
 #+end_src
 
 #+RESULTS:
-: bibtex-actions-insert-preset
+: citar-insert-preset
 
-**** =oc-bibtex-actions=
+**** =oc-citar=
 
 ***** install :inactive:
 
 #+begin_src elisp :tangle no
-(package! bibtex-actions
+(package! citar
   :recipe (:host github
-           :repo "bdarcus/bibtex-actions"))
+           :repo "bdarcus/citar"))
 #+end_src
 
 ***** configure :inactive:
@@ -1070,59 +1070,59 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+begin_src elisp :tangle no
 (defvar my/bibs '("~promo/bib/references.bib"))
 
-(use-package oc-bibtex-actions
+(use-package oc-citar
   :bind (("C-c b" . org-cite-insert)
          ("M-o" . org-open-at-point)
          :map minibuffer-local-map
-         ("M-b" . bibtex-actions-insert-preset))
+         ("M-b" . citar-insert-preset))
   :after (embark oc)
   :config
-  (setq bibtex-actions-bibliography my/bibs
+  (setq citar-bibliography my/bibs
         org-cite-global-bibliography my/bibs
-        org-cite-insert-processor 'oc-bibtex-actions
-        org-cite-follow-processor 'oc-bibtex-actions
-        org-cite-activate-processor 'oc-bibtex-actions))
+        org-cite-insert-processor 'oc-citar
+        org-cite-follow-processor 'oc-citar
+        org-cite-activate-processor 'oc-citar))
 
 ;; Use consult-completing-read for enhanced interface.
 (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 #+end_src
-source: https://github.com/bdarcus/bibtex-actions
+source: https://github.com/bdarcus/citar
 
 #+begin_src elisp :tangle no
-(setq bibtex-actions-at-point-function 'embark-act)
+(setq citar-at-point-function 'embark-act)
 #+end_src
 
-**** =bibtex-actions= templates :inactive:
+**** =citar= templates :inactive:
 
 #+begin_src elisp :tangle no
-(setq bibtex-actions-templates
+(setq citar-templates
       '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
         (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
         (note . "#+title: Notes on ${author editor}, ${title}")))
 #+end_src
 
-**** using =all-the-icons= for =bibtex-actions= :inactive:
+**** using =all-the-icons= for =citar= :inactive:
 
 #+begin_src elisp :tangle no
-(setq bibtex-actions-symbols
+(setq citar-symbols
   `((file . (,(all-the-icons-icon-for-file "foo.pdf" :face 'all-the-icons-dred) .
-            ,(all-the-icons-icon-for-file "foo.pdf" :face 'bibtex-actions-icon-dim)))
+            ,(all-the-icons-icon-for-file "foo.pdf" :face 'citar-icon-dim)))
     (note . (,(all-the-icons-icon-for-file "foo.txt") .
-            ,(all-the-icons-icon-for-file "foo.txt" :face 'bibtex-actions-icon-dim)))
+            ,(all-the-icons-icon-for-file "foo.txt" :face 'citar-icon-dim)))
     (link .
         (,(all-the-icons-faicon "external-link-square" :v-adjust 0.02 :face 'all-the-icons-dpurple) .
-        ,(all-the-icons-faicon "external-link-square" :v-adjust 0.02 :face 'bibtex-actions-icon-dim)))))
+        ,(all-the-icons-faicon "external-link-square" :v-adjust 0.02 :face 'citar-icon-dim)))))
 ;; Here we define a face to dim non 'active' icons, but preserve alignment
-(defface bibtex-actions-icon-dim
+(defface citar-icon-dim
     '((((background dark)) :foreground "#282c34")
      (((background light)) :foreground "#fafafa"))
      "Face for obscuring/dimming icons"
      :group 'all-the-icons-faces)
 #+end_src
-source: https://github.com/bdarcus/bibtex-actions
+source: https://github.com/bdarcus/citar
 
 #+RESULTS:
-: bibtex-actions-icon-dim
+: citar-icon-dim
 ** =org-download=
 *** installation
 
