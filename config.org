@@ -200,7 +200,7 @@ backup: ~(setq-default org-startup-folded t)~
   (map!
    :leader
    :prefix "j"
-   :desc "fold other trees" "f" #'org-show-current-heading-tidily))
+   :desc "fold other trees" "j" #'org-show-current-heading-tidily))
 #+end_src
 
 ** org dir
