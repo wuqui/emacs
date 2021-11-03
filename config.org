@@ -155,6 +155,12 @@ Current pattern: %`evil-mc-pattern
   :prefix "g"
   :nv "z" #'my-mc-hydra/body))
 #+end_src
+** set =yasnippets= completion key
+
+#+begin_src elisp
+(define-key yas-minor-mode-map (kbd "<") yas-maybe-expand)
+#+end_src
+
 * =projectile=
 ** set projects
 #+BEGIN_SRC elisp
