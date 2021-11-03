@@ -77,6 +77,27 @@ source: https://stackoverflow.com/a/3378391
          ("M-g M-d" . dogears-list)
          ("M-g M-D" . dogears-sidebar)))
 #+end_src
+** save all buffers & session
+:PROPERTIES:
+:ID:       58d59619-a84d-4396-ab58-81ebaca0c0ed
+:END:
+
+#+begin_src elisp
+(defun q/save-buffers-and-session ()
+  (interactive)
+  (evil-write-all nil)
+  (doom/quicksave-session)
+  )
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "save buffers & session"
+ :leader
+ :prefix "j"
+ "s" #'q/save-buffers-and-session
+ )
+#+end_src
 
 * windows and frames
 ** hydra for managing windows
