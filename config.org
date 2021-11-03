@@ -1324,3 +1324,11 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
         ("\\.pdf\\'" . default)
         ))
 #+end_src
+* insert lorem ipsum
+:PROPERTIES:
+:ID:       bb64534c-e149-459c-807b-b59b158a6a60
+:END:
+
+#+begin_src elisp :tangle packages.el
+(package! lorem-ipsum)
+#+end_src
