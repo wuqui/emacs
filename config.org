@@ -211,19 +211,22 @@ backup: ~(setq-default org-startup-folded t)~
 
 #+begin_src elisp
 (defun org-show-current-heading-tidily ()
-  (interactive)  ;Inteactive
+  (interactive)
   "Show next entry, keeping other entries closed."
-  (if (save-excursion (end-of-line) (outline-invisible-p))
-      (progn (org-show-entry) (show-children))
-    (outline-back-to-heading)
-    (unless (and (bolp) (org-on-heading-p))
-      (org-up-heading-safe)
-      (hide-subtree)
-      (error "Boundary reached"))
-    (org-overview)
-    (org-reveal t)
-    (org-show-entry)
-    (show-children)))
+  (dotimes (_ 2)
+    (if (save-excursion (end-of-line) (outline-invisible-p))
+        (progn (org-show-entry) (show-children))
+      (outline-back-to-heading)
+      (unless (and (bolp) (org-on-heading-p))
+        (org-up-heading-safe)
+        (hide-subtree)
+        (error "Boundary reached"))
+      (org-overview)
+      (org-reveal t)
+      (org-show-entry)
+      (show-children))
+    )
+  )
 #+end_src
 
 *** keybinding
