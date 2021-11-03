@@ -248,17 +248,22 @@ backup: ~(setq-default org-startup-folded t)~
 #+END_SRC
 
 *** switch to agenda keybinding
+**** macro
+
+#+begin_src elisp
+(fset 'switch-to-agenda-buffer
+   (kmacro-lambda-form [?  ?b ?B ?o ?r ?g ?  ?a ?g ?e ?n ?d ?a return] 0 "%d"))
+
+#+end_src
+
+**** keybinding
 
 #+begin_src emacs-lisp
-(fset 'switch-to-agenda
-   (kmacro-lambda-form [?  ?w ?v ?  ?w ?l ?  ?b ?B ?o ?r ?g ?  ?a ?g ?e ?n ?d ?a return] 0 "%d"))
-
 (map!
  :desc "switch to agenda"
  :leader
  :prefix "j"
- "q" #'switch-to-agenda
- )
+ "q" #'switch-to-agenda-buffer)
 #+end_src
 
 *** agenda files
