@@ -209,7 +209,8 @@ backup: ~(setq-default org-startup-folded t)~
 #+END_SRC
  org
 ** agenda
-*** custom agenda command
+*** open my agenda view
+
 #+BEGIN_SRC elisp
 (after! org
   (defun q/org-agenda ()
@@ -222,11 +223,26 @@ backup: ~(setq-default org-startup-folded t)~
     )
 
   (map!
+   :desc "open agenda"
    :leader
    :prefix "j"
-   :desc "q agenda" "q" #'q/org-agenda)
+   "Q" #'q/org-agenda)
   )
 #+END_SRC
+
+*** switch to agenda keybinding
+
+#+begin_src emacs-lisp
+(fset 'switch-to-agenda
+   (kmacro-lambda-form [?  ?w ?v ?  ?w ?l ?  ?b ?B ?o ?r ?g ?  ?a ?g ?e ?n ?d ?a return] 0 "%d"))
+
+(map!
+ :desc "switch to agenda"
+ :leader
+ :prefix "j"
+ "q" #'switch-to-agenda
+ )
+#+end_src
 
 *** agenda files
 #+BEGIN_SRC elisp
@@ -1250,6 +1266,7 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+BEGIN_SRC elisp
 (setq +latex-viewers '(skim))
 #+END_SRC
+
 * emojis
 #+begin_src elisp
 (map!
