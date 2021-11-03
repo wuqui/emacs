@@ -180,6 +180,8 @@ backup: ~(setq-default org-startup-folded t)~
 #+END_SRC
 
 ** fold non-active trees
+*** basic function
+
 #+begin_src elisp
 (defun org-show-current-heading-tidily ()
   (interactive)  ;Inteactive
@@ -195,12 +197,15 @@ backup: ~(setq-default org-startup-folded t)~
     (org-reveal t)
     (org-show-entry)
     (show-children)))
+#+end_src
 
-(after! org
+*** keybinding
+
+#+begin_src elisp
   (map!
    :leader
    :prefix "j"
-   :desc "fold other trees" "j" #'org-show-current-heading-tidily))
+   :desc "fold other trees" "j" #'org-show-current-heading-tidily)
 #+end_src
 
 ** org dir
@@ -1134,6 +1139,7 @@ source: https://github.com/bdarcus/bibtex-actions
 #+end_src
 
 *** configure
+
 #+begin_src elisp :tangle yes
 (use-package! org-transclusion
   :config
@@ -1151,6 +1157,7 @@ source: https://github.com/bdarcus/bibtex-actions
   (require 'org-transclusion-indent-mode)
   )
 #+end_src
+
 ** =org-bookmark-heading=
 for bookmarking org headings
 *** install
