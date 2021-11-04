@@ -1129,6 +1129,7 @@ source: https://github.com/bdarcus/citar
 #+end_src
 
 *** configuration
+
 #+begin_src elisp
 (use-package! org-download
   :after org
@@ -1139,11 +1140,28 @@ source: https://github.com/bdarcus/citar
   (map!
    :leader
    :prefix "j l"
-   :desc "org-download-clipboard" "c" #'org-download-clipboard
-   :desc "org-download-rename-last-file" "r" #'org-download-rename-last-file
    )
   )
 #+END_SRC
+
+*** custom function for download & rename
+
+#+begin_src elisp
+(defun qw/org-download-clipboard-and-rename ()
+  (interactive)
+  (org-download-clipboard)
+  (org-download-rename-last-file)
+  )
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "download from clipboard and rename"
+ :leader
+ :prefix "j"
+ "l" #'qw/org-download-clipboard-and-rename
+ )
+#+end_src
 
 ** =org-transclusion=
 *** install
