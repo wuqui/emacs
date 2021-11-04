@@ -1,3 +1,8 @@
 /config.el
 /.DS_Store
 /custom.el.bak
+/config_old.org
+/init_old.el
+/packages_old.el
+/custom.el
+/.projectile
