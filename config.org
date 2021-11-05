@@ -582,10 +582,16 @@ https://emacs.stackexchange.com/a/34436/29471
 #+end_src
 
 **** always use =booktabs=
+
 #+BEGIN_SRC elisp
 (after! org
   (setq org-latex-tables-booktabs t))
 #+END_SRC
+
+#+begin_src elisp
+(add-to-list 'org-latex-packages-alist '("" "booktabs"))
+#+end_src
+
 *** via =odt= to =docx=
 
 #+begin_src elisp
