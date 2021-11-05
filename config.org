@@ -1231,6 +1231,18 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+begin_src elisp :tangle packages.el
 (package! org-ql)
 #+end_src
+** set apps for opening files
+#+begin_src elisp
+(setq org-file-apps
+      '(
+        (remote . emacs)
+        (auto-mode . emacs)
+        (directory . emacs)
+        ("\\.mm\\'" . default)
+        ("\\.x?html?\\'" . default)
+        ("\\.pdf\\'" . emacs)
+        ))
+#+end_src
 
 * workspaces
 #+begin_src elisp
@@ -1327,18 +1339,6 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
  :prefix "i"
  :desc "insert emoji" "e" #'emojify-insert-emoji
  )
-#+end_src
-* =org-file-apps=
-#+begin_src elisp
-(setq org-file-apps
-      '(
-        (remote . emacs)
-        (auto-mode . emacs)
-        (directory . emacs)
-        ("\\.mm\\'" . default)
-        ("\\.x?html?\\'" . default)
-        ("\\.pdf\\'" . default)
-        ))
 #+end_src
 * insert lorem ipsum
 :PROPERTIES:
