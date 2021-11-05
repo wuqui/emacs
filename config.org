@@ -1226,6 +1226,11 @@ for bookmarking org headings
 #+end_src
 
 source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
+** =org-ql=
+
+#+begin_src elisp :tangle packages.el
+(package! org-ql)
+#+end_src
 
 * workspaces
 #+begin_src elisp
