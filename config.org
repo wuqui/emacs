@@ -589,6 +589,7 @@ https://emacs.stackexchange.com/a/34436/29471
 #+END_SRC
 
 #+begin_src elisp
+(setq org-latex-packages-alist '())
 (add-to-list 'org-latex-packages-alist '("" "booktabs"))
 #+end_src
 
