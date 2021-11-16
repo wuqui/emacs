@@ -868,26 +868,15 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 #+end_src
 
 ** =org-cite= et al.
-*** custom settings
-**** paths
+*** my paths
 
 #+BEGIN_src  elisp
 (defvar qw/ref-bib '("/Users/quirin/promo/bib/references.bib"))
 (defvar qw/ref-pdfs '("/Users/quirin/promo/bib/pdfs/"))
-(defvar qw/ref-notes "/Users/quirin/roam/")
-
-;; (after! bibtex-completion
-  (setq org-cite-global-bibliography qw/ref-bib)
-  (setq bibtex-completion-bibliography qw/ref-bib)
-  (setq citar-bibliography qw/ref-bib)
-  (setq bibtex-completion-library-path qw/ref-pdfs)
-  (setq bibtex-completion-notes-path qw/ref-notes)
-  (setq citar-library-paths qw/ref-pdfs)
-  (setq citar-notes-paths qw/ref-notes)
-  ;; )
+(defvar qw/ref-notes '("/Users/quirin/roam/"))
 #+END_src
 
-**** assign cite processors to backends :inactive:
+*** assign cite processors to backends :inactive:
 
 #+begin_src elisp :tangle no
 (after! oc
@@ -896,11 +885,8 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
                                      (html csl))))
 #+end_src
 
-
-*** new [2021-11-08 Mon]
-
-**** =citar=
-***** install
+*** =citar=
+**** install
 
 #+begin_src elisp :tangle packages.el
 (package! citar
@@ -910,19 +896,49 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
            :files ("*.el")))
 #+end_src
 
-***** config
+**** config
+***** basic
 
 #+begin_src elisp
-(use-package! citar
+(use-package citar
   :no-require
   :custom
   (org-cite-global-bibliography qw/ref-bib)
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)
-  ;; optional: org-cite-insert is also bound to C-c C-x C-@
+
   :bind
-  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
+  (:map org-mode-map :package org ("C-c b" . #'org-cite-insert))
+
+  :config
+  (setq citar-library-paths qw/ref-pdfs)
+  (setq citar-bibliography qw/ref-bib)
+  (setq citar-notes-paths qw/ref-notes)
+  )
+#+end_src
+
+***** icons
+
+#+begin_src elisp
+(setq citar-symbols
+      `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
+        (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
+        (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
+(setq citar-symbol-separator "  ")
+#+end_src
+
+*** =citeproc=
+
+#+begin_src elisp :tangle packages.el
+(package! citeproc)
+#+end_src
+
+*** =biblatex= processor
+
+#+begin_src elisp
+(use-package! oc-biblatex
+  :after oc)
 #+end_src
 
 ** =org-download=
