@@ -59,9 +59,6 @@ source: https://stackoverflow.com/a/3378391
  :desc "move file here" "m" #'rename-file)
 #+END_SRC
 ** save all buffers & session
-:PROPERTIES:
-:ID:       58d59619-a84d-4396-ab58-81ebaca0c0ed
-:END:
 
 #+begin_src elisp
 (defun q/save-buffers-and-session ()
