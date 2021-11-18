@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: elisp-source-block
+# name: shell-source-block
 # key: sh
 # --
 #+begin_src sh
