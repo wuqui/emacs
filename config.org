@@ -267,16 +267,11 @@ backup: ~(setq-default org-startup-folded t)~
 
                           ;; projects
                           "~/promo/sna/sna.org"
-                          "~/promo/haiku/haiku.org"
-                          "~/promo/IndVarBNC/IndVarBNC.org"
-                          "~/promo/AngloSaxon/AngloSaxon.org"
                           "~/promo/socemb/socemb.org"
-                          "~/promo/CoVid/CoVid.org"
 
                           ;; ongoing
                           "~/org/work.org"
                           "~/org/method.org"
-                          "~/promo/lehrveranstaltungen/2021_os_english-linguistics/2021_os_english-linguistics.org"
 
                           ;; teaching
                           "~/promo/lehre/2020-21_ps_itl/itl202021.org"
