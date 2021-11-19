@@ -1140,7 +1140,7 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 
 ** set viewer app
 #+BEGIN_SRC elisp
-(setq +latex-viewers '(skim))
+(setq +latex-viewers '(pdf-tools))
 #+END_SRC
 
 * emojis
