@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: latex-export-block
+# key: lae
+# --
+#+begin_export latex
+$0
+#+end_export
