@@ -161,6 +161,7 @@
         +roam2
         +jupyter
         +noter
+        ;; +pandoc
         ;; +present
         ;; +pretty
         )               ; organize your plain life in plain text
