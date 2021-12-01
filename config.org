@@ -1059,6 +1059,41 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
         ("\\.pdf\\'" . emacs)
         ))
 #+end_src
+** tag positive (=pos=) :pos:
+
+#+begin_src elisp
+(defun qw/org-set-tags-pos ()
+  (interactive)
+  (org-set-tags ":pos:")
+  (+org/insert-item-below 1)
+  )
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "tag =pos="
+ :leader
+ :prefix "j"
+ "p" #'qw/org-set-tags-pos
+ )
+#+end_src
+
+#+begin_src elisp
+(defun qw/org-set-tags-neg ()
+  (interactive)
+  (org-set-tags ":neg:")
+  (+org/insert-item-below 1)
+  )
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "tag =neg="
+ :leader
+ :prefix "j"
+ "n" #'qw/org-set-tags-neg
+ )
+#+end_src
 
 * workspaces
 #+begin_src elisp
