@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: latex-pause
+# key: pause
+# --
+#+latex: \pause$0
