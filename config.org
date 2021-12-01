@@ -144,7 +144,6 @@ Current pattern: %`evil-mc-pattern
 (after! yasnippet
   (define-key yas-minor-mode-map (kbd "<") yas-maybe-expand))
 #+end_src
-
 * =projectile=
 ** set projects
 #+BEGIN_SRC elisp
@@ -1151,12 +1150,12 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
    :desc "anki-editor / push notes" "p" #'anki-editor-push-notes
    :desc "anki-editor / mode" "m" #'anki-editor-mode
    )
-  (fset 'anki-editor-copy-heading
-        (kmacro-lambda-form [?v ?_ ?l ?l ?y ?j ?j ?j ?o escape ?p ?j ?j ?j ?i] 0 "%d"))
+  (fset 'anki-editor-copy-heading-to-front
+        (kmacro-lambda-form [?y ?y ?j ?j ?p ?  ?m ?h ?j ?o] 0 "%d"))
   (map!
-    :leader
-    :prefix "j a"
-    :desc "wrap extracted text in quote block" "h" #'anki-editor-copy-heading)
+   :leader
+   :prefix "j a"
+   :desc "wrap extracted text in quote block" "h" #'anki-editor-copy-heading-to-front)
   )
 #+end_src
 
