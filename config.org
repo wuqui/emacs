@@ -85,12 +85,6 @@ source: https://stackoverflow.com/a/3378391
  :prefix "j"
  :desc "resize windows" "r" #'+hydra/window-nav/body)
 #+END_SRC
-** always do vertical splits
-
-#+begin_src elisp
-(setq split-width-threshold 1)
-#+end_src
-
 * editing
 ** expand region
 #+BEGIN_SRC emacs-lisp
