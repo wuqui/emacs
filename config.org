@@ -1052,13 +1052,14 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
         ("\\.pdf\\'" . emacs)
         ))
 #+end_src
-** tag positive (=pos=) :pos:
+** tag subtrees with =pos= or =:neg:=
+*** =pos=
 
 #+begin_src elisp
 (defun qw/org-set-tags-pos ()
   (interactive)
   (org-set-tags ":pos:")
-  (+org/insert-item-below 1)
+  ;; (+org/insert-item-below 1)
   )
 #+end_src
 
@@ -1071,11 +1072,13 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
  )
 #+end_src
 
+*** =neg=
+
 #+begin_src elisp
 (defun qw/org-set-tags-neg ()
   (interactive)
   (org-set-tags ":neg:")
-  (+org/insert-item-below 1)
+  ;; (+org/insert-item-below 1)
   )
 #+end_src
 
