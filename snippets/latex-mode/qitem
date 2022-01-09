@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: qitem
+# key: qitem
+# --
+\begin{qitem}
+  # $1
+\end{qitem}
