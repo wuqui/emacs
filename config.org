@@ -1017,6 +1017,29 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   )
 #+end_src
 
+**** tweak to exclude first-level heading with =:only-contents=
+
+#+begin_src elisp
+(defvar org-transclusion-headline-ignored nil)
+
+(defun org-transclusion-content-filter-org-only-contents (data)
+  "Overriding the standard function to transclude subtrees only.
+This works on :only-contents property"
+  (if (and (eq (org-element-type data) 'headline)
+           (not org-transclusion-headline-ignored))
+      (progn
+        (setq org-transclusion-headline-ignored t)
+        nil)
+    data))
+
+(defun org-transclusion-reset-headline-ignored (&rest _)
+  (setq org-transclusion-headline-ignored nil))
+
+(advice-add #'org-transclusion-content-org-buffer-or-element
+            :after #'org-transclusion-reset-headline-ignored)
+#+end_src
+[[https://github.com/nobiot/org-transclusion/issues/125#issuecomment-1011474235][nobiot/org-transclusion#125 "No content found" with `:only-contents`]]
+
 ** =org-bookmark-heading=
 for bookmarking org headings
 *** install
