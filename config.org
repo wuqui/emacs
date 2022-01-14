@@ -980,6 +980,8 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 
 ** =org-transclusion=
 *** install
+**** from GitHub
+
 #+begin_src elisp :tangle packages.el
 (package! org-transclusion
   :recipe (:host github
@@ -988,10 +990,17 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
            :files ("*.el")))
 #+end_src
 
+**** from Melpa :inactive:
+
+#+begin_src elisp :tangle no
+(package! org-transclusion)
+#+end_src
+
 *** configure
 
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (use-package! org-transclusion
+  :after org
   :config
   (set-face-attribute
    'org-transclusion-fringe nil
