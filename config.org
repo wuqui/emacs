@@ -90,8 +90,8 @@ source: https://stackoverflow.com/a/3378391
 #+BEGIN_SRC emacs-lisp
 (map!
  :leader
- :prefix "j"
- :desc "expand region" "e r" #'er/expand-region)
+ :prefix ("j e" . "expand")
+ :desc "region" "r" #'er/expand-region)
 #+END_SRC
 
 ** multiple cursors
@@ -1149,7 +1149,7 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+BEGIN_SRC elisp
 (map!
  :leader
- :prefix "j d"
+ :prefix ("j d" . "dired")
  :desc "open home" "h" (lambda () (interactive) (find-file "~"))
  :desc "open Desktop" "d" (lambda () (interactive) (find-file "~/Desktop"))
  :desc "open promo" "p" (lambda () (interactive) (find-file "~/promo"))
@@ -1166,6 +1166,7 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+end_src
 
 ** configure
+
 #+begin_src elisp
 (use-package anki-editor
   :after org
@@ -1174,21 +1175,44 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
   :config
   (map!
    :leader
-   :prefix "j a"
-   :desc "anki-editor / insert note" "i" #'anki-editor-insert-note
-   :desc "anki-editor / push notes" "p" #'anki-editor-push-notes
-   :desc "anki-editor / mode" "m" #'anki-editor-mode
-   )
-  (fset 'anki-editor-copy-heading-to-front
-        (kmacro-lambda-form [?y ?y ?j ?j ?p ?  ?m ?h ?j ?o] 0 "%d"))
-  (map!
-   :leader
-   :prefix "j a"
-   :desc "wrap extracted text in quote block" "h" #'anki-editor-copy-heading-to-front)
+   :prefix-map ("j a" . "anki-editor")
+   :desc "insert note" "i" #'anki-editor-insert-note
+   :desc "push notes" "P" #'anki-editor-push-notes :desc "mode" "m" #'anki-editor-mode)
   )
 #+end_src
 
+*** copy heading to front card
+
+#+begin_src elisp
+(fset 'anki-editor-copy-heading-to-front
+      (kmacro-lambda-form [?y ?y ?j ?j ?p ?  ?m ?h ?j ?o] 0 "%d"))
+#+end_src
+
+#+begin_src elisp
+(map!
+ :leader
+ :prefix "j a"
+ :desc "copy heading to front" "h" #'anki-editor-copy-heading-to-front)
+#+end_src
+
+*** binding for pushing current note only
+
+#+begin_src elisp
+(defun q/anki-editor-push-note ()
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'anki-editor-push-notes)))
+#+end_src
+
+#+begin_src elisp
+(map!
+ :leader
+ :prefix "j a"
+ :desc "push note" "p" #'q/anki-editor-push-note)
+#+end_src
+
 * =deft=
+
 #+begin_src elisp
 (use-package! deft
   :after org
