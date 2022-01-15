@@ -1251,3 +1251,8 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+begin_src elisp :tangle packages.el
 (package! lorem-ipsum)
 #+end_src
+* make shell commands use [[file:~/.bashrc]]
+
+#+begin_src elisp
+(setq shell-command-switch "-ic")
+#+end_src
