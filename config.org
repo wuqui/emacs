@@ -1133,6 +1133,14 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
  "n" #'qw/org-set-tags-neg
  )
 #+end_src
+** auto-save buffers
+
+important for sync via Dropbox
+
+#+begin_src elisp
+(add-hook 'auto-save-hook 'org-save-all-org-buffers)
+#+end_src
+[[https://christiantietze.de/posts/2019/03/sync-emacs-org-files/][Sync Emacs Org Agenda Files via Dropbox Without Conflicts • Christian Tietze]]
 
 * workspaces
 #+begin_src elisp
