@@ -326,16 +326,12 @@ backup: ~(setq-default org-startup-folded t)~
 
 *** clocking
 **** clock into drawer
+
 #+BEGIN_SRC elisp
 (after! org
-  (setq org-clock-into-drawer "CLOCKBOOK"))
+  (setq org-clock-into-drawer "LOGBOOK"))
 #+END_SRC
 
-**** log into drawer
-#+BEGIN_SRC elisp
-(after! org
-  (setq org-log-into-drawer t))
-#+END_SRC
 **** clocking status
 #+BEGIN_SRC emacs-lisp
 (after! org
