@@ -305,20 +305,7 @@ backup: ~(setq-default org-startup-folded t)~
       )
 #+end_src
 
-*** todo states
-**** todo keywords
-
-#+begin_src elisp :results silent
-(after! org
-  (setq org-todo-keywords
-        '(
-          (sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d!)" "KILL(k)")
-          )
-        )
-  )
-#+end_src
-
-**** log changes
+*** log todo states to drawer
 
 #+begin_src elisp :results silent
 (setq org-log-into-drawer "CHANGEBOOK")
