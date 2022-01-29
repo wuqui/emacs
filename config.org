@@ -397,7 +397,6 @@ backup: ~(setq-default org-startup-folded t)~
 (after! org
   (setq org-clock-out-remove-zero-time-clocks nil))
 #+end_src
-
 *** hide repeating items
 #+BEGIN_SRC elisp
 (after! org

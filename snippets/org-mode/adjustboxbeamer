@@ -2,7 +2,6 @@
 # name: adjustboxbeamer
 # key: adjustboxbeamer
 # --
-#+latex: \centering
 #+latex: \begin{adjustbox}{max totalsize={\linewidth}{.9\textheight}}
 #+attr_latex: :center nil
 `yas-selected-text`
