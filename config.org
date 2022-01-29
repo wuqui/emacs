@@ -305,6 +305,12 @@ backup: ~(setq-default org-startup-folded t)~
       )
 #+end_src
 
+**** log changes
+
+#+begin_src elisp :results silent
+(setq org-log-into-drawer "CHANGEBOOK")
+#+end_src
+
 *** clocking
 **** clock into drawer
 #+BEGIN_SRC elisp
