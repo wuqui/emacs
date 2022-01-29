@@ -588,6 +588,12 @@ https://emacs.stackexchange.com/a/34436/29471
 (setq org-latex-packages-alist '())
 (add-to-list 'org-latex-packages-alist '("" "booktabs"))
 #+end_src
+**** ignore headings with =ignore= tag
+
+#+begin_src elisp
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+#+end_src
 
 *** via =odt= to =docx=
 
