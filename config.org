@@ -322,7 +322,8 @@ backup: ~(setq-default org-startup-folded t)~
 *** log todo states to drawer
 
 #+begin_src elisp :results silent
-(setq org-log-into-drawer "CHANGEBOOK")
+;; (setq org-log-into-drawer "CHANGEBOOK")
+(setq org-log-into-drawer "LOGBOOK")
 #+end_src
 
 *** clocking
