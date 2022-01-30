@@ -258,8 +258,10 @@ backup: ~(setq-default org-startup-folded t)~
 *** start on Mondays
 
 #+begin_src elisp
-(setq org-agenda-start-on-weekday 1)
+(after! org
+  (setq org-agenda-start-on-weekday 1))
 #+end_src
+
 *** configure time grid
 
 #+begin_src elisp
