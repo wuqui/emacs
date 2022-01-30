@@ -1208,6 +1208,22 @@ important for sync via Dropbox
  :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  )
 #+END_SRC
+** =dired-narrow=
+*** install
+
+#+begin_src elisp :tangle packages.el
+(package! dired-narrow)
+#+end_src
+
+*** configure
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :prefix "j d"
+ :desc "dired narrow" "n" #'dired-narrow)
+#+END_SRC
+
 * =anki-editor=
 ** install
 #+begin_src elisp :tangle packages.el
