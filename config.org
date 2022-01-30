@@ -299,6 +299,7 @@ backup: ~(setq-default org-startup-folded t)~
 #+end_src
 
 *** agenda view / sorting strategy
+
 #+begin_src elisp
 (setq org-agenda-sorting-strategy
       '(
@@ -637,11 +638,24 @@ https://emacs.stackexchange.com/a/34436/29471
 
 ** =org-super-agenda=
 *** install
+
 #+begin_src elisp :tangle packages.el
 (package! org-super-agenda)
 #+end_src
 
 *** configure
+:PROPERTIES:
+:ID:       a0f8dd06-2a8c-49a3-a99b-42011cebf682
+:END:
+
+fix to exclude active datestamps from time grid:
+
+#+begin_src elisp
+(defun my-org-hour-specification-p (item)
+  (s-matches? "[0-9][0-9]?:[0-9][0-9]" item))
+#+end_src
+[[https://github.com/alphapapa/org-super-agenda/issues/204#issue-1007461284][alphapapa/org-super-agenda#204 :with-time argument for timestamp selectors]]
+
 #+begin_src elisp
 (use-package! org-super-agenda
   :after org
@@ -654,8 +668,8 @@ https://emacs.stackexchange.com/a/34436/29471
   (setq org-super-agenda-groups
         ;; no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
         '(
-          (:name "time" :time-grid t)
-          (:name "overdue" :scheduled past :time-grid t)
+          (:name "time" :pred my-org-hour-specification-p)
+          (:name "overdue" :scheduled past)
           (:name "prio" :auto-priority)
           (:name "rout" :tag "rout")
           (:name "work" :tag "work")
