@@ -255,6 +255,11 @@ backup: ~(setq-default org-startup-folded t)~
    "Q" #'q/org-agenda)
   )
 #+END_SRC
+*** start on Mondays
+
+#+begin_src elisp
+(setq org-agenda-start-on-weekday 1)
+#+end_src
 
 *** switch to agenda keybinding
 **** macro
