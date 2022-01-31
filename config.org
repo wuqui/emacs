@@ -394,9 +394,6 @@ backup: ~(setq-default org-startup-folded t)~
             tags)))
 #+end_src
 **** don't remove clocking durations of =0=
-:PROPERTIES:
-:ID:       bf7b878f-a4f9-4034-821a-ae8d73b6b661
-:END:
 #+begin_src elisp
 (after! org
   (setq org-clock-out-remove-zero-time-clocks nil))
@@ -621,17 +618,11 @@ https://emacs.stackexchange.com/a/34436/29471
    :desc "expand table" "t e" #'org-table-expand))
 #+END_SRC
 *** =orgtbl-aggregate=
-:PROPERTIES:
-:ID:       a6973000-50f7-448f-b5f7-feeb01770e8c
-:END:
 **** install
 #+begin_src elisp :tangle packages.el
 (package! orgtbl-aggregate)
 #+end_src
 *** =orgtbljoin=
-:PROPERTIES:
-:ID:       bd489b47-ecb9-4f8f-ad3a-9a32e3fe0ce5
-:END:
 **** install
 
 #+begin_src elisp :tangle packages.el
@@ -647,9 +638,6 @@ https://emacs.stackexchange.com/a/34436/29471
   :after org)
 #+end_src
 *** =org-pretty-table=
-:PROPERTIES:
-:ID:       d23d0cc4-83a0-4b3a-a260-ba29e6b5223a
-:END:
 
 #+begin_src elisp :tangle packages.el
 (package! org-pretty-table
@@ -669,9 +657,6 @@ https://emacs.stackexchange.com/a/34436/29471
 #+end_src
 
 *** configure
-:PROPERTIES:
-:ID:       a0f8dd06-2a8c-49a3-a99b-42011cebf682
-:END:
 
 fix to exclude active datestamps from time grid:
 
@@ -1323,9 +1308,6 @@ important for sync via Dropbox
  )
 #+end_src
 * insert lorem ipsum
-:PROPERTIES:
-:ID:       bb64534c-e149-459c-807b-b59b158a6a60
-:END:
 
 #+begin_src elisp :tangle packages.el
 (package! lorem-ipsum)
