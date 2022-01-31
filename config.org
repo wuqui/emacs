@@ -1317,3 +1317,9 @@ important for sync via Dropbox
 #+begin_src elisp
 (setq shell-command-switch "-ic")
 #+end_src
+* open emails externally
+
+#+begin_src elisp
+(setq browse-url-mailto-function 'browse-url-generic)
+(setq browse-url-generic-program "open")
+#+end_src
