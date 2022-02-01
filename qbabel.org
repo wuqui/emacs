@@ -1,4 +1,6 @@
-#+TITLE: Qbabel
+#+TITLE: qbabel
+
+* =pandas= df to org-mode table
 
 #+name: df2org
 #+begin_src jupyter-python
@@ -15,3 +17,33 @@ class OrgFormatter(IPython.core.formatters.BaseFormatter):
 ip = get_ipython()
 ip.display_formatter.formatters['text/org'] = OrgFormatter()
 #+end_src
+
+* convert between Python and org-mode date formats
+
+#+begin_src jupyter-python
+# NOTANGLE-START
+import re
+import datetime as dt
+# NOTANGLE-END
+
+def orgdate_to_date(datestr):
+    """Returns a python datetime for the org date given in datestr.
+
+    Allows passing in an empty/whitespace string."""
+    if re.match(r'^ *$', datestr):
+        return ''
+
+    #m = re.match(r'^\[(\d+-\d+-\d+) +[a-zA-Z]{3}\]$', datestr)
+    m = re.match(r'^[\[<](\d+-\d+-\d+) +[a-zA-Z]{3}[\]>]$', datestr)
+    if not m:
+        raise ValueError("Input String is not a date: >%s<" % datestr)
+
+    return dt.datetime.strptime(m.group(1), '%Y-%m-%d').date()
+
+def date_to_orgdate(date, active=False):
+    orgstr = date.strftime("%Y-%m-%d %a")
+    if active:
+        return "<%s>" % orgstr
+    return "[%s]" % orgstr
+#+end_src
+[[https://github.com/dfeich/org-babel-examples/blob/master/python/pythonbabel.org#7-dates][org-babel-examples/pythonbabel.org at master · dfeich/org-babel-examples · Gi...]]
