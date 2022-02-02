@@ -19,12 +19,17 @@
 source: https://stackoverflow.com/a/3378391
 
 * font
-** set font size
+** set fonts and sizes
+
 #+BEGIN_SRC elisp
-(setq doom-font (font-spec :family "monospace" :size 18))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 18))
+(setq doom-variable-pitch-font (font-spec :family "Gentium Plus" :size 18))
 #+END_SRC
 
+other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
+
 ** change font size
+
 #+begin_src elisp
 (defhydra hydra-zoom ()
   "zoom"
@@ -36,6 +41,7 @@ source: https://stackoverflow.com/a/3378391
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
 #+end_src
+
 * buffers and files
 ** kill buffer and window
 #+BEGIN_SRC elisp
