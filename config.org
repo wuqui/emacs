@@ -643,18 +643,6 @@ https://emacs.stackexchange.com/a/34436/29471
 (use-package! orgtbl-join
   :after org)
 #+end_src
-*** =org-pretty-table=
-
-#+begin_src elisp :tangle packages.el
-(package! org-pretty-table
-  :recipe (:host github :repo "Fuco1/org-pretty-table") :pin "87772a9469d91770f87bfa788580fca69b9e697a")
-#+end_src
-
-#+begin_src elisp
-(use-package! org-pretty-table
-  :commands (org-pretty-table-mode global-org-pretty-table-mode))
-#+end_src
-
 ** =org-super-agenda=
 *** install
 
