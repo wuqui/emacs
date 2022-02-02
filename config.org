@@ -1306,7 +1306,7 @@ important for sync via Dropbox
 #+begin_src elisp :tangle packages.el
 (package! lorem-ipsum)
 #+end_src
-* make shell commands use [[file:~/.bashrc]]
+* make shell commands use =~/.bashrc=
 
 #+begin_src elisp
 (setq shell-command-switch "-ic")
