@@ -28,6 +28,12 @@ source: https://stackoverflow.com/a/3378391
 
 other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
 
+*** disable variable pitch font for =treemacs=
+
+#+begin_src elisp
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+#+end_src
+
 ** change font size
 
 #+begin_src elisp
@@ -41,7 +47,6 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
 #+end_src
-
 * buffers and files
 ** kill buffer and window
 #+BEGIN_SRC elisp
