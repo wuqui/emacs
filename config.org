@@ -1168,6 +1168,17 @@ important for sync via Dropbox
 (add-hook 'auto-save-hook 'org-save-all-org-buffers)
 #+end_src
 [[https://christiantietze.de/posts/2019/03/sync-emacs-org-files/][Sync Emacs Org Agenda Files via Dropbox Without Conflicts • Christian Tietze]]
+** add link type for Apple Mail messages
+
+uses [[id:ae8d035f-7308-435b-a624-2e979405456e][Alfred]] workflow: [[id:ccee3003-b071-4981-8b94-c5ae52cc87a5][copy Apple Mail ID to clipboard]]
+
+#+begin_src elisp
+(org-add-link-type "message"
+ (lambda (id)
+  (shell-command
+   (concat "open message:" id))))
+#+end_src
+https://emacs.stackexchange.com/a/63982
 
 * workspaces
 #+begin_src elisp
