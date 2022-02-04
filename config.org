@@ -21,12 +21,27 @@ source: https://stackoverflow.com/a/3378391
 * font
 ** set fonts and sizes
 
-#+BEGIN_SRC elisp
-(setq doom-font (font-spec :family "JetBrains Mono" :size 18))
-(setq doom-variable-pitch-font (font-spec :family "Gentium Plus" :size 18))
+#+BEGIN_SRC elisp :tangle yes
+(setq doom-font (font-spec :family "JetBrains Mono":size 18))
+(setq doom-variable-pitch-font (font-spec :family "Noto Serif" :size 18))
 #+END_SRC
 
 other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
+
+*** KILL adjust font size for =mixed-pitch-mode= :inactive:
+
+#+begin_src elisp :tangle no
+(use-package! mixed-pitch
+  :config
+  (setq mixed-pitch-set-heigth t)
+  (set-face-attribute 'variable-pitch nil :height 3))
+#+end_src
+
+#+begin_src elisp :tangle no
+(setq doom-font (font-spec :family "Fira Code" :size 18 :height 1.0)
+      doom-variable-pitch-font (font-spec :family "Gentium Plus" :height 3)
+      )
+#+end_src
 
 *** disable variable pitch font for =treemacs=
 
