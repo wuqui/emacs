@@ -1347,11 +1347,8 @@ https://emacs.stackexchange.com/a/63982
 (setq browse-url-mailto-function 'browse-url-generic)
 (setq browse-url-generic-program "open")
 #+end_src
-* =emacs-everywhere=
+* =csv-mode=
 
-#+begin_src elisp
-(setq emacs-everywhere-frame-parameters
-      '((name . "emacs-everywhere")
-        (width . 80)
-        (height . 30)))
+#+begin_src elisp :tangle packages.el
+(package! csv-mode)
 #+end_src
