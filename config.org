@@ -434,6 +434,12 @@ backup: ~(setq-default org-startup-folded t)~
 (after! org
   (setq org-agenda-skip-scheduled-if-done t))
 #+END_SRC
+*** set deadline warning days
+
+#+begin_src elisp
+(setq org-deadline-warning-days 3)
+#+end_src
+
 ** use IDs for links
 #+begin_src elisp
 (setq org-id-link-to-org-use-id 'use-existing)
