@@ -439,6 +439,11 @@ backup: ~(setq-default org-startup-folded t)~
 #+begin_src elisp
 (setq org-deadline-warning-days 3)
 #+end_src
+*** bulk set priorities
+
+#+begin_src elisp
+(setq org-agenda-bulk-custom-functions '((?P (lambda nil (org-agenda-priority 'set)))))
+#+end_src
 
 ** use IDs for links
 #+begin_src elisp
