@@ -317,13 +317,14 @@ backup: ~(setq-default org-startup-folded t)~
 #+end_src
 
 *** agenda files
+
 #+BEGIN_SRC elisp
 (after! org
   (setq org-agenda-files (list
-                          "~/Dropbox/rout.org"
-                          "~/Dropbox/privat.org"
-                          "~/Dropbox/method.org"
-                          "~/Dropbox/work.org"
+                          "~/org/rout.org"
+                          "~/org/privat.org"
+                          "~/org/method.org"
+                          "~/org/work.org"
                           )
         )
   )
