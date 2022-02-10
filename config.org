@@ -826,6 +826,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
    :desc "find file" "f" #'org-roam-node-find
    :desc "insert" "i" #'org-roam-node-insert
    :desc "add alias" "a" #'org-roam-alias-add
+   :desc "add ref" "c" #'org-roam-ref-add
    :desc "add tag" "l" #'org-roam-tag-add
    :desc "sync DB" "s" #'org-roam-db-sync
    :desc "d / yesterday" "y" #'org-roam-dailies-goto-yesterday
