@@ -449,35 +449,37 @@ backup: ~(setq-default org-startup-folded t)~
 ** capture templates
 
 #+begin_src elisp :results silent
-(setq org-capture-templates
-      '(
-        ("p" "todo / privat" entry (file "~/org/privat.org")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nSCHEDULED: %^t"
-         :prepend t
-         :empty-lines 1
-         )
-        ("w" "todo / work" entry (file "~/org/work.org")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nSCHEDULED: %^t"
-         :prepend t
-         :empty-lines 1
-         )
-        ("v" "videnda" entry (file "~/org/videnda.org")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
-         :prepend t
-         :empty-lines 1
-         )
-        ("a" "audenda" entry (file "~/org/audenda.org")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
-         :prepend t
-         :empty-lines 1
-         )
-        ("l" "legenda" entry (file "~/org/legenda.org")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
-         :prepend t
-         :empty-lines 1
-         )
+(after! org
+  (setq org-capture-templates
+        '(
+          ("p" "todo / privat" entry (file "~/org/privat.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nSCHEDULED: %^t"
+           :prepend t
+           :empty-lines 1
+           )
+          ("w" "todo / work" entry (file "~/org/work.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\nSCHEDULED: %^t"
+           :prepend t
+           :empty-lines 1
+           )
+          ("v" "videnda" entry (file "~/org/videnda.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :prepend t
+           :empty-lines 1
+           )
+          ("a" "audenda" entry (file "~/org/audenda.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :prepend t
+           :empty-lines 1
+           )
+          ("l" "legenda" entry (file "~/org/legenda.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :prepend t
+           :empty-lines 1
+           )
+          )
         )
-      )
+  )
 #+end_src
 
 ** use IDs for links
