@@ -601,6 +601,7 @@ backup: ~(setq-default org-startup-folded t)~
 source: https://emacs.stackexchange.com/a/39107/29471
 
 *** insert checkbox
+
 #+BEGIN_SRC elisp
 (defun q/toggle-checkbox ()
   (interactive)
@@ -614,7 +615,27 @@ source: https://emacs.stackexchange.com/a/39107/29471
  :leader
  :desc "insert checkbox" "c h" #'q/toggle-checkbox)
 #+END_SRC
+
 ** export
+*** keybinding for using last export action
+
+#+begin_src elisp
+(defun q/org-export-dispatch-last ()
+  (interactive)
+  (let
+      ((current-prefix-arg '(4)))
+    (call-interactively 'org-export-dispatch)))
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "q/org-export-dispatch-last"
+ :leader
+ :prefix "m"
+ "E" #'q/org-export-dispatch-last
+ )
+#+end_src
+
 *** format datetime stamps
 **** remove brackets
 source: https://stackoverflow.com/a/33716338/4165300
