@@ -325,6 +325,9 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/org/privat.org"
                           "~/org/method.org"
                           "~/org/work.org"
+                          "~/org/legenda.org"
+                          "~/org/videnda.org"
+                          "~/org/audenda.org"
                           )
         )
   )
