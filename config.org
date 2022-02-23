@@ -588,22 +588,6 @@ fix to exclude active datestamps from time grid:
  :leader
  :desc "org-paste-subtree" "m s w" #'widen)
 #+end_src
-** shifting timestamps
-#+begin_src elisp
-(map!
- :after evil-org
- :map evil-org-mode-map
- :n "C-h" #'org-shiftleft
- :n "C-j" #'org-shiftdown
- :n "C-k" #'org-shiftup
- :n "C-l" #'org-shiftright
- )
-#+end_src
-** calendar start weekday on Mondays
-#+begin_src elisp
-(after! org
-  (setq calendar-week-start-day 1))
-#+end_src
 ** insert stuff
 *** insert datetime / inactive
 #+BEGIN_SRC elisp
@@ -774,9 +758,11 @@ https://emacs.stackexchange.com/a/34436/29471
 #+END_SRC
 *** =orgtbl-aggregate=
 **** install
+
 #+begin_src elisp :tangle packages.el
 (package! orgtbl-aggregate)
 #+end_src
+
 *** =orgtbljoin=
 **** install
 
@@ -805,47 +791,6 @@ should be included in Doom emacs via the =+pretty= flag for =org=, but doesn't c
 #+begin_src elisp
 (use-package! org-pretty-table ; "prettier" tables
   :hook (org-mode . org-pretty-table-mode))
-#+end_src
-
-** =org-super-agenda=
-*** install
-
-#+begin_src elisp :tangle packages.el
-(package! org-super-agenda)
-#+end_src
-
-*** configure
-
-fix to exclude active datestamps from time grid:
-
-#+begin_src elisp
-(defun my-org-hour-specification-p (item)
-  (s-matches? "[0-9][0-9]?:[0-9][0-9]" item))
-#+end_src
-[[https://github.com/alphapapa/org-super-agenda/issues/204#issue-1007461284][alphapapa/org-super-agenda#204 :with-time argument for timestamp selectors]]
-
-#+begin_src elisp
-(use-package! org-super-agenda
-  :after org
-  :init
-  ;; fix to retain evil bindings for Doom Emacs from GitHub issue in package repo; source: [[https://github.com/alphapapa/org-super-agenda/issues/50][alphapapa/org-super-agenda#50 Some keybindings not working at heading]]
-  (setq org-super-agenda-header-map (make-sparse-keymap))
-  :hook
-  (after-init . org-super-agenda-mode)
-  :config
-  (setq org-super-agenda-groups
-        ;; no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
-        '(
-          (:name "time" :pred my-org-hour-specification-p)
-          (:name "overdue" :scheduled past)
-          (:name "prio" :auto-priority)
-          (:name "rout" :tag "rout")
-          (:name "work" :tag "work")
-          (:name "privat" :tag "privat")
-          (:name "method" :tag "method")
-          )
-        )
-  )
 #+end_src
 
 ** =org-babel=
