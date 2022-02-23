@@ -288,15 +288,6 @@ backup: ~(setq-default org-startup-folded t)~
   (setq org-agenda-start-on-weekday 1))
 #+end_src
 
-*** configure time grid
-
-#+begin_src elisp
-(setq org-agenda-time-grid
-      (quote ((daily today require-timed remove-match)
-              (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000)
-              "......" "----------------")))
-#+end_src
-
 *** switch to agenda keybinding
 **** macro
 
