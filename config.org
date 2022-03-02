@@ -1194,8 +1194,13 @@ This works on :only-contents property"
             :after #'org-transclusion-reset-headline-ignored)
 #+end_src
 
-** =org-bookmark-heading=
-for bookmarking org headings
+** KILL =org-bookmark-heading= :inactive:
+
+- for bookmarking org headings
+- not clear what the benefits are over default method?
+- problem and reason for deactivating: creates IDs during refiling and capturing
+  - https://github.com/alphapapa/org-bookmark-heading/issues/8
+
 *** install
 
 #+begin_src elisp :tangle packages.el
@@ -1206,9 +1211,14 @@ for bookmarking org headings
 
 *** configure
 
-#+begin_src elisp
+#+begin_src elisp :tangle no
 (use-package! org-bookmark-heading)
 #+end_src
+
+#+begin_src emacs-lisp :tangle no
+(setq org-capture-bookmark nil)
+#+end_src
+
 ** =org-tree-slide= :inactive:
 
 #+begin_src elisp :tangle no
