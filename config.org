@@ -417,7 +417,7 @@ backup: ~(setq-default org-startup-folded t)~
 
 (defun org-dblock-write:clocktable-by-tag (params)
   (insert "| Tag | Headline | Time (h) |\n")
-  (insert "|     | <l19>    | <r>  |\n")
+  (insert "|     | <l18>    | <r>  |\n")
   (let ((tags (plist-get params :tags)))
     (mapcar (lambda (tag)
               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
