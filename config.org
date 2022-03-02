@@ -62,6 +62,16 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
 #+end_src
+* modeline
+** decrease size
+
+#+begin_src elisp :results silent
+(after! doom-modeline
+  (setq doom-modeline-height 1)
+  (set-face-attribute 'mode-line nil :height 150)
+  (set-face-attribute 'mode-line-inactive nil :height 150))
+#+end_src
+
 * buffers and files
 ** kill buffer and window
 #+BEGIN_SRC elisp
