@@ -17,6 +17,13 @@
 
 #+end_src
 source: https://stackoverflow.com/a/3378391
+* binding for universal argument
+
+#+begin_src elisp
+(map!
+ :desc "universal argument"
+ "C-M-u" #'universal-argument)
+#+end_src
 
 * font
 ** set fonts and sizes
@@ -623,6 +630,7 @@ fix to exclude active datestamps from time grid:
 #+END_SRC
 
 *** insert file link
+
 #+BEGIN_SRC elisp
 (defun q/insert-file-link ()
   (interactive)
