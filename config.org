@@ -1074,6 +1074,17 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
         (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
 (setq citar-symbol-separator "  ")
 #+end_src
+**** keybindings
+
+#+begin_src emacs-lisp
+(map!
+ :leader
+ :prefix-map ("j z" . "zitations")
+ :desc "insert citation" "i" #'citar-insert-citation
+ :desc "open" "o" #'citar-open
+ :desc "refresh" "r" #'citar-refresh
+ )
+#+end_src
 
 *** =citeproc=
 
