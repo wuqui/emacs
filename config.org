@@ -1464,6 +1464,30 @@ source: https://emacs.stackexchange.com/a/33679/29471
     ))
   )
 #+END_SRC
+
+** view =pdf= in new frame
+:PROPERTIES:
+:ID:       1a35abb2-1916-4bf1-8cf2-8103f597d493
+:END:
+
+source: https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
+
+- if only one frame is present: use new window
+- if separate frame available: use separate frame
+
+#+BEGIN_SRC elisp
+(after! latex
+  (defun framesMenus-display-buffer-use-some-frame (fun &rest args)
+    "Use `display-buffer-use-some-frame' as `display-buffer-overriding-action'.
+Then run FUN with ARGS."
+    (let ((display-buffer-overriding-action '(display-buffer-use-some-frame)))
+      (apply fun args)))
+
+  (advice-add 'TeX-pdf-tools-sync-view :around #'framesMenus-display-buffer-use-some-frame)
+  (advice-add 'pdf-sync-backward-search-mouse :around #'framesMenus-display-buffer-use-some-frame)
+  )
+#+END_SRC
+
 * emojis
 #+begin_src elisp
 (map!
