@@ -1433,10 +1433,37 @@ https://emacs.stackexchange.com/a/63982
 #+end_src
 
 ** set viewer app
+
 #+BEGIN_SRC elisp
 (setq +latex-viewers '(pdf-tools))
 #+END_SRC
 
+** folding
+*** fold custom macros
+:PROPERTIES:
+:ID:       8ffa02ce-ba2f-4daf-9734-6086193aee93
+:END:
+source: https://emacs.stackexchange.com/a/33679/29471
+
+#+BEGIN_SRC elisp
+(after! latex
+  (setq TeX-fold-macro-spec-list '(
+    ("[f]" ("footnote"))
+    ("[m]" ("marginpar"))
+    ("[c]" ("cite"))
+    ("[l]" ("label"))
+    ("[r]" ("ref" "pageref" "eqref"))
+    ("[i]" ("index" "glossary"))
+    ("[1]:||*" ("item"))
+    ("..." ("dots"))
+    ("(C)" ("copyright"))
+    ("(R)" ("textregistered"))
+    ("TM" ("texttrademark"))
+    (1 ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup"))
+    ("{1}" ("cite" "parencite" "textcite" "se" "sw" "sps" "sbs" "hw" "qpar" "ol" "mn" "phnm" "mrphm" "enquote" "uline" "num"))
+    ))
+  )
+#+END_SRC
 * emojis
 #+begin_src elisp
 (map!
