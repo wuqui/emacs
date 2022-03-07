@@ -208,6 +208,7 @@ Current pattern: %`evil-mc-pattern
 (after! yasnippet
   (define-key yas-minor-mode-map (kbd "<") yas-maybe-expand))
 #+end_src
+
 * =projectile=
 ** set projects
 #+BEGIN_SRC elisp
@@ -1219,31 +1220,6 @@ This works on :only-contents property"
 
 (advice-add #'org-transclusion-content-org-buffer-or-element
             :after #'org-transclusion-reset-headline-ignored)
-#+end_src
-
-** KILL =org-bookmark-heading= :inactive:
-
-- for bookmarking org headings
-- not clear what the benefits are over default method?
-- problem and reason for deactivating: creates IDs during refiling and capturing
-  - https://github.com/alphapapa/org-bookmark-heading/issues/8
-
-*** install
-
-#+begin_src elisp :tangle packages.el
-(package! org-bookmark-heading
-  :recipe (:host github
-           :repo "alphapapa/org-bookmark-heading"))
-#+end_src
-
-*** configure
-
-#+begin_src elisp :tangle no
-(use-package! org-bookmark-heading)
-#+end_src
-
-#+begin_src emacs-lisp :tangle no
-(setq org-capture-bookmark nil)
 #+end_src
 
 ** =org-tree-slide= :inactive:
