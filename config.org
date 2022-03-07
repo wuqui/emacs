@@ -147,6 +147,14 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
 #+end_src
 [[https://emacs.stackexchange.com/a/5372][How to change Emacs windows from vertical split to horizontal split? - Emacs ...]]
 
+** switch frames
+
+#+BEGIN_SRC elisp
+(map!
+ :leader
+ :desc "switch frames" "f o" #'other-frame)
+#+END_SRC
+
 * editing
 ** expand region
 #+BEGIN_SRC emacs-lisp
