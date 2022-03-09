@@ -68,7 +68,8 @@
 
        :emacs
        (dired
-        +icons)             ; making dired pretty [functional]
+        +icons
+        )             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
        ibuffer         ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes

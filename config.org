@@ -440,10 +440,11 @@ backup: ~(setq-default org-startup-folded t)~
             tags)))
 #+end_src
 **** don't remove clocking durations of =0=
+
 #+begin_src elisp
-(after! org
-  (setq org-clock-out-remove-zero-time-clocks nil))
+(setq org-clock-out-remove-zero-time-clocks nil)
 #+end_src
+
 *** hide repeating items
 #+BEGIN_SRC elisp
 (after! org
