@@ -1316,8 +1316,9 @@ https://emacs.stackexchange.com/a/63982
  :leader
  :desc "switch workspace" "y" #'+workspace/switch-to)
 #+end_src
-* =dired=
-** hide details by default
+* file management
+** =dired=
+*** hide details by default
 #+BEGIN_SRC emacs-lisp
 (after! dired
   (add-hook 'dired-mode-hook
@@ -1325,14 +1326,14 @@ https://emacs.stackexchange.com/a/63982
               (dired-hide-details-mode))))
 #+END_SRC
 
-** delete files to Trash
+*** delete files to Trash
 #+BEGIN_SRC emacs-lisp
 (after! dired
   (setq delete-by-moving-to-trash t)
   (setq trash-directory "~/.Trash"))
 #+END_SRC
 
-** bindings for folders
+*** bindings for folders
 #+BEGIN_SRC elisp
 (map!
  :leader
@@ -1346,14 +1347,14 @@ https://emacs.stackexchange.com/a/63982
  :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  )
 #+END_SRC
-** =dired-narrow=
-*** install
+*** =dired-narrow=
+**** install
 
 #+begin_src elisp :tangle packages.el
 (package! dired-narrow)
 #+end_src
 
-*** configure
+**** configure
 
 #+BEGIN_SRC elisp
 (map!
@@ -1361,6 +1362,34 @@ https://emacs.stackexchange.com/a/63982
  :prefix "j d"
  :desc "dired narrow" "n" #'dired-narrow)
 #+END_SRC
+*** =dired-subtree=
+
+#+begin_src elisp :tangle packages.el
+(package! dired-subtree)
+#+end_src
+
+#+begin_src elisp
+(use-package! dired-subtree
+  :after dired
+  :config
+  (define-key dired-mode-map (kbd "<tab>") 'dired-subtree-toggle))
+#+end_src
+*** =dired-sidebar=
+
+#+begin_src elisp :tangle packages.el
+(package! dired-sidebar)
+#+end_src
+
+#+begin_src lisp
+(use-package! dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar))
+#+end_src
+
+** =dirvish=
+
+#+begin_src elisp :tangle packages.el
+(package! dirvish)
+#+end_src
 
 * =anki-editor=
 ** install
@@ -1429,6 +1458,7 @@ https://emacs.stackexchange.com/a/63982
 #+end_src
 * =LaTeX=
 ** set bibliography path
+
 #+begin_src elisp
 (setq reftex-default-bibliography "~/promo/bib/references.bib")
 #+end_src
