@@ -1192,6 +1192,17 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   )
 #+end_src
 
+*** keybindings
+
+#+begin_src elisp
+(map!
+ :leader
+ :prefix-map ("j t" . "org-transclusion")
+ :desc "add" "a" #'org-transclusion-add
+ :desc "remove" "r" #'org-transclusion-remove
+ )
+#+end_src
+
 *** tweak to exclude first-level heading with =:only-contents=
 
 #+begin_src elisp
