@@ -121,6 +121,25 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
 #+end_src
 
 * windows and frames
+** switch windows using =ace-window=
+*** keybinding
+
+#+begin_src elisp
+(map!
+ :desc "ace-window"
+ :leader
+ "w w" #'ace-window
+ )
+#+end_src
+
+*** enable switching to =treemacs= window
+
+#+begin_src elisp
+(after! (:and treemacs ace-window)
+  (setq aw-ignored-buffers (delq 'treemacs-mode aw-ignored-buffers)))
+#+end_src
+https://github.com/hlissner/doom-emacs/issues/1177#issuecomment-464936107
+
 ** hydra for managing windows
 #+BEGIN_SRC emacs-lisp
 (map!
@@ -146,7 +165,6 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
         (switch-to-buffer (other-buffer))))))
 #+end_src
 [[https://emacs.stackexchange.com/a/5372][How to change Emacs windows from vertical split to horizontal split? - Emacs ...]]
-
 ** switch frames
 
 #+BEGIN_SRC elisp
@@ -208,6 +226,23 @@ Current pattern: %`evil-mc-pattern
 (after! yasnippet
   (define-key yas-minor-mode-map (kbd "<") yas-maybe-expand))
 #+end_src
+** move lines up/down using =drag-stuff=
+
+#+begin_src elisp :tangle packages.el
+(package! drag-stuff)
+#+end_src
+
+#+begin_src elisp
+(use-package! drag-stuff
+  :init
+  (map!
+   :desc "move line up" "M-p" #'drag-stuff-up
+   :desc "move line down" "M-n" #'drag-stuff-down
+   :desc "move word left" "M-b" #'drag-stuff-left
+   :desc "move word down" "M-ü" #'drag-stuff-right
+   )
+   )
+#+end_src
 
 * =projectile=
 ** set projects
@@ -240,7 +275,6 @@ Current pattern: %`evil-mc-pattern
  :leader
  :desc "switch workspace" "y" #'+workspace/switch-to)
 #+end_src
-
 * =org-mode=
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
@@ -866,6 +900,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   :config
     (setq +org-roam-open-buffer-on-find-file nil)
     (setq org-roam-graph-exclude-matcher '("dailies"))
+    (setq org-roam-file-exclude-regexp "logseq/bak")
 
   (map!
    :leader
@@ -1349,13 +1384,14 @@ https://emacs.stackexchange.com/a/63982
 (map!
  :leader
  :prefix ("j d" . "dired")
- :desc "open home" "h" (lambda () (interactive) (find-file "~"))
- :desc "open Desktop" "d" (lambda () (interactive) (find-file "~/Desktop"))
- :desc "open promo" "p" (lambda () (interactive) (find-file "~/promo"))
- :desc "open Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
- :desc "open bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
- :desc "open Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
- :desc "open orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
+ :desc "home" "h" (lambda () (interactive) (find-file "~"))
+ :desc "Desktop" "d" (lambda () (interactive) (find-file "~/Desktop"))
+ :desc "promo" "p" (lambda () (interactive) (find-file "~/promo"))
+ :desc "Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
+ :desc "bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
+ :desc "Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
+ :desc "orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
+ :desc "Google Drive" "g" (lambda () (interactive) (find-file "~/Google Drive"))
  )
 #+END_SRC
 *** =dired-narrow=
@@ -1400,6 +1436,13 @@ https://emacs.stackexchange.com/a/63982
 
 #+begin_src elisp :tangle packages.el
 (package! dirvish)
+#+end_src
+* version control
+** =ediff=
+*** unfold =org= files before diffing
+
+#+begin_src elisp :results silent
+(add-hook 'ediff-prepare-buffer-hook #'show-all)
 #+end_src
 
 * =anki-editor=
@@ -1508,11 +1551,6 @@ source: https://emacs.stackexchange.com/a/33679/29471
 #+END_SRC
 
 ** view =pdf= in new frame
-:PROPERTIES:
-:ID:       1a35abb2-1916-4bf1-8cf2-8103f597d493
-:END:
-
-source: https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
 
 - if only one frame is present: use new window
 - if separate frame available: use separate frame
@@ -1529,6 +1567,7 @@ Then run FUN with ARGS."
   (advice-add 'pdf-sync-backward-search-mouse :around #'framesMenus-display-buffer-use-some-frame)
   )
 #+END_SRC
+https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
 
 * emojis
 #+begin_src elisp
@@ -1559,3 +1598,26 @@ Then run FUN with ARGS."
 #+begin_src elisp :tangle packages.el
 (package! csv-mode)
 #+end_src
+* =pdf-tools=
+** config
+
+#+BEGIN_SRC emacs-lisp
+(use-package! pdf-tools
+  :config
+  (setq-default pdf-view-display-size 'fit-width)
+  (setq pdf-annot-activate-created-annotations t))
+#+END_SRC
+
+** custom keybindings
+
+#+BEGIN_SRC emacs-lisp
+(map!
+ :leader
+ :prefix-map ("d". "pdf-tools")
+ :desc "annotate w/ text" "t" #'pdf-annot-add-text-annotation
+ :desc "annotate w/ highlight" "h" #'pdf-annot-add-highlight-markup-annotation
+ :desc "annotate w/ underline" "u" #'pdf-annot-add-underline-markup-annotation
+ :desc "annotate w/ strikeout" "s" #'pdf-annot-add-strikeout-markup-annotation
+ :desc "delete annotation" "d" #'pdf-annot-delete
+ :desc "jump back" "b" #'pdf-history-goto)
+#+END_SRC
