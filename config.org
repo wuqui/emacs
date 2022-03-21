@@ -274,6 +274,12 @@ And abbreviations, e.g.
 and semicolons;
 dot.ted And exlamation marks!
 And more.
+** spellchecking
+*** set =ispell= dictionary to =british=
+
+#+begin_src elisp
+(setq ispell-dictionary "british")
+#+end_src
 
 * =projectile=
 ** set projects
