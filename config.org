@@ -281,6 +281,16 @@ And more.
 (setq ispell-dictionary "british")
 #+end_src
 
+** enable mouse clicks for =flycheck=
+
+#+begin_src elisp
+(eval-after-load "flyspell"
+  '(progn
+     (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+     (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+#+end_src
+[[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
+
 * =projectile=
 ** set projects
 #+BEGIN_SRC elisp
