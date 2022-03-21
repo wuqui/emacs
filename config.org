@@ -69,6 +69,7 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
  :desc "zoom hydra" "f s" #'hydra-zoom/body
  )
 #+end_src
+
 * modeline
 ** decrease size
 
@@ -243,6 +244,36 @@ Current pattern: %`evil-mc-pattern
    )
    )
 #+end_src
+** break paragraph into lines
+
+#+begin_src elisp :results silent
+(defun p2l ()
+  "Format current paragraph into single lines."
+  (interactive "*")
+  (save-excursion
+    (forward-paragraph)
+    (let ((foo (point)))
+      (backward-paragraph)
+      (replace-regexp "\n" " " nil (1+ (point)) foo)
+      (backward-paragraph)
+      (replace-regexp "\\.\s ?" ".\n" nil (point) foo)
+      (backward-paragraph)
+      (replace-regexp "; ?" ";\n" nil (point) foo)
+      (backward-paragraph)
+      (replace-regexp "\? ?" "?\n" nil (point) foo)
+      (backward-paragraph)
+      (replace-regexp "\! ?" "!\n" nil (point) foo)
+      )))
+#+end_src
+
+This is an example.
+Multiple sentences.
+What about question marks?
+And abbreviations, e.g.
+/i.e./.
+and semicolons;
+dot.ted And exlamation marks!
+And more.
 
 * =projectile=
 ** set projects
