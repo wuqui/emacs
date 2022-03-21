@@ -520,6 +520,7 @@ backup: ~(setq-default org-startup-folded t)~
               (clocktable-by-tag/insert-tag (plist-put (plist-put params :match tag) :tags tag)))
             tags)))
 #+end_src
+
 **** don't remove clocking durations of =0=
 
 #+begin_src elisp
@@ -542,6 +543,12 @@ backup: ~(setq-default org-startup-folded t)~
 #+begin_src elisp
 (setq org-deadline-warning-days 3)
 #+end_src
+*** skip deadlines if task is done
+
+#+begin_src elisp
+(setq org-agenda-skip-deadline-if-done t)
+#+end_src
+
 *** bulk set priorities
 
 #+begin_src elisp
