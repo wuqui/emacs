@@ -1649,6 +1649,15 @@ Then run FUN with ARGS."
   )
 #+END_SRC
 https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separate-frames-for-dual-monitor-setup
+** indent manually & by 2 spaces
+
+#+begin_src elisp
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (setq tab-width 2
+                  electric-indent-mode nil)))
+#+end_src
+[[https://emacs.stackexchange.com/a/48884/29471][Manual indentation in LaTeX mode - Emacs Stack Exchange]]
 
 * emojis
 #+begin_src elisp
