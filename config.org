@@ -1287,6 +1287,8 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 (map!
  :leader
  :prefix-map ("j t" . "org-transclusion")
+ :desc "toggle mode" "m" #'org-transclusion-mode
+ :desc "make from link" "l" #'org-transclusion-make-from-link
  :desc "add" "a" #'org-transclusion-add
  :desc "remove" "r" #'org-transclusion-remove
  )
