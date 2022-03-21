@@ -1700,5 +1700,8 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
  :desc "annotate w/ underline" "u" #'pdf-annot-add-underline-markup-annotation
  :desc "annotate w/ strikeout" "s" #'pdf-annot-add-strikeout-markup-annotation
  :desc "delete annotation" "d" #'pdf-annot-delete
- :desc "jump back" "b" #'pdf-history-goto)
+ :desc "jump back" "b" #'pdf-history-goto
+ :desc "jump back" "j" #'pdf-history-forward
+ :desc "jump back" "k" #'pdf-history-backward
+ )
 #+END_SRC
