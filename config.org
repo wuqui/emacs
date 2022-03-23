@@ -1623,7 +1623,9 @@ source: https://emacs.stackexchange.com/a/33679/29471
     ("(R)" ("textregistered"))
     ("TM" ("texttrademark"))
     (1 ("part" "chapter" "section" "subsection" "subsubsection" "paragraph" "subparagraph" "part*" "chapter*" "section*" "subsection*" "subsubsection*" "paragraph*" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup"))
-    ("{1}" ("cite" "parencite" "textcite" "se" "sw" "sps" "sbs" "hw" "qpar" "ol" "mn" "phnm" "mrphm" "enquote" "uline" "num" "textsuperscript" "todo"))
+    ("{1}" ("cite" "textcite" "se" "sw" "sps" "sbs" "hw" "qpar" "ol" "mn" "phnm" "mrphm" "enquote" "uline" "num" "textsuperscript"))
+    ("({1})" ("parencite" "todo"))
+    ("[todo]" ("todo"))
     ))
   )
 #+END_SRC
