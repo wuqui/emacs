@@ -1483,7 +1483,7 @@ https://emacs.stackexchange.com/a/63982
 (package! dired-sidebar)
 #+end_src
 
-#+begin_src lisp
+#+begin_src elisp
 (use-package! dired-sidebar
   :commands (dired-sidebar-toggle-sidebar))
 #+end_src
