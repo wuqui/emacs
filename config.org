@@ -1606,9 +1606,6 @@ https://emacs.stackexchange.com/a/63982
 
 ** folding
 *** fold custom macros
-:PROPERTIES:
-:ID:       8ffa02ce-ba2f-4daf-9734-6086193aee93
-:END:
 source: https://emacs.stackexchange.com/a/33679/29471
 
 #+BEGIN_SRC elisp
