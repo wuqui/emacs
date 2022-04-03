@@ -426,9 +426,8 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/org/legenda.org"
                           "~/org/videnda.org"
                           "~/org/audenda.org"
-                          )
-        )
-  )
+                          "~/org/probanda.org"
+                          )))
 #+END_SRC
 
 *** include archive files
@@ -625,32 +624,32 @@ fix to exclude active datestamps from time grid:
            (file "~/org/privat.org")
             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
-           :empty-lines 1
-           )
+           :empty-lines 1)
           ("w" "todo / work" entry
            (file "~/org/work.org")
             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
-           :empty-lines 1
-           )
+           :empty-lines 1)
           ("v" "videnda" entry
            (file "~/org/videnda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
-           :empty-lines 1
-           )
+           :empty-lines 1)
           ("a" "audenda" entry
            (file "~/org/audenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
-           :empty-lines 1
-           )
+           :empty-lines 1)
           ("l" "legenda" entry
            (file "~/org/legenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
-           :empty-lines 1
-           )
+           :empty-lines 1)
+          ("b" "probanda" entry
+           (file "~/org/probanda.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :prepend t
+           :empty-lines 1)
           )
         )
   )
