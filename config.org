@@ -455,6 +455,7 @@ backup: ~(setq-default org-startup-folded t)~
                           "~/org/videnda.org"
                           "~/org/audenda.org"
                           "~/org/probanda.org"
+                          "~/org/deponenda.org"
                           )))
 #+END_SRC
 
@@ -675,6 +676,11 @@ fix to exclude active datestamps from time grid:
            :empty-lines 1)
           ("b" "probanda" entry
            (file "~/org/probanda.org")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :prepend t
+           :empty-lines 1)
+          ("d" "deponenda" entry
+           (file "~/org/deponenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
