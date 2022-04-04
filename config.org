@@ -121,6 +121,12 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
  )
 #+end_src
 
+** bookmark file location
+
+#+begin_src elisp
+(setq bookmark-file "~/.doom.d/bookmarks")
+#+end_src
+
 * windows and frames
 ** switch windows using =ace-window=
 *** keybinding
