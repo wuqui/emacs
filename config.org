@@ -298,28 +298,50 @@ And more.
 [[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
 
 * =projectile=
+** fix error detecting =$HOME= as project root
+
+error message by =doom doctor=:
+
+#+begin_quote
+! Your $HOME is recognized as a project root
+Emacs will assume $HOME is the root of any project living under $HOME. If
+this isn't desired, you will need to remove ".git" from
+`projectile-project-root-files-bottom-up' (a variable), e.g.
+
+(after! projectile (setq projectile-project-root-files-bottom-up (remove
+".git" projectile-project-root-files-bottom-up)))
+#+end_quote
+
+#+begin_src elisp
+(after! projectile (setq projectile-project-root-files-bottom-up (remove
+".git" projectile-project-root-files-bottom-up)))
+#+end_src
+
 ** set projects
 #+BEGIN_SRC elisp
 (after! projectile
   (setq projectile-known-projects '(
-                                    ;; private
-                                    "~/.doom.d/"
-                                    "~/org/"
-                                    "~/roam/"
-                                    "~/temp/latex/"
-                                    "~/Dropbox/orgzly/"
+    ;; private
+    "~/.doom.d/"
+    "~/org/"
+    "~/roam/"
+    "~/temp/latex/"
+    "~/Dropbox/orgzly/"
 
-                                    ;; teaching
-                                    "~/promo/lehre/2021-22_ps_itl/"
-                                    "~/promo/lehre/2021-22_sem_morph-wf/"
+    ;; teaching
+    "~/promo/lehre/2021-22_ps_itl/"
+    "~/promo/lehre/2021-22_sem_morph-wf/"
+    "~/promo/lehre/2022_ps_itl/"
+    "~/promo/lehre/2022_sem_lexical-innovation/"
+    "~/promo/lehre/2022_ps_methods-in-linguistics"
 
-                                    ;; projects
-                                    "~/promo/neocrawler/"
-                                    "~/promo/sna/"
-                                    "~/promo/AngloSaxon/"
-                                    "~/promo/socemb/"
-                                    "~/promo/NeoCov/"
-                                    )))
+    ;; projects
+    "~/promo/neocrawler/"
+    "~/promo/sna/"
+    "~/promo/AngloSaxon/"
+    "~/promo/socemb/"
+    "~/promo/NeoCov/"
+    )))
 #+END_SRC
 
 ** switch between workspaces
