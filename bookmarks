@@ -1,0 +1,150 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("deponenda.org"
+ (filename . "~/org/deponenda.org")
+ (front-context-string . "#+title: Deponen")
+ (rear-context-string)
+ (position . 1))
+("probanda.org"
+ (filename . "~/org/probanda.org")
+ (front-context-string . "obanda\n\n* TODO =")
+ (rear-context-string)
+ (position . 12))
+("agenda / gießen"
+ (filename . "~/org/rout.org")
+ (front-context-string . "TODO gießen\nSCHE")
+ (rear-context-string . "14:40]\n:END:\n** ")
+ (position . 183720))
+("agenda / aufräumen"
+ (filename . "~/org/privat.org")
+ (front-context-string . "ONE aufräumen\nSC")
+ (rear-context-string . "1:05]\n:END:\n** D")
+ (position . 17628))
+("agenda / rasieren"
+ (filename . "~/org/privat.org")
+ (front-context-string . "TODO [#B] rasier")
+ (rear-context-string . "23:04]\n:END:\n** ")
+ (position . 7902))
+("roam / french"
+ (filename . "~/roam/20201020142924-french.org")
+ (front-context-string . "#+title: French\n")
+ (rear-context-string . "ok::franz\n:END:\n")
+ (position . 118))
+("agenda / Wäsche"
+ (filename . "~/org/privat.org")
+ (front-context-string . "DONE Wäsche\nSCHE")
+ (rear-context-string . "16:10]\n:END:\n** ")
+ (position . 11271))
+("legenda.org"
+ (filename . "~/org/legenda.org")
+ (front-context-string . "#+title: legenda")
+ (rear-context-string)
+ (position . 1))
+("termux config.org"
+ (filename . "~/tools/doom.d.tmx/config.org")
+ (front-context-string . "w\n#+title: Doom ")
+ (rear-context-string . "startup: overvie")
+ (position . 19))
+("roam / weekly review"
+ (filename . "~/roam/20200819115037-weekly_review.org")
+ (front-context-string . "#+title: weekly ")
+ (rear-context-string . "0ddd9589a\n:END:\n")
+ (position . 114))
+("roam / English"
+ (filename . "~/roam/20200617224108-english.org")
+ (front-context-string . "#+title: English")
+ (rear-context-string . "vok::engl\n:END:\n")
+ (position . 90))
+("privat.org"
+ (filename . "~/org/privat.org")
+ (front-context-string . "#+title: privat\n")
+ (rear-context-string)
+ (position . 1))
+("qbase.sty"
+ (filename . "~/Library/texmf/tex/latex/qbase/qbase.sty")
+ (front-context-string . "% Declare that t")
+ (rear-context-string)
+ (position . 1))
+("agenda / einkaufen"
+ (filename . "~/org/privat.org")
+ (front-context-string . "DO einkaufen\n:PR")
+ (rear-context-string . ":02]\n:END:\n** TO")
+ (position . 21215))
+("videnda.org"
+ (filename . "~/org/videnda.org")
+ (front-context-string . "#+title: videnda")
+ (rear-context-string)
+ (position . 1))
+("agenda / NeoCov"
+ (filename . "~/org/work.org")
+ (front-context-string . "RT [[file:../roa")
+ (rear-context-string . ":27\n:END:\n\n** ST")
+ (position . 113565))
+("rout.org"
+ (filename . "~/org/rout.org")
+ (front-context-string . "#+title: rout\n#+")
+ (rear-context-string)
+ (position . 1))
+("agenda / morph-wf"
+ (filename . "~/org/work.org")
+ (front-context-string . "RT morph-wf\n:PRO")
+ (rear-context-string . "Mon -7d>\n\n*** ST")
+ (position . 22577))
+("agenda / Mittagessen"
+ (filename . "~/org/rout.org")
+ (front-context-string . "DO Mittagessen\nS")
+ (rear-context-string . ":09\n:END:\n\n** TO")
+ (position . 142591))
+("references.bib"
+ (filename . "~/promo/bib/references.bib")
+ (front-context-string . "\n@electronic{201")
+ (rear-context-string)
+ (position . 1))
+("mail.org"
+ (filename . "~/org/mail.org")
+ (front-context-string . "Mail\n#+setupfile")
+ (rear-context-string)
+ (position . 10))
+("latex.tex"
+ (filename . "~/temp/latex/latex.tex")
+ (front-context-string . "\\documentclass{s")
+ (rear-context-string)
+ (position . 1))
+("work.org"
+ (filename . "~/org/work.org")
+ (front-context-string . "k\n#+filetags: wo")
+ (rear-context-string)
+ (position . 13))
+("ranger-m"
+ (filename . "~/Desktop/")
+ (front-context-string . "Anglo-Saxon.Rmd*")
+ (rear-context-string . ".9k 2020-06-02  ")
+ (position . 83))
+("method.org"
+ (filename . "~/org/method.org")
+ (front-context-string . "method\n#+filetag")
+ (rear-context-string)
+ (position . 10))
+("audenda.org"
+ (filename . "~/org/audenda.org")
+ (front-context-string . "#+title: audenda")
+ (rear-context-string)
+ (position . 1))
+("temp.org"
+ (filename . "~/org/temp.org")
+ (front-context-string . "#+title: temp\n\n*")
+ (rear-context-string)
+ (position . 1))
+("org-refile-last-stored"
+ (filename . "~/roam/20200819115037-weekly_review.org")
+ (front-context-string . "******* =git= sa")
+ (rear-context-string . "= sau gut :pos:\n")
+ (position . 22685))
+("org-capture-last-stored"
+ (filename . "~/org/deponenda.org")
+ (front-context-string . "* TODO [[https:/")
+ (rear-context-string . "tle: Deponenda\n\n")
+ (position . 21))
+)
