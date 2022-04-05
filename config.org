@@ -975,8 +975,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
             "* %?"
             :target (file+head
                         "%<%Y-%m-%d>.org"
-                        ;; title bak: %<%A, %d %B %Y>
-                        "#+TITLE: %<%Y-%m-%d>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n- \n* Dank\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n** \n* Clocktable\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
+                        "#+TITLE: %<%Y-%m-%d>\n#+SUBTITLE: %<%A>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n- \n* Dank\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n** \n* Clocktable\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
     ;; (setq org-roam-capture-templates
     ;;         '(("r" "bibliography reference" plain
     ;;         "%?"
