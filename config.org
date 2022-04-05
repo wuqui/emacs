@@ -182,6 +182,7 @@ https://github.com/hlissner/doom-emacs/issues/1177#issuecomment-464936107
 
 * editing
 ** expand region
+
 #+BEGIN_SRC emacs-lisp
 (map!
  :leader
