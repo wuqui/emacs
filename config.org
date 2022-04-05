@@ -79,6 +79,16 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
   (set-face-attribute 'mode-line nil :height 150)
   (set-face-attribute 'mode-line-inactive nil :height 150))
 #+end_src
+** keybinding for toggle
+
+#+begin_src elisp
+(map!
+ :desc "toggle modeline"
+ :leader
+ :prefix "t"
+ "m" #'hide-mode-line-mode
+)
+#+end_src
 
 * buffers and files
 ** kill buffer and window
