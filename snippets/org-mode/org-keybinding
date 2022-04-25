@@ -1,5 +1,6 @@
 # key: kbd
 # name: org-keybinding
 # --
-| kbd | =$0= |
-| cmd | ~~ |
+| kbd  | cmd |
+|------|-----|
+| ~$0~ | ~~  |
