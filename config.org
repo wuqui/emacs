@@ -86,8 +86,7 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
  :desc "toggle modeline"
  :leader
  :prefix "t"
- "m" #'hide-mode-line-mode
-)
+ "m" #'hide-mode-line-mode)
 #+end_src
 
 * buffers and files
@@ -244,6 +243,7 @@ Current pattern: %`evil-mc-pattern
 (after! yasnippet
   (define-key yas-minor-mode-map (kbd "<") yas-maybe-expand))
 #+end_src
+
 ** move lines up/down using =drag-stuff=
 
 #+begin_src elisp :tangle packages.el
