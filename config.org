@@ -425,6 +425,15 @@ backup: ~(setq-default org-startup-folded t)~
    "Q" #'q/org-agenda)
   )
 #+END_SRC
+*** numerical priorities
+
+#+begin_src elisp
+(setq org-highest-priority 1)
+(setq org-default-priority 5)
+(setq org-lowest-priority 9)
+#+end_src
+source: [[https://www.reddit.com/r/emacs/comments/lbueqw/how_can_i_change_priorities_to_1_to_9_for_all_org/?utm_source=share&utm_medium=web2x&context=3][How can I change priorities to 1 to 9 for all org files? : emacs]]
+
 *** start on Mondays
 
 #+begin_src elisp
