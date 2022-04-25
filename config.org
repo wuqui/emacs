@@ -340,8 +340,6 @@ this isn't desired, you will need to remove ".git" from
     "~/Dropbox/orgzly/"
 
     ;; teaching
-    "~/promo/lehre/2021-22_ps_itl/"
-    "~/promo/lehre/2021-22_sem_morph-wf/"
     "~/promo/lehre/2022_ps_itl/"
     "~/promo/lehre/2022_sem_lexical-innovation/"
     "~/promo/lehre/2022_ps_methods-in-linguistics"
