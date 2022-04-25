@@ -1763,3 +1763,12 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
  :desc "jump back" "k" #'pdf-history-backward
  )
 #+END_SRC
+* =Quarto=
+
+#+begin_src elisp :tangle packages.el
+(package! quarto-mode)
+#+end_src
+
+#+begin_src elisp
+(use-package! quarto-mode)
+#+end_src
