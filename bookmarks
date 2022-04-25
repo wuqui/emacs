@@ -1,8 +1,33 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("deponenda.org"
+(("agenda / Post"
+ (filename . "~/org/privat.org")
+ (front-context-string . "ONE [#A] Post\nSC")
+ (rear-context-string . "P recurring\n** D")
+ (position . 3064))
+("einkaufen.org"
+ (filename . "~/org/einkaufen.org")
+ (front-context-string . ": einkaufen\n#+TO")
+ (rear-context-string)
+ (position . 8))
+("agenda / einkaufen"
+ (filename . "~/org/privat.org")
+ (front-context-string . "ODO [#2] einkauf")
+ (rear-context-string . "5:02]\n:END:\n** T")
+ (position . 23427))
+("agenda / putzen"
+ (filename . "~/org/privat.org")
+ (front-context-string . "TODO [#A] putzen")
+ (rear-context-string . "  0:18\n:END:\n** ")
+ (position . 4080))
+("markdown.md"
+ (filename . "~/org/markdown.md")
+ (front-context-string . "\nI think links s")
+ (rear-context-string)
+ (position . 1))
+("deponenda.org"
  (filename . "~/org/deponenda.org")
  (front-context-string . "#+title: Deponen")
  (rear-context-string)
@@ -67,11 +92,6 @@
  (front-context-string . "% Declare that t")
  (rear-context-string)
  (position . 1))
-("agenda / einkaufen"
- (filename . "~/org/privat.org")
- (front-context-string . "DO einkaufen\n:PR")
- (rear-context-string . ":02]\n:END:\n** TO")
- (position . 21215))
 ("videnda.org"
  (filename . "~/org/videnda.org")
  (front-context-string . "#+title: videnda")
@@ -138,13 +158,13 @@
  (rear-context-string)
  (position . 1))
 ("org-refile-last-stored"
- (filename . "~/roam/20200819115037-weekly_review.org")
- (front-context-string . "****** keiner ha")
- (rear-context-string . "eit am WE :neg:\n")
- (position . 25722))
+ (filename . "~/org/privat.org")
+ (front-context-string . "** DONE Covid-Te")
+ (rear-context-string . "2022-04-16 Sat>\n")
+ (position . 30587))
 ("org-capture-last-stored"
- (filename . "~/roam/20220404191946-citavi.org")
- (front-context-string)
- (rear-context-string . "#+title: Citavi\n")
- (position . 84))
+ (filename . "~/org/privat.org")
+ (front-context-string . "* TODO Covid-Tes")
+ (rear-context-string . "tegory: privat\n\n")
+ (position . 56))
 )
