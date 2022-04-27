@@ -905,6 +905,22 @@ https://emacs.stackexchange.com/a/34436/29471
 #+begin_src elisp
 (setq org-odt-preferred-output-format "docx")
 #+end_src
+*** to =html=
+**** customise style
+
+#+begin_src elisp :results silent
+(setq org-export-with-title nil)
+(setq org-export-with-toc nil)
+(setq org-html-postamble nil)
+(setq org-html-head-extra "
+   <style>
+        body {
+            font-family: \"Helvetica\";
+            font-size: 16px;
+        }
+   </style>
+")
+#+end_src
 
 ** =org-tables=
 *** shrink
