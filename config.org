@@ -918,7 +918,8 @@ https://emacs.stackexchange.com/a/34436/29471
 #+end_src
 
 ** =org-tables=
-*** shrink
+*** kbd for shrinking
+
 #+BEGIN_SRC emacs-lisp
 (after! org
   (map!
@@ -926,13 +927,15 @@ https://emacs.stackexchange.com/a/34436/29471
    :desc "shrink table" "t s" #'org-table-shrink))
 #+END_SRC
 
-*** expand
+*** kbd for expanding
+
 #+BEGIN_SRC emacs-lisp
 (after! org
   (map!
    :leader
    :desc "expand table" "t e" #'org-table-expand))
 #+END_SRC
+
 *** =orgtbl-aggregate=
 **** install
 
@@ -968,6 +971,16 @@ should be included in Doom emacs via the =+pretty= flag for =org=, but doesn't c
 #+begin_src elisp
 (use-package! org-pretty-table ; "prettier" tables
   :hook (org-mode . org-pretty-table-mode))
+#+end_src
+*** align on startup
+
+#+begin_src elisp
+(setq org-startup-align-all-tables t)
+#+end_src
+
+*** shrink on startup
+#+begin_src elisp
+(setq org-startup-shrink-all-tables t)
 #+end_src
 
 ** =org-babel=
