@@ -329,15 +329,13 @@ this isn't desired, you will need to remove ".git" from
 #+end_src
 
 ** set projects
+
 #+BEGIN_SRC elisp
 (after! projectile
   (setq projectile-known-projects '(
     ;; private
     "~/.doom.d/"
-    "~/org/"
-    "~/roam/"
-    "~/temp/latex/"
-    "~/Dropbox/orgzly/"
+    "~/Dropbox/roam/agenda/"
 
     ;; teaching
     "~/promo/lehre/2022_ps_itl/"
@@ -462,16 +460,16 @@ source: [[https://www.reddit.com/r/emacs/comments/lbueqw/how_can_i_change_priori
 #+BEGIN_SRC elisp
 (after! org
   (setq org-agenda-files (list
-                          "~/org/rout.org"
-                          "~/org/privat.org"
-                          "~/org/method.org"
-                          "~/org/work.org"
-                          "~/org/legenda.org"
-                          "~/org/videnda.org"
-                          "~/org/audenda.org"
-                          "~/org/probanda.org"
-                          "~/org/deponenda.org"
-                          )))
+    "~/org/agenda/rout.org"
+    "~/org/agenda/privat.org"
+    "~/org/agenda/method.org"
+    "~/org/agenda/work.org"
+    "~/org/agenda/legenda.org"
+    "~/org/agenda/videnda.org"
+    "~/org/agenda/audenda.org"
+    "~/org/agenda/probanda.org"
+    "~/org/agenda/deponenda.org"
+    )))
 #+END_SRC
 
 *** include archive files
@@ -665,37 +663,37 @@ fix to exclude active datestamps from time grid:
   (setq org-capture-templates
         '(
           ("p" "todo / privat" entry
-           (file "~/org/privat.org")
+           (file "~/org/agenda/privat.org")
             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("w" "todo / work" entry
-           (file "~/org/work.org")
+           (file "~/org/agenda/work.org")
             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("v" "videnda" entry
-           (file "~/org/videnda.org")
+           (file "~/org/agenda/videnda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("a" "audenda" entry
-           (file "~/org/audenda.org")
+           (file "~/org/agenda/audenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("l" "legenda" entry
-           (file "~/org/legenda.org")
+           (file "~/org/agenda/legenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("b" "probanda" entry
-           (file "~/org/probanda.org")
+           (file "~/org/agenda/probanda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
           ("d" "deponenda" entry
-           (file "~/org/deponenda.org")
+           (file "~/org/agenda/deponenda.org")
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
@@ -997,7 +995,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
   :hook
     (after-init . org-roam-mode)
   :custom
-    (org-roam-directory "~/roam")
+    (org-roam-directory "~/Dropbox/roam")
     (org-roam-dailies-directory "journal")
     (org-roam-graph-viewer "/usr/bin/open")
   :init
@@ -1509,8 +1507,8 @@ https://emacs.stackexchange.com/a/63982
  :desc "Lehre" "l" (lambda () (interactive) (find-file "~/promo/lehre"))
  :desc "bib/pdfs" "b" (lambda () (interactive) (find-file "~/promo/bib/pdfs"))
  :desc "Volumes" "v" (lambda () (interactive) (find-file "/Volumes"))
- :desc "orgzly" "o" (lambda () (interactive) (find-file "~/Dropbox/orgzly"))
  :desc "Google Drive" "g" (lambda () (interactive) (find-file "~/Google Drive"))
+ :desc "Dropbox" "D" (lambda () (interactive) (find-file "~/Dropbox"))
  )
 #+END_SRC
 *** =dired-narrow=
