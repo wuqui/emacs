@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("agenda / Post"
+(("agenda / LexInn"
+ (filename . "~/Dropbox/roam/agenda/work.org")
+ (front-context-string . "xical innovation")
+ (rear-context-string . "_lex-inn.org][le")
+ (position . 53673))
+("agenda / einkaufen"
+ (filename . "~/Dropbox/roam/agenda/privat.org")
+ (front-context-string . "** DONE [#3] ein")
+ (rear-context-string . "ue 15:02]\n:END:\n")
+ (position . 25162))
+("agenda / methods in linguistics"
+ (filename . "~/org/work.org")
+ (front-context-string . "thods in linguis")
+ (rear-context-string . "guistics.org][me")
+ (position . 49815))
+("agenda / Post"
  (filename . "~/org/privat.org")
  (front-context-string . "ONE [#A] Post\nSC")
  (rear-context-string . "P recurring\n** D")
@@ -12,11 +27,6 @@
  (front-context-string . ": einkaufen\n#+TO")
  (rear-context-string)
  (position . 8))
-("agenda / einkaufen"
- (filename . "~/org/privat.org")
- (front-context-string . "ODO [#2] einkauf")
- (rear-context-string . "5:02]\n:END:\n** T")
- (position . 23427))
 ("agenda / putzen"
  (filename . "~/org/privat.org")
  (front-context-string . "TODO [#A] putzen")
@@ -93,7 +103,7 @@
  (rear-context-string)
  (position . 1))
 ("videnda.org"
- (filename . "~/org/videnda.org")
+ (filename . "~/org/agenda/videnda.org")
  (front-context-string . "#+title: videnda")
  (rear-context-string)
  (position . 1))
@@ -163,8 +173,8 @@
  (rear-context-string . "2022-04-16 Sat>\n")
  (position . 30587))
 ("org-capture-last-stored"
- (filename . "~/org/privat.org")
- (front-context-string . "* TODO Covid-Tes")
- (rear-context-string . "tegory: privat\n\n")
- (position . 56))
+ (filename . "~/Dropbox/roam/20220510233014-received_pronunciation.org")
+ (front-context-string . "\n[[id:e0e60391-1")
+ (rear-context-string . "d Pronunciation\n")
+ (position . 118))
 )
