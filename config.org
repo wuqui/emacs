@@ -655,6 +655,15 @@ fix to exclude active datestamps from time grid:
         )
   )
 #+end_src
+*** hourly intervals for time grid
+
+#+begin_src elisp
+(setq org-agenda-time-grid
+      '((daily today require-timed)
+        (800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 2000)
+        "......"
+        "----------------"))
+#+end_src
 
 ** capture templates
 
