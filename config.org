@@ -345,11 +345,8 @@ this isn't desired, you will need to remove ".git" from
     "~/promo/lehre/2022_ps_methods-in-linguistics"
 
     ;; projects
-    "~/promo/neocrawler/"
-    "~/promo/sna/"
-    "~/promo/AngloSaxon/"
-    "~/promo/socemb/"
     "~/promo/NeoCov/"
+    "~/promo/me2inc/"
     )))
 #+END_SRC
 
