@@ -706,6 +706,17 @@ fix to exclude active datestamps from time grid:
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :prepend t
            :empty-lines 1)
+          ("A" "Anki")
+            ("Ae" "Anki / English" entry
+                (file+headline "~/Dropbox/roam/20200617224108-english.org" "vocabulary")
+                "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                :empty-lines 1
+                :jump-to-captured 1)
+            ("Af" "Anki / French" entry
+                (file+headline "~/Dropbox/roam/20201020142924-french.org" "vocabulary")
+                "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                :empty-lines 1
+                :jump-to-captured 1)
           )
         )
   )
