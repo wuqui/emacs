@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("agenda / LexInn"
+(("agenda / meth.org"
+ (filename . "~/Dropbox/roam/agenda/meth.org")
+ (front-context-string . "h\n#+filetags: me")
+ (rear-context-string)
+ (position . 13))
+("agenda / methods in linguistics"
+ (filename . "~/Dropbox/roam/agenda/work.org")
+ (front-context-string . "TRT [[file:~/pro")
+ (rear-context-string . " TODO post\n*** S")
+ (position . 58444))
+("agenda / LexInn"
  (filename . "~/Dropbox/roam/agenda/work.org")
  (front-context-string . "xical innovation")
  (rear-context-string . "_lex-inn.org][le")
@@ -12,11 +22,6 @@
  (front-context-string . "** DONE [#3] ein")
  (rear-context-string . "ue 15:02]\n:END:\n")
  (position . 25162))
-("agenda / methods in linguistics"
- (filename . "~/org/work.org")
- (front-context-string . "thods in linguis")
- (rear-context-string . "guistics.org][me")
- (position . 49815))
 ("agenda / Post"
  (filename . "~/org/privat.org")
  (front-context-string . "ONE [#A] Post\nSC")
@@ -67,11 +72,6 @@
  (front-context-string . "#+title: French\n")
  (rear-context-string . "ok::franz\n:END:\n")
  (position . 118))
-("agenda / Wäsche"
- (filename . "~/org/privat.org")
- (front-context-string . "DONE Wäsche\nSCHE")
- (rear-context-string . "16:10]\n:END:\n** ")
- (position . 11271))
 ("legenda.org"
  (filename . "~/org/legenda.org")
  (front-context-string . "#+title: legenda")
@@ -152,11 +152,6 @@
  (front-context-string . "Anglo-Saxon.Rmd*")
  (rear-context-string . ".9k 2020-06-02  ")
  (position . 83))
-("method.org"
- (filename . "~/org/method.org")
- (front-context-string . "method\n#+filetag")
- (rear-context-string)
- (position . 10))
 ("audenda.org"
  (filename . "~/org/audenda.org")
  (front-context-string . "#+title: audenda")
@@ -173,8 +168,8 @@
  (rear-context-string . "2022-04-16 Sat>\n")
  (position . 30587))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/roam/20220510233014-received_pronunciation.org")
- (front-context-string . "\n[[id:e0e60391-1")
- (rear-context-string . "d Pronunciation\n")
- (position . 118))
+ (filename . "~/Dropbox/roam/20220513115553-data_analysis.org")
+ (front-context-string)
+ (rear-context-string . ": data analysis\n")
+ (position . 91))
 )
