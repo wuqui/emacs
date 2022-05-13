@@ -892,6 +892,13 @@ source: https://stackoverflow.com/a/33716338/4165300
 #+end_src
 https://emacs.stackexchange.com/a/34436/29471
 *** to =LaTeX=
+**** use [[id:8648d38e-b820-4ef5-93e2-51085a78b39d][XeLaTeX]]
+
+#+begin_src elisp
+;; (setq org-latex-compiler "xelatex")
+(setq org-latex-compiler "lualatex")
+#+end_src
+
 **** don't center tables
 #+begin_src elisp
 (setq org-latex-tables-centered nil)
@@ -1686,6 +1693,13 @@ https://emacs.stackexchange.com/a/63982
   (deft-directory "~/roam/"))
 #+end_src
 * =LaTeX=
+** use [[id:8648d38e-b820-4ef5-93e2-51085a78b39d][XeLaTeX]]
+
+#+begin_src elisp
+;; (setq-default TeX-engine 'xetex)
+(setq-default TeX-engine 'luatex)
+#+end_src
+
 ** set bibliography path
 
 #+begin_src elisp
