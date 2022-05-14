@@ -168,8 +168,8 @@
  (rear-context-string . "2022-04-16 Sat>\n")
  (position . 30587))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/roam/20220513115553-data_analysis.org")
- (front-context-string)
- (rear-context-string . ": data analysis\n")
- (position . 91))
+ (filename . "~/Dropbox/roam/20201020142924-french.org")
+ (front-context-string . "** teste\n:PROPER")
+ (rear-context-string . "e | /​fʀɛ​ʃ/ |\n\n")
+ (position . 3111))
 )
