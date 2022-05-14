@@ -1686,6 +1686,11 @@ https://emacs.stackexchange.com/a/63982
  :prefix "j a"
  :desc "push note" "p" #'q/anki-editor-push-note)
 #+end_src
+*** don't use =org-mode= tags
+
+#+begin_src elisp
+(setq anki-editor-org-tags-as-anki-tags nil)
+#+end_src
 
 * =deft=
 
