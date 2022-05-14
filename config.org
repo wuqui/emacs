@@ -737,6 +737,17 @@ fix to exclude active datestamps from time grid:
                     "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
                     :empty-lines 1
                     :jump-to-captured 1)
+            ("As" "Anki / Spanish")
+                ("Asv" "vocab" entry
+                    (file+headline "~/Dropbox/roam/20211103231650-spanisch.org" "vocabulary")
+                    "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                    :empty-lines 1
+                    :jump-to-captured 1)
+                ("Asp" "phrase" entry
+                    (file+headline "~/Dropbox/roam/20211103231650-spanisch.org" "phrases")
+                    "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                    :empty-lines 1
+                    :jump-to-captured 1)
           )
         )
   )
