@@ -939,7 +939,7 @@ https://emacs.stackexchange.com/a/34436/29471
 **** customise style
 
 #+begin_src elisp :results silent
-(setq org-export-with-title nil)
+;; (setq org-export-with-title nil)
 (setq org-export-with-toc nil)
 (setq org-html-postamble nil)
 (setq org-html-head-extra "
