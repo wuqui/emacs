@@ -10,6 +10,7 @@
 #+END_SRC
 
 * use =Alt= key for non-ASCII chars
+
 #+begin_src elisp
 (setq mac-option-modifier nil
       mac-command-modifier 'meta
@@ -17,6 +18,13 @@
 
 #+end_src
 source: https://stackoverflow.com/a/3378391
+
+* set locale
+
+#+begin_src elisp
+(setenv "LANG" "en_US.UTF-8")
+#+end_src
+
 * binding for universal argument
 
 #+begin_src elisp
