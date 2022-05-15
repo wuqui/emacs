@@ -1544,6 +1544,28 @@ uses [[id:ae8d035f-7308-435b-a624-2e979405456e][Alfred]] workflow: [[id:ccee3003
 #+end_src
 https://emacs.stackexchange.com/a/63982
 
+** =linkmarks=
+*** installation
+
+#+begin_src elisp :tangle packages.el
+(package! linkmarks
+  :recipe (:host github
+           :repo "dustinlacewell/linkmarks"))
+#+end_src
+
+*** configuration
+
+#+begin_src elisp
+(setq linkmarks-file "~/.doom.d/bookmarks.org")
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "jump to linkmark"
+ :leader "RET" #'linkmarks-select
+)
+#+end_src
+
 * workspaces
 #+begin_src elisp
 (map!

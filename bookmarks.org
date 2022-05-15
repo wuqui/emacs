@@ -1,0 +1,15 @@
+#+title: Bookmarks
+
+* temp.org
+[[file:~/org/temp.org]]
+* bookmarks.org
+[[file:~/.doom.d/bookmarks.org]]
+* config.org
+[[~/.doom.d/config.org]]
+* agenda
+** aufräumen
+[[id:21bc1aac-39a1-40eb-a236-1c32a7d635a0][aufräumen]]
+** meth.org
+[[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
+* qtex.org
+[[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
