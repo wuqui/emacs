@@ -7,18 +7,36 @@
 * config.org
 [[~/.doom.d/config.org]]
 * agenda
-** meth.org
-[[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
 ** privat
 *** aufräumen
 [[id:21bc1aac-39a1-40eb-a236-1c32a7d635a0][aufräumen]]
 *** rasieren
 [[id:2dfd4185-5cdd-4977-a215-0b4b54805b5c][rasieren]]
+*** privat.org
+[[id:bf255616-b2af-41ff-82a9-593a813aac71][privat]]
+** work
+[[id:922dbc08-3d7f-4ff6-bc88-3b298bcb6acc][work]]
+** meth.org
+[[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
 ** rout
+*** rout.org
+[[id:1dec718e-b353-49b7-bcbe-f5c475898651][rout]]
 *** Mittagessen
 [[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
 *** Abendessen
 [[id:3310d2d4-6e25-4537-a13c-959675e22f73][Abendessen]]
+** videnda
+[[id:e1961799-306b-48b9-8c49-58f628836021][videnda]]
+** shopping
+[[id:8f308ece-d641-4116-ae0d-a44b39ba48cf][shopping]]
+** audenda
+[[id:2deb03a3-a4dc-41a5-a71e-46790906ae03][audenda]]
+** deponenda
+[[id:a50851b1-b247-40e6-a7a4-36262d879d4e][deponenda]]
+** legenda
+[[id:4c96b14c-0433-4d90-b1a4-6c6035e8b907][legenda]]
+** probanda
+[[id:452b9d6a-3028-40eb-9415-86e8afdfdee9][probanda]]
 * qtex.org
 [[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
 * web
