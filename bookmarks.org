@@ -7,9 +7,18 @@
 * config.org
 [[~/.doom.d/config.org]]
 * agenda
-** aufräumen
-[[id:21bc1aac-39a1-40eb-a236-1c32a7d635a0][aufräumen]]
 ** meth.org
 [[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
+** privat
+*** aufräumen
+[[id:21bc1aac-39a1-40eb-a236-1c32a7d635a0][aufräumen]]
+** rout
+*** Mittagessen
+[[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
+*** Abendessen
+[[id:3310d2d4-6e25-4537-a13c-959675e22f73][Abendessen]]
 * qtex.org
 [[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
+* web
+** nbdev on Twitter
+https://twitter.com/search?q=nbdev&src=typed_query
