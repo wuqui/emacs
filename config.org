@@ -1116,6 +1116,12 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 ;;         :unnarrowed t)))
         )
 #+end_src
+*** include archive files
+
+#+begin_src elisp
+(setq org-roam-file-extensions '("org" "org_archive"))
+#+end_src
+
 *** =org-roam=bibtex= :inactive:
 **** install
 #+begin_src elisp :tangle no
