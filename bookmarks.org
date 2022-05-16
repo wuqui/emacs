@@ -1,11 +1,9 @@
 #+title: Bookmarks
 
-* temp.org
-[[file:~/org/temp.org]]
 * bookmarks.org
 [[file:~/.doom.d/bookmarks.org]]
-* config.org
-[[~/.doom.d/config.org]]
+* temp.org
+[[file:~/org/temp.org]]
 * agenda
 ** privat
 *** aufräumen
@@ -16,8 +14,13 @@
 [[id:bf255616-b2af-41ff-82a9-593a813aac71][privat]]
 ** work
 [[id:922dbc08-3d7f-4ff6-bc88-3b298bcb6acc][work]]
-** meth.org
-[[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
+*** Lehre
+**** intro
+[[id:23ee7d29-5051-4a1c-9e37-b637adb7c9dc][intro]]
+**** MethLing
+[[id:b42025ca-c5ca-40ae-b121-f764734136c8][methods in linguistics]]
+**** LexInn
+[[id:777de55e-3e04-4645-b1e9-39e9bb72293b][lexical innovation]]
 ** rout
 *** rout.org
 [[id:1dec718e-b353-49b7-bcbe-f5c475898651][rout]]
@@ -25,19 +28,25 @@
 [[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
 *** Abendessen
 [[id:3310d2d4-6e25-4537-a13c-959675e22f73][Abendessen]]
-** videnda
+** meth.org
+[[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
+** anda
+*** videnda
 [[id:e1961799-306b-48b9-8c49-58f628836021][videnda]]
-** shopping
+*** shopping
 [[id:8f308ece-d641-4116-ae0d-a44b39ba48cf][shopping]]
-** audenda
+*** audenda
 [[id:2deb03a3-a4dc-41a5-a71e-46790906ae03][audenda]]
-** deponenda
+*** deponenda
 [[id:a50851b1-b247-40e6-a7a4-36262d879d4e][deponenda]]
-** legenda
+*** legenda
 [[id:4c96b14c-0433-4d90-b1a4-6c6035e8b907][legenda]]
-** probanda
+*** probanda
 [[id:452b9d6a-3028-40eb-9415-86e8afdfdee9][probanda]]
-* qtex.org
+* config
+** config.org
+[[~/.doom.d/config.org]]
+** qtex.org
 [[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
 * web
 ** nbdev on Twitter
