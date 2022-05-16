@@ -1071,11 +1071,11 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
     (org-roam-graph-viewer "/usr/bin/open")
   :init
     (setq org-roam-dailies-capture-templates
-            '(("d" "default" entry
-            "* %?"
-            :target (file+head
-                        "%<%Y-%m-%d>.org"
-                        "#+TITLE: %<%Y-%m-%d>\n#+SUBTITLE: %<%A>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n:PROPERTIES:\n:collapsed: true\n:END:\n- \n* Dank\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Clocktable\n:PROPERTIES:\n:collapsed: true\n:END:\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
+        '(("d" "default" entry
+        "* %?"
+        :target (file+head
+            "%<%Y-%m-%d>.org"
+            "#+TITLE: %<%Y-%m-%d>\n#+SUBTITLE: %<%A>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n:PROPERTIES:\n:collapsed: true\n:END:\n- \n* Dank\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Clocktable\n:PROPERTIES:\n:collapsed: true\n:END:\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
     ;; (setq org-roam-capture-templates
     ;;         '(("r" "bibliography reference" plain
     ;;         "%?"
