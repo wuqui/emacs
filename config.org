@@ -1059,7 +1059,8 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
               (assq-delete-all :noweb org-babel-default-header-args))))
 #+end_src
 ** =org-roam=
-*** config
+*** basic config
+
 #+BEGIN_SRC emacs-lisp
 (use-package! org-roam
   :after org
@@ -1070,44 +1071,51 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
     (org-roam-dailies-directory "journal")
     (org-roam-graph-viewer "/usr/bin/open")
   :init
-    (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry
-        "* %?"
-        :target (file+head
-            "%<%Y-%m-%d>.org"
-            "#+TITLE: %<%Y-%m-%d>\n#+SUBTITLE: %<%A>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n:PROPERTIES:\n:collapsed: true\n:END:\n- \n* Dank\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Clocktable\n:PROPERTIES:\n:collapsed: true\n:END:\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
-    ;; (setq org-roam-capture-templates
-    ;;         '(("r" "bibliography reference" plain
-    ;;         "%?"
-    ;;         :target
-    ;;         (file+head "${citekey}.org" "#+title: ${citekey}\n#+filetags:\n")
-    ;;         :unnarrowed t)))
-            )
   :config
     (setq +org-roam-open-buffer-on-find-file nil)
     (setq org-roam-graph-exclude-matcher '("dailies"))
-    (setq org-roam-file-exclude-regexp "logseq/bak")
-
-  (map!
-   :leader
-   :prefix "r"
-   :desc "sidebar" "r" #'org-roam-buffer-toggle
-   :desc "find file" "f" #'org-roam-node-find
-   :desc "insert" "i" #'org-roam-node-insert
-   :desc "add alias" "a" #'org-roam-alias-add
-   :desc "add ref" "c" #'org-roam-ref-add
-   :desc "add tag" "l" #'org-roam-tag-add
-   :desc "sync DB" "s" #'org-roam-db-sync
-   :desc "d / yesterday" "y" #'org-roam-dailies-goto-yesterday
-   :desc "d / today" "t" #'org-roam-dailies-goto-today
-   :desc "d / tomorrow" "m" #'org-roam-dailies-goto-tomorrow
-   :desc "d / date" "d" #'org-roam-dailies-goto-date
-   :desc "d / previous" "p" #'org-roam-dailies-goto-previous-note
-   :desc "d / next" "n" #'org-roam-dailies-goto-next-note
-   )
-  )
+    (setq org-roam-file-exclude-regexp "logseq/bak"))
 #+END_SRC
 
+*** keybindings
+
+#+begin_src elisp
+(map!
+ :leader
+ :prefix "r"
+ :desc "sidebar" "r" #'org-roam-buffer-toggle
+ :desc "find file" "f" #'org-roam-node-find
+ :desc "insert" "i" #'org-roam-node-insert
+ :desc "add alias" "a" #'org-roam-alias-add
+ :desc "add ref" "c" #'org-roam-ref-add
+ :desc "add tag" "l" #'org-roam-tag-add
+ :desc "sync DB" "s" #'org-roam-db-sync
+ :desc "d / yesterday" "y" #'org-roam-dailies-goto-yesterday
+ :desc "d / today" "t" #'org-roam-dailies-goto-today
+ :desc "d / tomorrow" "m" #'org-roam-dailies-goto-tomorrow
+ :desc "d / date" "d" #'org-roam-dailies-goto-date
+ :desc "d / previous" "p" #'org-roam-dailies-goto-previous-note
+ :desc "d / next" "n" #'org-roam-dailies-goto-next-note
+ )
+#+end_src
+
+*** capture templates
+
+#+begin_src elisp
+(setq org-roam-dailies-capture-templates
+    '(("d" "default" entry
+    "* %?"
+    :target (file+head
+        "%<%Y-%m-%d>.org"
+        "#+TITLE: %<%Y-%m-%d>\n#+SUBTITLE: %<%A>\n#+PROPERTY: quality \n#+PROPERTY: privat \n#+PROPERTY: work \n \n* Affirm\n:PROPERTIES:\n:collapsed: true\n:END:\n- \n* Dank\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Was will ich heute machen?\n** TODO\n* Wie war mein Tag?\n:PROPERTIES:\n:collapsed: true\n:END:\n** \n* Clocktable\n:PROPERTIES:\n:collapsed: true\n:END:\n#+begin: clocktable-by-tag :tags (\"work\" \"privat\" \"rout\" \"method\") :maxlevel 1 :block %<%Y-%m-%d>\n#+end:")))
+;; (setq org-roam-capture-templates
+;;         '(("r" "bibliography reference" plain
+;;         "%?"
+;;         :target
+;;         (file+head "${citekey}.org" "#+title: ${citekey}\n#+filetags:\n")
+;;         :unnarrowed t)))
+        )
+#+end_src
 *** =org-roam=bibtex= :inactive:
 **** install
 #+begin_src elisp :tangle no
