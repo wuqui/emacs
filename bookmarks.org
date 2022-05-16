@@ -12,6 +12,8 @@
 ** privat
 *** aufräumen
 [[id:21bc1aac-39a1-40eb-a236-1c32a7d635a0][aufräumen]]
+*** rasieren
+[[id:2dfd4185-5cdd-4977-a215-0b4b54805b5c][rasieren]]
 ** rout
 *** Mittagessen
 [[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
