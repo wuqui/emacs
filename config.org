@@ -357,11 +357,14 @@ this isn't desired, you will need to remove ".git" from
 #+END_SRC
 
 ** switch between workspaces
+
 #+begin_src elisp
 (map!
+ :desc "switch workspace"
  :leader
- :desc "switch workspace" "y" #'+workspace/switch-to)
+ "z" #'+workspace/switch-to)
 #+end_src
+
 * =org-mode=
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
@@ -672,7 +675,6 @@ fix to exclude active datestamps from time grid:
         "......"
         "----------------"))
 #+end_src
-
 ** capture templates
 
 #+begin_src elisp :results silent
