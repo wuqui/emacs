@@ -21,9 +21,13 @@
 [[id:b42025ca-c5ca-40ae-b121-f764734136c8][methods in linguistics]]
 **** LexInn
 [[id:777de55e-3e04-4645-b1e9-39e9bb72293b][lexical innovation]]
+*** mails
+[[id:fb28a674-8396-4e5b-9683-971c22d846ed][mails]]
 ** rout
 *** rout.org
 [[id:1dec718e-b353-49b7-bcbe-f5c475898651][rout]]
+*** plan
+[[id:org-hs-id-custom:bda794e8-9d6a-48aa-b5cd-cd123c181517][plan]]
 *** Mittagessen
 [[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
 *** Abendessen
@@ -31,17 +35,17 @@
 ** meth.org
 [[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
 ** anda
-*** videnda
+*** videnda.org
 [[id:e1961799-306b-48b9-8c49-58f628836021][videnda]]
-*** shopping
+*** shopping.org
 [[id:8f308ece-d641-4116-ae0d-a44b39ba48cf][shopping]]
-*** audenda
+*** audenda.org
 [[id:2deb03a3-a4dc-41a5-a71e-46790906ae03][audenda]]
-*** deponenda
+*** deponenda.org
 [[id:a50851b1-b247-40e6-a7a4-36262d879d4e][deponenda]]
-*** legenda
+*** legenda.org
 [[id:4c96b14c-0433-4d90-b1a4-6c6035e8b907][legenda]]
-*** probanda
+*** probanda.org
 [[id:452b9d6a-3028-40eb-9415-86e8afdfdee9][probanda]]
 * config
 ** config.org
