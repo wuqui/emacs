@@ -1078,6 +1078,11 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
     (setq org-roam-graph-exclude-matcher '("dailies"))
     (setq org-roam-file-exclude-regexp "logseq/bak"))
 #+END_SRC
+*** disable completion
+
+#+begin_src elisp
+(setq org-roam-completion-everywhere nil)
+#+end_src
 
 *** keybindings
 
