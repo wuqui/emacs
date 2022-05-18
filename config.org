@@ -1875,18 +1875,26 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
 (package! csv-mode)
 #+end_src
 * =pdf-tools=
-** config
+** install
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src elisp :tangle packages.el
+(package! pdf-tools
+  :recipe (:host github
+           :repo "vedang/pdf-tools"))
+#+end_src
+
+** configure
+
+#+begin_src elisp
 (use-package! pdf-tools
-  :config
-  (setq-default pdf-view-display-size 'fit-width)
-  (setq pdf-annot-activate-created-annotations t))
-#+END_SRC
+  ;; (setq-default pdf-view-display-size 'fit-width)
+  ;; (setq pdf-annot-activate-created-annotations t)
+)
+#+end_src
 
-** custom keybindings
+** keybindings
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
 (map!
  :leader
  :prefix-map ("d". "pdf-tools")
