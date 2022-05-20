@@ -4,6 +4,8 @@
 [[file:~/.doom.d/bookmarks.org]]
 * temp.org
 [[file:~/org/temp.org]]
+* latex.tex
+[[file:~/temp/latex/latex.tex]]
 * agenda
 ** privat
 *** aufräumen

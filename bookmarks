@@ -163,10 +163,10 @@
  (rear-context-string)
  (position . 1))
 ("org-refile-last-stored"
- (filename . "~/Dropbox/roam/agenda/work.org_archive")
- (front-context-string . "*** DONE Besprec")
- (rear-context-string . "ia/][=SocMed=]]\n")
- (position . 29521))
+ (filename . "~/.doom.d/config.org")
+ (front-context-string . "*** keybindings\n")
+ (rear-context-string . "ols)\n#+end_src\n\n")
+ (position . 48716))
 ("org-capture-last-stored"
  (filename . "~/Dropbox/roam/20220517090704-diversity4research.org")
  (front-context-string . "#+filetags: :pro")
