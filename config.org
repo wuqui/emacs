@@ -1366,7 +1366,7 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 (use-package! org-download
   :after org
   :config
-  (setq-default org-download-image-dir "./img/")
+  (setq-default org-download-image-dir "./att/")
   (setq-default org-download-heading-lvl nil)
   (setq org-download-annotate-function (lambda (_link) ""))
   (map!
@@ -1496,6 +1496,7 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 (package! org-ql)
 #+end_src
 ** set apps for opening files
+
 #+begin_src elisp
 (setq org-file-apps
       '(
