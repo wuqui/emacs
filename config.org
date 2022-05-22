@@ -317,23 +317,10 @@ And more.
 [[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
 
 * =projectile=
-** fix error detecting =$HOME= as project root
-
-error message by =doom doctor=:
-
-#+begin_quote
-! Your $HOME is recognized as a project root
-Emacs will assume $HOME is the root of any project living under $HOME. If
-this isn't desired, you will need to remove ".git" from
-`projectile-project-root-files-bottom-up' (a variable), e.g.
-
-(after! projectile (setq projectile-project-root-files-bottom-up (remove
-".git" projectile-project-root-files-bottom-up)))
-#+end_quote
+** disable automatic project detection
 
 #+begin_src elisp
-(after! projectile (setq projectile-project-root-files-bottom-up (remove
-".git" projectile-project-root-files-bottom-up)))
+(setq projectile-track-known-projects-automatically nil)
 #+end_src
 
 ** set projects
