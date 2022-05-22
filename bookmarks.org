@@ -62,6 +62,8 @@ https://twitter.com/search?q=nbdev&src=typed_query
 * roam
 ** English
 [[id:7507c78b-a09c-499b-80e1-17dfff5e46fa][English]]
+** Spanisch
+[[id:5da049b9-1e64-4906-b4dc-f994c07cb224][Spanisch]]
 ** vowel chart
 [[id:25003349-5c57-4744-8d1d-b4e3bfe555d0][vowel chart]]
 ** consonant inventory

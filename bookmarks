@@ -168,8 +168,8 @@
  (rear-context-string . " =>  0:40\n:END:\n")
  (position . 89304))
 ("org-capture-last-stored"
- (filename . "~/Dropbox/roam/20220521111943-gantt_chart.org")
- (front-context-string . "\n[[id:0cc575c2-3")
- (rear-context-string . "le: Gantt chart\n")
- (position . 89))
+ (filename . "~/Dropbox/roam/20210907110515-italienisch.org")
+ (front-context-string . "** Er trinkt.\n:P")
+ (rear-context-string . "a mia ragazza.\n\n")
+ (position . 32165))
 )
