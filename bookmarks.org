@@ -14,6 +14,8 @@
 [[id:2dfd4185-5cdd-4977-a215-0b4b54805b5c][rasieren]]
 *** privat.org
 [[id:bf255616-b2af-41ff-82a9-593a813aac71][privat]]
+*** einkaufen
+[[id:8b9f852a-e346-4035-83e6-4a3ce9e7ae1d][einkaufen]]
 ** work
 [[id:922dbc08-3d7f-4ff6-bc88-3b298bcb6acc][work]]
 *** Lehre
@@ -57,3 +59,10 @@
 * web
 ** nbdev on Twitter
 https://twitter.com/search?q=nbdev&src=typed_query
+* roam
+** English
+[[id:7507c78b-a09c-499b-80e1-17dfff5e46fa][English]]
+** vowel chart
+[[id:25003349-5c57-4744-8d1d-b4e3bfe555d0][vowel chart]]
+** consonant inventory
+[[id:cd64283c-0f2d-48bf-8764-486dd7c964b5][consonant inventory]]
