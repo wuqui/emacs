@@ -812,6 +812,17 @@ dependencies
                     "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
                     :empty-lines 1
                     :jump-to-captured 1)
+            ("Ai" "Anki / Italian")
+                ("Aiv" "vocab" entry
+                    (file+headline "~/Dropbox/roam/20210907110515-italienisch.org" "vocabulary")
+                    "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                    :empty-lines 1
+                    :jump-to-captured 1)
+                ("Aip" "phrase" entry
+                    (file+headline "~/Dropbox/roam/20210907110515-italienisch.org" "phrases")
+                    "* %^{question}\n:PROPERTIES:\n:ANKI_NOTE_TYPE: AnkiEditor\n:END:\n** Front\n%\\1\n** Back\n%?\n"
+                    :empty-lines 1
+                    :jump-to-captured 1)
           )
         )
   )
