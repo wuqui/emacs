@@ -353,6 +353,7 @@ this isn't desired, you will need to remove ".git" from
     ;; projects
     "~/promo/NeoCov/"
     "~/promo/me2inc/"
+    "~/promo/diss/"
     )))
 #+END_SRC
 
@@ -475,6 +476,7 @@ source: [[https://www.reddit.com/r/emacs/comments/lbueqw/how_can_i_change_priori
     "~/org/agenda/privat.org"
     "~/org/agenda/meth.org"
     "~/org/agenda/work.org"
+    "~/org/agenda/diss.org"
     "~/org/agenda/legenda.org"
     "~/org/agenda/videnda.org"
     "~/org/agenda/audenda.org"
