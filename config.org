@@ -1853,7 +1853,7 @@ https://emacs.stackexchange.com/a/63982
 ** set viewer app
 
 #+BEGIN_SRC elisp
-(setq +latex-viewers '(pdf-tools))
+(setq +latex-viewers '(skim))
 #+END_SRC
 
 ** folding
