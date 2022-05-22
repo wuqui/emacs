@@ -249,7 +249,7 @@ Current pattern: %`evil-mc-pattern
 
 #+begin_src elisp
 (after! yasnippet
-  (define-key yas-minor-mode-map (kbd ">") yas-maybe-expand))
+  (define-key yas-minor-mode-map (kbd ";") yas-maybe-expand))
 #+end_src
 
 ** move lines up/down using =drag-stuff=
