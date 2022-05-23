@@ -1763,6 +1763,15 @@ https://emacs.stackexchange.com/a/63982
 #+end_src
 [[https://oremacs.com/2017/03/18/dired-ediff/][Quickly ediff files from dired · (or emacs]]
 
+#+begin_src elisp
+(map!
+ :desc "ediff"
+ :leader
+ :prefix "j d"
+ "e" #'ora-ediff-files
+)
+#+end_src
+
 * =anki-editor=
 ** install
 #+begin_src elisp :tangle packages.el
