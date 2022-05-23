@@ -641,9 +641,11 @@ fix to exclude active datestamps from time grid:
   :hook
   (after-init . org-super-agenda-mode)
   :config
+  (setq org-super-agenda-properties-inherit nil)
   (setq org-super-agenda-groups
         ;; no grouping by priority automatically: ~(:name "prio" :priority>= "9" :order 5)~
         '(
+          (:discard (:property ("TASK" "ongoing")))
           (:name "time" :pred my-org-hour-specification-p)
           (:name "overdue" :scheduled past)
           (:name "prio" :auto-priority)
@@ -655,6 +657,7 @@ fix to exclude active datestamps from time grid:
         )
   )
 #+end_src
+
 *** hourly intervals for time grid
 
 #+begin_src elisp
