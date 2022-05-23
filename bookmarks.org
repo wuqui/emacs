@@ -2,9 +2,15 @@
 
 * bookmarks.org
 [[file:~/.doom.d/bookmarks.org]]
-* temp.org
+* config
+** config.org
+[[~/.doom.d/config.org]]
+** qtex.org
+[[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
+* temp
+** temp.org
 [[file:~/org/temp.org]]
-* latex.tex
+** latex.tex
 [[file:~/temp/latex/latex.tex]]
 * agenda
 ** privat
@@ -27,6 +33,10 @@
 [[id:777de55e-3e04-4645-b1e9-39e9bb72293b][lexical innovation]]
 *** mails
 [[id:fb28a674-8396-4e5b-9683-971c22d846ed][mails]]
+*** SkEfond
+[[id:941bc9a0-425a-4a37-89f6-41a9fa358e63][SkEfond]]
+*** diss
+[[id:8da06789-3075-402c-9407-4bcf8b013244][diss]]
 ** rout
 *** rout.org
 [[id:1dec718e-b353-49b7-bcbe-f5c475898651][rout]]
@@ -51,14 +61,6 @@
 [[id:4c96b14c-0433-4d90-b1a4-6c6035e8b907][legenda]]
 *** probanda.org
 [[id:452b9d6a-3028-40eb-9415-86e8afdfdee9][probanda]]
-* config
-** config.org
-[[~/.doom.d/config.org]]
-** qtex.org
-[[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
-* web
-** nbdev on Twitter
-https://twitter.com/search?q=nbdev&src=typed_query
 * roam
 ** English
 [[id:7507c78b-a09c-499b-80e1-17dfff5e46fa][English]]
@@ -68,3 +70,8 @@ https://twitter.com/search?q=nbdev&src=typed_query
 [[id:25003349-5c57-4744-8d1d-b4e3bfe555d0][vowel chart]]
 ** consonant inventory
 [[id:cd64283c-0f2d-48bf-8764-486dd7c964b5][consonant inventory]]
+* web
+** nbdev on Twitter
+https://twitter.com/search?q=nbdev&src=typed_query
+** CoVid international
+https://ourworldindata.org/explorers/coronavirus-data-explorer?zoomToSelection=true&time=2020-03-01..latest&facet=none&pickerSort=desc&pickerMetric=new_cases_per_million&Metric=Confirmed+cases&Interval=7-day+rolling+average&Relative+to+Population=true&Color+by+test+positivity=false&country=IND~USA~GBR~DEU~ITA~FRA~CHE~AUT~RUS~ESP~PRT
