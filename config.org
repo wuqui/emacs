@@ -582,8 +582,9 @@ source: [[https://www.reddit.com/r/emacs/comments/lbueqw/how_can_i_change_priori
 *** set deadline warning days
 
 #+begin_src elisp
-(setq org-deadline-warning-days 3)
+(setq org-deadline-warning-days 0)
 #+end_src
+
 *** skip deadlines if task is done
 
 #+begin_src elisp
