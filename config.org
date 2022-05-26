@@ -694,7 +694,7 @@ dependencies
 )
 #+end_src
 
-**** gradients
+**** use gradients
 
 #+begin_src elisp
 (setq elgantt-user-set-color-priority-counter 0)
