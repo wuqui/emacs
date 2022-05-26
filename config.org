@@ -1408,8 +1408,9 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
  :leader
  :prefix-map ("j z" . "zitations")
  :desc "insert citation" "i" #'citar-insert-citation
+ :desc "insert reference" "r" #'citar-insert-reference
  :desc "open" "o" #'citar-open
- :desc "refresh" "r" #'citar-refresh
+ :desc "refresh" "g" #'citar-refresh
  )
 #+end_src
 
