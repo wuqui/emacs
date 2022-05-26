@@ -1007,6 +1007,23 @@ https://emacs.stackexchange.com/a/34436/29471
 (setq org-latex-compiler "lualatex")
 #+end_src
 
+**** use =scrartcl=
+
+#+begin_src elisp
+(with-eval-after-load "ox-latex"
+  (add-to-list 'org-latex-classes
+               '("scrartcl" "\\documentclass{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+
+#+begin_src elisp
+(setq org-latex-default-class "scrartcl")
+#+end_src
+
 **** don't center tables
 #+begin_src elisp
 (setq org-latex-tables-centered nil)
