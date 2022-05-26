@@ -725,6 +725,19 @@ dependencies
                            :elgantt-user-overlay ,elgantt-org-id)))))))
 #+end_src
 
+**** custom views
+***** diss
+
+#+begin_src elisp
+(defun q/elgantt-diss ()
+  (interactive)
+  (setq elgantt-start-date nil
+        elgantt-scroll-to-current-month-at-startup t
+        elgantt-agenda-files "~/Dropbox/roam/agenda/diss.org"
+        elgantt-startup-folded nil
+    )
+  (elgantt-open))
+#+end_src
 
 ** capture templates
 
