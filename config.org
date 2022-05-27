@@ -646,14 +646,15 @@ fix to exclude active datestamps from time grid:
   (setq org-super-agenda-groups '(
           (:name "time" :pred my-org-hour-specification-p)
           ;; (:discard (:property ("TASK" "ongoing")))
-          ;; (:name "ongoing" :property ("TASK" "ongoing") :order 9)
-          (:name "overdue" :scheduled past :order 9)
-          (:name "prio" :auto-priority)
+          (:name "deadlines" :deadline today :order 2)
+          (:name "ongoing" :property ("TASK" "ongoing") :order 9)
+          (:name "overdue" :scheduled past :order 1)
+          (:name "prio" :auto-priority t :order 2)
           (:name "rout" :tag "rout")
           (:name "work" :tag "work")
           (:name "privat" :tag "privat")
           (:name "method" :tag "method")
-          (:name "rest" :anything)
+          (:name "rest" :anything t)
           )))
 #+end_src
 
