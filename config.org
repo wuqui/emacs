@@ -476,21 +476,19 @@ backup: ~(setq-default org-startup-folded t)~
   )
 #+END_SRC
 *** switch to agenda buffer
-**** macro
 
 #+begin_src elisp
-(fset 'switch-to-agenda-buffer
-   (kmacro-lambda-form [?  ?b ?B ?* ?O ?r ?g ?  ?A ?g ?e ?n ?d ?a ?* return] 0 "%d"))
+(defun q/switch-to-agenda-buffer ()
+  (interactive)
+  (switch-to-buffer "*Org Agenda*"))
 #+end_src
-
-**** keybinding
 
 #+begin_src emacs-lisp
 (map!
  :desc "switch to agenda"
  :leader
  :prefix "j"
- "q" #'switch-to-agenda-buffer)
+ "q" #'q/switch-to-agenda-buffer)
 #+end_src
 
 *** numerical priorities
