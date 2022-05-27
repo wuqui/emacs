@@ -1864,19 +1864,6 @@ https://emacs.stackexchange.com/a/63982
 (setq anki-editor-org-tags-as-anki-tags nil)
 #+end_src
 
-* =deft=
-
-#+begin_src elisp
-(use-package! deft
-  :after org
-  :bind
-  ("C-c n d" . deft)
-  :custom
-  (deft-recursive t)
-  (deft-use-filter-string-for-filename t)
-  (deft-default-extension "org")
-  (deft-directory "~/roam/"))
-#+end_src
 * =LaTeX=
 ** use [[id:8cb59141-e932-4c9a-8d54-e4fdadf96e15][LuaLaTeX]]
 
