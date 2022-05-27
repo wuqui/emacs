@@ -436,12 +436,12 @@ source: [[https://www.reddit.com/r/emacs/comments/lbueqw/how_can_i_change_priori
 #+end_src
 
 *** switch to agenda keybinding
+*** switch to agenda buffer
 **** macro
 
 #+begin_src elisp
 (fset 'switch-to-agenda-buffer
-   (kmacro-lambda-form [?  ?b ?B ?o ?r ?g ?  ?a ?g ?e ?n ?d ?a return] 0 "%d"))
-
+   (kmacro-lambda-form [?  ?b ?B ?* ?O ?r ?g ?  ?A ?g ?e ?n ?d ?a ?* return] 0 "%d"))
 #+end_src
 
 **** keybinding
