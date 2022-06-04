@@ -1904,6 +1904,14 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
                   electric-indent-mode nil)))
 #+end_src
 [[https://emacs.stackexchange.com/a/48884/29471][Manual indentation in LaTeX mode - Emacs Stack Exchange]]
+** insert citations using =citar=
+
+#+begin_src elisp
+(map!
+ :desc "insert citation"
+ "C-c b" #'citar-insert-citation
+)
+#+end_src
 
 * emojis
 #+begin_src elisp
