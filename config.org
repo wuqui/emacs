@@ -1126,6 +1126,18 @@ https://emacs.stackexchange.com/a/34436/29471
 (add-to-list 'org-latex-packages-alist '("" "qtex" t))
 #+end_src
 
+**** default header arguments
+
+#+begin_src elisp
+(setq org-babel-default-header-args:latex '(
+    (:exports . "results")
+    (:imagemagick . "yes")
+    (:iminoptions . "-density 600 -background white -alpha remove -alpha off")
+    (:fit . "yes")
+    (:results . "file link")
+    ))
+#+end_src
+
 **** ignore headings with =ignore= tag
 
 #+begin_src elisp
