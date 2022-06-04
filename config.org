@@ -1138,6 +1138,11 @@ https://emacs.stackexchange.com/a/34436/29471
     ))
 #+end_src
 
+**** don't center tables
+#+begin_src elisp
+(setq org-latex-tables-centered nil)
+#+end_src
+
 **** ignore headings with =ignore= tag
 
 #+begin_src elisp
