@@ -2055,4 +2055,11 @@ image-mode buffers."
   :init
   (setq langtool-language-tool-jar "/opt/homebrew/Cellar/languagetool/5.7/libexec/languagetool-commandline.jar"))
 #+end_src
+** kbd for overwrite mode
 
+#+begin_src elisp
+(map!
+ :desc "toggle overwrite mode"
+ "C-c i" #'overwrite-mode
+)
+#+end_src
