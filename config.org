@@ -1072,11 +1072,24 @@ source: https://stackoverflow.com/a/33716338/4165300
 https://emacs.stackexchange.com/a/34436/29471
 *** to =LaTeX=
 **** use [[id:8cb59141-e932-4c9a-8d54-e4fdadf96e15][LuaLaTeX]]
+***** during export
 
 #+begin_src elisp
-;; (setq org-latex-compiler "xelatex")
 (setq org-latex-compiler "lualatex")
 #+end_src
+
+***** for =org-babel=
+
+#+begin_src elisp :results silent
+(advice-add 'org-babel-latex-tex-to-pdf :before
+            (lambda (file)
+              (with-temp-buffer
+                (insert-file-contents file)
+                (beginning-of-buffer)
+                (insert "% lualatex\n")
+                (write-file file))))
+#+end_src
+[[https://www.reddit.com/r/emacs/comments/akqoho/comment/efa4w5n/?utm_source=share&utm_medium=web2x&context=3][Org babel compile latex using xelatex : emacs]]
 
 **** use =scrartcl=
 
