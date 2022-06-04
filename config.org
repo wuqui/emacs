@@ -1816,6 +1816,21 @@ important for sync via Dropbox
 (setq anki-editor-org-tags-as-anki-tags nil)
 #+end_src
 
+*** jump to note via ID
+
+#+begin_src elisp
+(defun qw/find-anki-note (x)
+  (interactive "sNote ID: ")
+  (consult-ripgrep "~/roam/" x))
+#+end_src
+
+#+begin_src elisp
+(map!
+ :leader
+ :prefix "j a"
+ :desc "find note via ID" "f" #'qw/find-anki-note)
+#+end_src
+
 * =LaTeX=
 ** use [[id:8cb59141-e932-4c9a-8d54-e4fdadf96e15][LuaLaTeX]]
 
