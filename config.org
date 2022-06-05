@@ -478,6 +478,7 @@ backup: ~(setq-default org-startup-folded t)~
    "Q" #'q/org-agenda)
   )
 #+END_SRC
+
 *** switch to agenda buffer
 
 #+begin_src elisp
@@ -1666,9 +1667,8 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+begin_src elisp
 (map!
  :desc "tag =pos="
- :leader
- :prefix "j"
- "p" #'qw/org-set-tags-pos
+ :map org-mode-map
+ :nvi "C-c p" #'qw/org-set-tags-pos
  )
 #+end_src
 
@@ -1685,11 +1685,11 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
 #+begin_src elisp
 (map!
  :desc "tag =neg="
- :leader
- :prefix "j"
- "n" #'qw/org-set-tags-neg
+ :map org-mode-map
+ :nvi "C-c n" #'qw/org-set-tags-neg
  )
 #+end_src
+
 ** auto-save buffers
 
 important for sync via Dropbox
