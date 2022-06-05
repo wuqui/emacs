@@ -371,7 +371,7 @@ Current pattern: %`evil-mc-pattern
 ** break paragraph into lines
 
 #+begin_src elisp :results silent
-(defun p2l ()
+(defun qw/paragraphs-to-lines ()
   "Format current paragraph into single lines."
   (interactive "*")
   (save-excursion
