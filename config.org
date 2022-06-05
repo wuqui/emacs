@@ -194,12 +194,44 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
 (setq bookmark-file "~/.doom.d/bookmarks")
 #+end_src
 
-* workspaces
+* workspaces and projects
+using =projectile=
+** disable automatic project detection
+
+#+begin_src elisp
+(setq projectile-track-known-projects-automatically nil)
+#+end_src
+
+** set projects
+
+#+BEGIN_SRC elisp
+(after! projectile
+  (setq projectile-known-projects '(
+    ;; private
+    "~/.doom.d/"
+    "~/Dropbox/roam/agenda/"
+
+    ;; teaching
+    "~/promo/lehre/2022_ps_itl/"
+    "~/promo/lehre/2022_sem_lexical-innovation/"
+    "~/promo/lehre/2022_ps_methods-in-linguistics"
+
+    ;; projects
+    "~/promo/NeoCov/"
+    "~/promo/me2inc/"
+    "~/promo/diss/"
+    )))
+#+END_SRC
+
+** switch between workspaces
+
 #+begin_src elisp
 (map!
+ :desc "switch workspace"
  :leader
- :desc "switch workspace" "y" #'+workspace/switch-to)
+ "z" #'+workspace/switch-to)
 #+end_src
+
 * windows and frames
 ** switch windows using =ace-window=
 *** keybinding
@@ -347,14 +379,6 @@ Current pattern: %`evil-mc-pattern
       )))
 #+end_src
 
-This is an example.
-Multiple sentences.
-What about question marks?
-And abbreviations, e.g.
-/i.e./.
-and semicolons;
-dot.ted And exlamation marks!
-And more.
 ** spellchecking
 *** set =ispell= dictionary to =british=
 
@@ -371,43 +395,6 @@ And more.
      (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 #+end_src
 [[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
-
-* =projectile=
-** disable automatic project detection
-
-#+begin_src elisp
-(setq projectile-track-known-projects-automatically nil)
-#+end_src
-
-** set projects
-
-#+BEGIN_SRC elisp
-(after! projectile
-  (setq projectile-known-projects '(
-    ;; private
-    "~/.doom.d/"
-    "~/Dropbox/roam/agenda/"
-
-    ;; teaching
-    "~/promo/lehre/2022_ps_itl/"
-    "~/promo/lehre/2022_sem_lexical-innovation/"
-    "~/promo/lehre/2022_ps_methods-in-linguistics"
-
-    ;; projects
-    "~/promo/NeoCov/"
-    "~/promo/me2inc/"
-    "~/promo/diss/"
-    )))
-#+END_SRC
-
-** switch between workspaces
-
-#+begin_src elisp
-(map!
- :desc "switch workspace"
- :leader
- "z" #'+workspace/switch-to)
-#+end_src
 
 * =org-mode=
 ** fold files on startup
