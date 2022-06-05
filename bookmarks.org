@@ -37,6 +37,8 @@
 [[id:941bc9a0-425a-4a37-89f6-41a9fa358e63][SkEfond]]
 *** diss
 [[id:8da06789-3075-402c-9407-4bcf8b013244][diss]]
+*** references.bib
+[[file:~/promo/bib/references.bib]]
 ** rout
 *** rout.org
 [[id:1dec718e-b353-49b7-bcbe-f5c475898651][rout]]
