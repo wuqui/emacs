@@ -333,6 +333,17 @@ Current pattern: %`evil-mc-pattern
   :prefix "g"
   :nv "z" #'my-mc-hydra/body))
 #+end_src
+** disable tab complete for =company=
+
+#+begin_src elisp
+(define-key company-active-map (kbd "TAB") nil)
+(define-key company-active-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(setq company-auto-commit-chars nil)
+#+end_src
+[[https://www.reddit.com/r/DoomEmacs/comments/tm3315/comment/i1zei0w/?utm_source=share&utm_medium=web2x&context=3][source]]
+
 ** set =yasnippets= completion key
 
 #+begin_src elisp
