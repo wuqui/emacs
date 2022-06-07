@@ -1852,7 +1852,10 @@ important for sync via Dropbox
 ** set viewer app
 
 #+BEGIN_SRC elisp
-(setq +latex-viewers '(pdf-tools))
+(setq +latex-viewers '(
+    pdf-tools
+    ;; skim
+    ))
 #+END_SRC
 
 ** folding
