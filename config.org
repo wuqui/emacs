@@ -1649,8 +1649,8 @@ source for =advice-remove=: https://github.com/hlissner/doom-emacs/issues/4646
         (directory . emacs)
         ("\\.mm\\'" . default)
         ("\\.x?html?\\'" . default)
-        ;; ("\\.pdf\\'" . emacs)
-        ("\\.pdf\\'" . default)
+        ("\\.pdf\\'" . emacs)
+        ;; ("\\.pdf\\'" . default)
         ))
 #+end_src
 
