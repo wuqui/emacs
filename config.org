@@ -469,6 +469,7 @@ backup: ~(setq-default org-startup-folded t)~
     (org-agenda nil "a")
     (org-agenda-day-view)
     (org-agenda-goto-today)
+    (text-scale-set -1)
     )
 
   (map!
