@@ -412,6 +412,19 @@ Current pattern: %`evil-mc-pattern
 #+end_src
 [[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
 
+** setting for writing
+
+#+begin_src elisp
+(defun qw/write ()
+    (interactive)
+    (+zen/toggle t)
+    (highlight-indent-guides-mode 0)
+    (writegood-mode 0)
+    (display-line-numbers-mode 0)
+    (text-scale-set 1)
+)
+#+end_src
+
 * =org-mode=
 ** fold files on startup
 backup: ~(setq-default org-startup-folded t)~
