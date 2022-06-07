@@ -412,6 +412,19 @@ Current pattern: %`evil-mc-pattern
 #+end_src
 [[https://www.tenderisthebyte.com/blog/2019/06/09/spell-checking-emacs/][Spell Checking in Emacs | Tender Is The Byte]]
 
+** move up and down with ~C-p|n~ in insert mode
+
+#+begin_src elisp
+(map!
+ :desc "move up"
+ :i "C-p")
+#+end_src
+
+#+begin_src elisp
+(map!
+ :desc "move down"
+ :i "C-n")
+#+end_src
 ** setting for writing
 
 #+begin_src elisp
