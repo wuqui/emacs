@@ -774,7 +774,7 @@ dependencies
 (use-package! elgantt
   :config
   (require 'cl)
-  (setq elgantt-start-date "2022-05-01")
+  ;; (setq elgantt-start-date "2022-05-01")
   (setq elgantt-agenda-files "~/Dropbox/roam/agenda/diss.org")
 )
 #+end_src
@@ -816,10 +816,10 @@ dependencies
 #+begin_src elisp
 (defun q/elgantt-diss ()
   (interactive)
-  (setq elgantt-start-date nil
-        elgantt-scroll-to-current-month-at-startup t
-        elgantt-agenda-files "~/Dropbox/roam/agenda/diss.org"
-        elgantt-startup-folded nil
+  (setq
+    elgantt-scroll-to-current-month-at-startup t
+    elgantt-agenda-files "~/Dropbox/roam/agenda/diss.org"
+    elgantt-startup-folded t
     )
   (elgantt-open))
 #+end_src
