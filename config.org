@@ -1396,6 +1396,31 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+*** =org-roam-search=
+
+#+begin_src elisp :tangle packages.el
+(package! org-roam-search
+  :recipe (:host github
+          :repo "natask/org-roam-search"
+          :branch "master"))
+
+(package! sexp-string
+  :recipe (:host github
+          :repo "natask/sexp-string"
+          :branch "master"))
+
+(package!  delve
+  :recipe (:host github
+           :repo "publicimageltd/delve"
+           :branch "main"
+           :files ("*.el")))
+
+(package!  delve-show
+  :recipe (:host github
+           :repo "natask/delve-show"
+           :branch "master"
+           :files ("*.el")))
+#+end_src
 
 ** =org-ref= :inactive:
 *** install
