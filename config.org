@@ -1280,6 +1280,7 @@ should be included in Doom emacs via the =+pretty= flag for =org=, but doesn't c
 #+end_src
 
 *** shrink on startup
+
 #+begin_src elisp
 (setq org-startup-shrink-all-tables t)
 #+end_src
@@ -1368,20 +1369,6 @@ for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
 
 #+begin_src elisp
 (setq org-roam-file-extensions '("org" "org_archive"))
-#+end_src
-
-*** =org-roam=bibtex= :inactive:
-**** install
-#+begin_src elisp :tangle no
-(package! org-roam-bibtex
-  :recipe (:host github
-           :repo "org-roam/org-roam-bibtex"))
-#+end_src
-
-**** configure
-#+begin_src elisp :tangle no
-(use-package! org-roam-bibtex
-  :after org-roam)
 #+end_src
 
 *** =org-roam-ui=
