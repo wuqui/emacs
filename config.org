@@ -829,12 +829,12 @@ dependencies
 ***** diss
 
 #+begin_src elisp
-(defun q/elgantt-diss ()
+(defun qw/elgantt-diss ()
   (interactive)
   (setq
     elgantt-scroll-to-current-month-at-startup t
     elgantt-agenda-files "~/Dropbox/roam/agenda/diss.org"
-    elgantt-startup-folded t
+    elgantt-startup-folded nil
     )
   (elgantt-open))
 #+end_src
