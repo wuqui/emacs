@@ -142,7 +142,22 @@ other options: [[id:3f2f2ed3-dfc4-4bcd-a50a-8da7aafd8596][fonts]]
 (use-package! dired-sidebar
   :commands (dired-sidebar-toggle-sidebar))
 #+end_src
+*** clean =LaTeX= files
 
+#+begin_src elisp
+(setq dired-latex-unclean-extensions '(
+    ".idx"
+    ".lof"
+    ".lot"
+    ".glo"
+    ".bcf"
+    ".fls"
+    ".run.xml"
+    ".synctex.gz"
+    ".fdb_latexmk"
+    ".auctex-auto"
+))
+#+end_src
 ** =dirvish=
 
 #+begin_src elisp :tangle packages.el
