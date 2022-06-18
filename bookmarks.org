@@ -22,6 +22,8 @@
 [[id:bf255616-b2af-41ff-82a9-593a813aac71][privat]]
 *** einkaufen
 [[id:8b9f852a-e346-4035-83e6-4a3ce9e7ae1d][einkaufen]]
+*** Wäsche
+[[id:cfca8438-81fb-4bc9-99a1-5e9bf3bfab69][Wäsche]]
 ** work
 [[id:922dbc08-3d7f-4ff6-bc88-3b298bcb6acc][work]]
 *** Lehre
