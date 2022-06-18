@@ -2021,6 +2021,22 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
  :desc "jump back" "n" #'pdf-history-forward
  )
 #+END_SRC
+* =shell=
+** make shell commands use =~/.bashrc=
+
+#+begin_src elisp
+(setq shell-command-switch "-ic")
+#+end_src
+
+** run shell command on current file
+
+#+begin_src elisp
+(defun qw/execute-shell-command-on-file (shell-command-text)
+  (interactive "MShell command:")
+  (shell-command (format shell-command-text (shell-quote-argument buffer-file-name)))
+  )
+#+end_src
+
 * misc
 ** set locale
 
@@ -2039,11 +2055,6 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
 
 #+begin_src elisp :tangle packages.el
 (package! lorem-ipsum)
-#+end_src
-** make shell commands use =~/.bashrc=
-
-#+begin_src elisp
-(setq shell-command-switch "-ic")
 #+end_src
 ** open emails externally
 
