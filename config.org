@@ -292,6 +292,16 @@ https://github.com/hlissner/doom-emacs/issues/1177#issuecomment-464936107
         (switch-to-buffer (other-buffer))))))
 #+end_src
 [[https://emacs.stackexchange.com/a/5372][How to change Emacs windows from vertical split to horizontal split? - Emacs ...]]
+
+#+begin_src elisp
+(map!
+ :desc "toggle vertical vs horizontal"
+ :leader
+ :prefix "w"
+ "S" #'window-split-toggle
+)
+#+end_src
+
 ** switch frames
 
 #+BEGIN_SRC elisp
