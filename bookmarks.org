@@ -8,10 +8,12 @@
 ** qtex.org
 [[file:~/Library/texmf/tex/latex/qtex/qtex.org]]
 * temp
-** temp.org
+** org-mode
 [[file:~/org/temp.org]]
-** latex.tex
+** latex
 [[file:~/temp/latex/latex.tex]]
+** markdown
+[[file:~/temp/md/temp.md]]
 * agenda
 ** privat
 *** aufräumen
@@ -50,6 +52,8 @@
 [[id:6ce4a49b-4d22-478e-b7bd-ed1fdef152cc][Mittagessen]]
 *** Abendessen
 [[id:3310d2d4-6e25-4537-a13c-959675e22f73][Abendessen]]
+*** WGN
+[[id:05f131a3-1e4f-43c8-93c3-d67a6a47eb4f][WGN]]
 ** meth.org
 [[id:d7a54bb3-0ee1-42e2-b51f-36ab7b0bb84b][meth]]
 ** anda
