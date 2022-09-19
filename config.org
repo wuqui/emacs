@@ -756,7 +756,7 @@ fix to exclude active datestamps from time grid:
           (:name "time" :pred my-org-hour-specification-p)
           ;; (:discard (:property ("TASK" "ongoing")))
           (:name "deadlines" :deadline today :order 3)
-          (:name "ongoing" :property ("TASK" "ongoing") :order 9)
+          ;; (:name "ongoing" :property ("TASK" "ongoing") :order 9)
           (:name "overdue" :scheduled past :order 2)
           (:name "prio" :auto-priority t :order 4)
           (:name "rout" :tag "rout" :order 1)
