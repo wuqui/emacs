@@ -227,9 +227,9 @@ using =projectile=
     "~/Dropbox/roam/agenda/"
 
     ;; teaching
-    "~/promo/lehre/2022_ps_itl/"
-    "~/promo/lehre/2022_sem_lexical-innovation/"
-    "~/promo/lehre/2022_ps_methods-in-linguistics"
+    "~/promo/lehre/2022-1_ps_intro/"
+    "~/promo/lehre/2022-1_sem_lexical-innovation/"
+    "~/promo/lehre/2022-1_ps_methods-in-linguistics"
 
     ;; projects
     "~/promo/NeoCov/"
