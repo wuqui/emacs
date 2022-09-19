@@ -1295,6 +1295,22 @@ should be included in Doom emacs via the =+pretty= flag for =org=, but doesn't c
 (setq org-startup-shrink-all-tables t)
 #+end_src
 
+*** exclude columns from export
+
+#+BEGIN_SRC emacs-lisp :results silent :exports source
+(defun dfeich/org-export-delete-commented-cols (back-end)
+  "Delete columns $2 to $> marked as `<#>' on a row with `/' in $1.
+    If you want a non-empty column $1 to be deleted make it $2 by
+    inserting an empty column before and adding `/' in $1."
+  (while (re-search-forward "^[ \t]*| +/ +|\\(.*|\\)? +\\(<#>\\) *|" nil t)
+    (goto-char (match-beginning 2))
+    (org-table-delete-column)
+    (beginning-of-line)))
+(add-hook 'org-export-before-processing-hook #'dfeich/org-export-delete-commented-cols)
+;; (remove-hook 'org-export-before-processing-hook #'dfeich/org-export-delete-commented-cols)
+#+END_SRC
+https://stackoverflow.com/a/51049671/4165300
+
 ** =org-babel=
 *** default arguments for =jupyter-python=
 for [[file:../roam/20210822112618-ipython.org][IPython]] source blocks
