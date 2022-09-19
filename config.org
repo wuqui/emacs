@@ -2013,8 +2013,8 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
 (package! csv-mode)
 #+end_src
 * pdfs
-** use =pdf-tools= :inactive:
-*** install
+** =pdf-tools=
+*** install :inactive:
 
 #+begin_src elisp :tangle no
 (package! pdf-tools
@@ -2024,14 +2024,15 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
 
 *** configure
 
-#+begin_src elisp :tangle no
+#+begin_src elisp
 (use-package! pdf-tools
   :config
-    (setq pdf-view-use-scaling t)
+    ;; (setq pdf-view-use-scaling t)
     ;; (setq-default pdf-view-display-size 'fit-width)
-    ;; (setq pdf-annot-activate-created-annotations t)
+    (setq pdf-annot-activate-created-annotations t)
 )
 #+end_src
+
 ** keybindings
 
 #+BEGIN_SRC emacs-lisp :tangle yes
@@ -2047,6 +2048,7 @@ https://emacs.stackexchange.com/questions/55395/auctex-and-pdf-tools-in-2-separa
  :desc "jump back" "n" #'pdf-history-forward
  )
 #+END_SRC
+
 * =shell=
 ** make shell commands use =~/.bashrc=
 
